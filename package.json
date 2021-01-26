@@ -1,5 +1,6 @@
 {
   "name": "fitw-client",
+  "description": "Fill In The World educational game client",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
@@ -27,11 +28,20 @@
     "socket.io-client": "^3.1.0",
     "typescript": "^4.1.3"
   },
+  "devDependencies": {
+    "@capacitor/cli": "2.4.6",
+    "canvas": "^2.6.1"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "node_modules/(?!(phaser3-rex-plugins|@ionic/react)/)"
+    ]
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -47,9 +57,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@capacitor/cli": "2.4.6"
-  },
-  "description": "An Ionic project"
+  }
 }
