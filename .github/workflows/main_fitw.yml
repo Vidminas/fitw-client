@@ -31,5 +31,5 @@ jobs:
       with:
         app-name: 'fitw'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_d9b85d2dcae74f92ba09a71665044bb1 }}
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_057c435ef5d1408bb1c566377cd23d47 }}
         package: .
