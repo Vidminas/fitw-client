@@ -32,4 +32,4 @@ jobs:
           app-name: "fitw"
           slot-name: "production"
           publish-profile: ${{ secrets.AzureAppService_PublishProfile_057c435ef5d1408bb1c566377cd23d47 }}
-          package: .
+          package: "./build"
