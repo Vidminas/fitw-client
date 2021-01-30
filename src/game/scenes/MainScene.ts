@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import { SERVER_ADDRESS } from "../constants";
+import { SERVER_ADDRESS } from "../../constants";
 import { socketEmit } from "../game";
 
 class MainScene extends Phaser.Scene {

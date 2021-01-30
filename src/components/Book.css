@@ -1,0 +1,114 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&family=Merienda&display=swap");
+
+:root {
+  /* colors */
+  --cover-bg: #36354e;
+  --page-bg: #e9e6c4;
+  --light-text: #fafafa;
+  --dark-text: #2a2935;
+
+  /* fonts */
+  --cover-font: "Merienda", cursive;
+  --cover-font-size: 16px;
+  --page-font: "Cormorant Garamond", serif;
+  --page-font-size: 12px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+#book {
+  height: 12.5rem;
+  perspective: 2500px;
+  transition: all 1s;
+  position: relative;
+  margin: auto;
+}
+/* Properties could be simplified but listed out for clarity */
+#book.closedFront {
+  left: 0;
+  width: 9.25rem;
+}
+#book.closedBack {
+  left: 9.25rem;
+  width: 9.25rem;
+}
+#book.open {
+  left: 9.25rem;
+  width: 18.5rem;
+}
+
+/* cover pages */
+.page:first-of-type,
+.page:last-of-type {
+  top: 0;
+  width: 9.25rem;
+  height: 12.5rem;
+  font-family: var(--cover-font);
+  font-size: var(--cover-font-size);
+  color: var(--light-text);
+}
+.page:first-of-type .page-side-left,
+.page:first-of-type .page-side-right,
+.page:last-of-type .page-side-left,
+.page:last-of-type .page-side-right {
+  background-color: var(--cover-bg);
+}
+
+.page {
+  position: absolute;
+  top: 0.25rem;
+  left: 0.25rem;
+  right: 0;
+  height: 12rem;
+  width: 9rem;
+  font-family: var(--page-font);
+  font-size: var(--page-font-size);
+  color: var(--dark-text);
+  border-radius: 5px 2px 2px 5px;
+  transform-style: preserve-3d;
+  transform-origin: center left;
+  box-shadow: inset 3px 0px 20px rgba(0, 0, 0, 0.2),
+    0px 0px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 1.5s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+.page-side-left,
+.page-side-right {
+  position: absolute;
+  padding: 1rem;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  background-color: var(--page-bg);
+}
+.page-side-right {
+  transform-origin: center center;
+  transform: rotateY(180deg);
+}
+
+.page.inFront {
+  z-index: 3;
+}
+.page.inMiddle {
+  z-index: 2;
+}
+.page.inBack {
+  z-index: 1;
+}
+.flip-right-to-left {
+  transform: rotateY(-180deg);
+}
+.flip-left-to-right {
+  transform: rotateY(0);
+}
+
+.page-side-left::before,
+.page-side-right::before,
+.page-side-left::after,
+.page-side-right::after {
+  display: block;
+  border-top: 1px dashed rgba(0, 0, 0, 0.3);
+  content: "";
+  padding-bottom: 1rem;
+}
