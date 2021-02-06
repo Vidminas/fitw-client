@@ -10,8 +10,12 @@ import Book from "../components/Book";
 import { SERVER_USERS_ENDPOINT } from "../constants";
 import { useFetch } from "../hooks/useFetch";
 
+const fetchParams = {
+  method: "GET",
+};
+
 const Home: React.FC = () => {
-  const [data, status] = useFetch(SERVER_USERS_ENDPOINT);
+  const [data, status] = useFetch(SERVER_USERS_ENDPOINT, fetchParams);
 
   if (status === "ok") {
     console.log(data);
