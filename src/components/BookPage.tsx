@@ -5,7 +5,7 @@ export interface PageFlip {
   fromPage?: number;
 }
 
-interface PageProps {
+interface BookPageProps {
   pageNum: number;
   numPages: number;
   lastFlip: PageFlip;
@@ -13,7 +13,7 @@ interface PageProps {
   openPreviousPage: (i: number) => void;
 }
 
-const Page: React.FC<PageProps> = ({
+const BookPage: React.FC<BookPageProps> = ({
   pageNum,
   numPages,
   lastFlip,
@@ -81,4 +81,4 @@ const Page: React.FC<PageProps> = ({
   );
 };
 
-export default Page;
+export default BookPage;

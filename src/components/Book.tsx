@@ -1,10 +1,10 @@
 import React from "react";
 import "./Book.css";
-import Page, { PageFlip } from "./Page";
+import BookPage, { PageFlip } from "./BookPage";
 
 const numPages = 5;
 
-const Book2: React.FC<{}> = () => {
+const Book: React.FC<{}> = () => {
   const [currentPage, setCurrentPage] = React.useState(-1);
   const [lastFlip, setLastFlip] = React.useState<PageFlip>({});
   const pages = [];
@@ -24,7 +24,7 @@ const Book2: React.FC<{}> = () => {
 
   for (let i = 0; i < numPages; ++i) {
     pages.push(
-      <Page
+      <BookPage
         key={i}
         pageNum={i}
         numPages={numPages}
@@ -49,4 +49,4 @@ const Book2: React.FC<{}> = () => {
   );
 };
 
-export default Book2;
+export default Book;

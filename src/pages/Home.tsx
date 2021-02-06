@@ -6,7 +6,7 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import React from "react";
-import Book2 from "../components/Book";
+import Book from "../components/Book";
 import { SERVER_USERS_ENDPOINT } from "../constants";
 import { useFetch } from "../hooks/useFetch";
 
@@ -41,7 +41,7 @@ const Home: React.FC = () => {
             <IonTitle size="large">Blank</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <Book2 />
+        <Book />
       </IonContent>
     </IonPage>
   );
