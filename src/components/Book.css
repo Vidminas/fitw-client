@@ -112,3 +112,8 @@
   content: "";
   padding-bottom: 1rem;
 }
+
+.page-side-left p,
+.page-side-right p {
+  margin: 0;
+}

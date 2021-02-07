@@ -11,6 +11,8 @@ interface BookPageProps {
   lastFlip: PageFlip;
   openNextPage: (i: number) => void;
   openPreviousPage: (i: number) => void;
+  leftChildren?: React.ReactNode;
+  rightChildren?: React.ReactNode;
 }
 
 const BookPage: React.FC<BookPageProps> = ({
@@ -19,6 +21,8 @@ const BookPage: React.FC<BookPageProps> = ({
   lastFlip,
   openNextPage,
   openPreviousPage,
+  leftChildren,
+  rightChildren,
 }) => {
   const [isOpen, setIsOpen] = React.useState(true);
   const [isFlipLTR, setIsFlipLTR] = React.useState(false);
@@ -71,12 +75,8 @@ const BookPage: React.FC<BookPageProps> = ({
 
   return (
     <div className={classNames.join(" ")} onClick={handleClick}>
-      <div className="page-side-left">
-        <p>{pageNum}'th Left</p>
-      </div>
-      <div className="page-side-right">
-        <a href="/game">{pageNum}'th Right</a>
-      </div>
+      <div className="page-side-left">{leftChildren}</div>
+      <div className="page-side-right">{rightChildren}</div>
     </div>
   );
 };

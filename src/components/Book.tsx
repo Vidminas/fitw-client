@@ -1,7 +1,11 @@
 import React, { ReactElement } from "react";
+import { Link } from "react-router-dom";
 import User from "../api/user";
 import "./Book.css";
 import BookPage, { PageFlip } from "./BookPage";
+import Banner from "./FITW banner.svg";
+import NewWorld from "./new world.svg";
+import WorldEllipse from "./world ellipse.svg";
 
 type BookProps = {
   user: User;
@@ -27,16 +31,20 @@ const Book: React.FC<BookProps> = ({ user }) => {
     }
   };
 
-  const addPage = () => {
-    const pageNum = pages.length;
+  const addPage = (
+    leftChildren?: React.ReactNode,
+    rightChildren?: React.ReactNode
+  ) => {
     pages.push(
       <BookPage
-        key={pageNum}
-        pageNum={pageNum}
+        key={pages.length}
+        pageNum={pages.length}
         numPages={numPages}
         lastFlip={lastFlip}
         openNextPage={openNextPage}
         openPreviousPage={openPreviousPage}
+        leftChildren={leftChildren}
+        rightChildren={rightChildren}
       />
     );
   };
@@ -45,15 +53,67 @@ const Book: React.FC<BookProps> = ({ user }) => {
   // is that they will get displayed in reverse order
 
   // add back cover
-  addPage();
+  addPage(
+    <p>sup, this is back cover left</p>,
+    <p>sup, this is back cover right</p>
+  );
   // add new world page
-  addPage();
+  addPage(
+    <>
+      <p>New World</p>
+      <Link to={{ pathname: "/game", state: { user: user } }}>
+        <img src={NewWorld} alt="Click to create a new world" />
+      </Link>
+    </>
+  );
   // add existing worlds
-  for (let i = 0; i < user.worlds.length; ++i) {
-    addPage();
+  for (let i = 0; i < user.worlds.length; i++) {
+    const world1 = (
+      <>
+        <p>{user.worlds[i].name}</p>
+        <Link
+          to={{
+            pathname: "/game",
+            state: { user: user, world: user.worlds[i] },
+          }}
+        >
+          <img
+            src={WorldEllipse}
+            alt={`Click to enter the world ${user.worlds[i].name}`}
+          />
+        </Link>
+      </>
+    );
+    const world2 = ++i < user.worlds.length && (
+      <>
+        <p>{user.worlds[i].name}</p>
+        <Link
+          to={{
+            pathname: "/game",
+            state: { user: user, world: user.worlds[i] },
+          }}
+        >
+          <img
+            src={WorldEllipse}
+            alt={`Click to enter the world ${user.worlds[i].name}`}
+          />
+        </Link>
+      </>
+    );
+    addPage(world1, world2);
   }
   // add front cover
-  addPage();
+  addPage(
+    <>
+      <p>Fill In The World</p>
+      <img src={Banner} alt="Game banner" />
+      <p>-&gt;</p>
+    </>,
+    <>
+      <p>The worlds of</p>
+      <p>{user.username}</p>
+    </>
+  );
 
   let className = "open";
   if (currentPage === -1) {
