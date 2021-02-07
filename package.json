@@ -8,6 +8,8 @@
     "@ionic/core": "^5.5.2",
     "@ionic/react": "^5.5.2",
     "@ionic/react-router": "^5.5.2",
+    "axios": "^0.21.1",
+    "axios-hooks": "^2.3.0",
     "phaser": "^3.52.0",
     "phaser3-rex-plugins": "^1.1.39",
     "react": "^17.0.1",

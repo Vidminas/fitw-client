@@ -8,16 +8,13 @@ import {
 import React from "react";
 import Book from "../components/Book";
 import { SERVER_USERS_ENDPOINT } from "../constants";
-import { useFetch } from "../hooks/useFetch";
-
-const fetchParams = {
-  method: "GET",
-};
+import useAxios from "axios-hooks";
 
 const Home: React.FC = () => {
-  const [data, status] = useFetch(SERVER_USERS_ENDPOINT, fetchParams);
+  const [{ data, loading, error }] = useAxios(SERVER_USERS_ENDPOINT);
 
-  if (status === "ok") {
+  if (!loading && !error) {
+    console.log("data");
     console.log(data);
   }
 
@@ -25,27 +22,22 @@ const Home: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          {status === "loading" && (
+          {loading && (
             <IonTitle>Connecting to {SERVER_USERS_ENDPOINT}</IonTitle>
           )}
-          {status === "error" && (
+          {error && (
             <IonTitle>
               Error while connecting to {SERVER_USERS_ENDPOINT}. Please report
               this to the developer.
             </IonTitle>
           )}
-          {status === "ok" && (
+          {!loading && !error && (
             <IonTitle>Welcome to Fill In The World!</IonTitle>
           )}
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Blank</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <Book />
+        {!loading && !error && <Book user={data[0]} />}
       </IonContent>
     </IonPage>
   );
