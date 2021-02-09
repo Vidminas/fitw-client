@@ -8,15 +8,39 @@ import {
 import React from "react";
 import Book from "../components/Book";
 import { SERVER_USERS_ENDPOINT } from "../constants";
-import useAxios from "axios-hooks";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { USER_FETCH, USER_LOADED } from "../redux/actionTypes";
+import { Dispatch } from "redux";
+import IUser from "../api/user";
+
+const fetchUser = (
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  setError: React.Dispatch<any>
+) => (dispatch: Dispatch) => {
+  dispatch({ type: USER_FETCH });
+  setLoading(true);
+  axios
+    .get(SERVER_USERS_ENDPOINT)
+    .then((response) => {
+      dispatch({ type: USER_LOADED, payload: response.data[0] });
+      setLoading(false);
+    })
+    .catch((error) => {
+      setError(error);
+      setLoading(false);
+    });
+};
 
 const Home: React.FC = () => {
-  const [{ data, loading, error }] = useAxios(SERVER_USERS_ENDPOINT);
+  const user: IUser = useSelector((state: any) => state.user?.user);
+  const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState<any>(undefined);
+  const dispatch = useDispatch();
 
-  if (!loading && !error) {
-    console.log("data");
-    console.log(data);
-  }
+  React.useEffect(() => {
+    dispatch(fetchUser(setLoading, setError));
+  }, [dispatch]);
 
   return (
     <IonPage>
@@ -37,7 +61,7 @@ const Home: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        {!loading && !error && <Book user={data[0]} />}
+        {!loading && !error && user && <Book user={user} />}
       </IonContent>
     </IonPage>
   );
