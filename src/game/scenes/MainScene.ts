@@ -1,12 +1,14 @@
 import Phaser from "phaser";
+import { Socket } from "socket.io-client";
 import { SERVER_ADDRESS } from "../../constants";
-import { socketEmit } from "../game";
 
 class MainScene extends Phaser.Scene {
   private rexUI: any;
+  private socket: Socket;
 
-  constructor() {
+  constructor(socket: Socket) {
     super("MainScene");
+    this.socket = socket;
   }
 
   preload() {
@@ -20,7 +22,7 @@ class MainScene extends Phaser.Scene {
       `[color=yellow]Connected to [/color][color=green]${SERVER_ADDRESS}[/color]`
     );
     console.log(txt);
-    socketEmit("Hey from MainScene");
+    this.socket.emit("Hey from MainScene");
   }
 
   update() {

@@ -6,13 +6,28 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import React from "react";
+import { useLocation } from "react-router";
+import User from "../api/user";
+import World from "../api/world";
 import { SERVER_ADDRESS } from "../constants";
-import { destroyGame, initGame } from "../game/game";
+import PhaserGame from "../game/PhaserGame";
 
-const Game: React.FC = () => {
+type LocationState = {
+  user: User;
+  world?: World;
+};
+
+const Game: React.FC<{}> = () => {
+  const { user, world } = useLocation<LocationState>().state;
+  const [game] = React.useState(new PhaserGame());
+  console.log("in game page");
+
   React.useEffect(() => {
-    initGame("game-root");
-    return () => destroyGame();
+    console.log(`Initialising game with`);
+    console.log(user);
+    console.log(world);
+    game.init("game-root", user, world);
+    return () => game.destroy();
   }, []);
 
   return (
