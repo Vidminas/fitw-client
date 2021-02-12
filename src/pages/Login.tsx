@@ -1,60 +1,47 @@
 import { IonContent, IonHeader, IonPage } from "@ionic/react";
 import React from "react";
-import { useCookies } from "react-cookie";
+import { useDispatch, useSelector } from "react-redux";
 import { RouteComponentProps } from "react-router";
-import { SERVER_AUTH } from "../constants";
+import * as Actions from "../redux/actionTypes";
+import { AppState, UserStateStatus } from "../redux/store";
 import "./LoginForm.css";
 
-type Status = "initial" | "loading" | "error" | "ok";
+const Login: React.FC<RouteComponentProps> = ({ history, location }) => {
+  const dispatch = useDispatch();
+  const status = useSelector<AppState, UserStateStatus>(
+    (state) => state.user.currentStatus
+  );
+  const response = useSelector<AppState, any>((state) => state.user.response);
+  const error = useSelector<AppState, string | undefined>(
+    (state) => state.user.error
+  );
 
-interface LoginProps extends RouteComponentProps {
-  setIsAuthed: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const Login: React.FC<LoginProps> = ({ history, setIsAuthed }) => {
-  const [cookies] = useCookies();
   const [email, setEmail] = React.useState("");
-  const [data, setData] = React.useState<any>(null);
-  const [status, setStatus] = React.useState<Status>("initial");
-
-  if (cookies["connect.sid"]) {
-    console.log("Found session cookie!");
-    setIsAuthed(true);
-    history.push("/home");
-  }
-
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
   };
 
-  const handleSubmit = () => {
-    const fetchParams = {
-      method: "POST",
-      body: JSON.stringify({
-        destination: email,
-      }),
-      headers: { "Content-Type": "application/json" },
-    };
-    const controller = new AbortController();
+  // Fetch user if auth token is present in the URL (link from auth email)
+  // Otherwise, try loading the local user when this component is mounted
+  // (this will automatically verify the user with the server if one is found)
+  React.useEffect(() => {
+    if (location.search) {
+      dispatch({ type: Actions.USER_FETCH, payload: location.search });
+    } else {
+      dispatch({ type: Actions.USER_LOADLOCAL });
+    }
+  }, [location.search, dispatch]);
 
-    fetch(SERVER_AUTH, {
-      ...fetchParams,
-      signal: controller.signal,
-    })
-      .then((response) => {
-        console.log(response);
-        setStatus(response.ok ? "ok" : "error");
-        return response.json();
-      })
-      .then((data) => {
-        setData(data);
-      })
-      .catch((error) => {
-        setStatus("error");
-        setData(error);
-        console.error(error);
-      });
-    return () => controller.abort();
+  // And redirect to home for when a user is loaded (local or remote auth)
+  React.useEffect(() => {
+    if (status === "loggedIn") {
+      history.push("/home");
+    }
+  }, [status, history]);
+
+  // Request an auth email if an email is submitted
+  const handleSubmit = () => {
+    dispatch({ type: Actions.USER_AUTH_EMAIL, payload: email });
   };
 
   return (
@@ -65,33 +52,35 @@ const Login: React.FC<LoginProps> = ({ history, setIsAuthed }) => {
           <div>
             {/* <div className="page-side-left"> */}
             <p>Login form</p>
-            {(status === "initial" || status === "error") && (
+            {status !== "sentAuthEmail" && status !== "loggedIn" && (
               <>
                 <label htmlFor="email-input">
                   Please enter your email address:
                 </label>
                 <input
-                  id="email-input"
-                  onChange={handleEmailChange}
                   type="email"
+                  name="email-input"
+                  onChange={handleEmailChange}
                 />
+                <button onClick={handleSubmit} disabled={status === "loading"}>
+                  Submit
+                </button>
+                {status === "error" && (
+                  <>
+                    <p>There was an error, you can try submitting again</p>
+                    <p>
+                      <code>{error?.toString()}</code>
+                    </p>
+                  </>
+                )}
               </>
             )}
-            {status === "ok" && (
+            {status === "sentAuthEmail" && (
               <>
                 <p>Login token has been sent, check your email.</p>
-                <p>The verification code is {data.code}</p>
+                <p>The verification code is {response.code}</p>
               </>
             )}
-            {status === "error" && (
-              <p>There was an error, you can try submitting again: {data}</p>
-            )}
-            <button
-              onClick={handleSubmit}
-              disabled={status !== "initial" && status !== "error"}
-            >
-              Submit
-            </button>
             {/* </div> */}
             {/* <div className="page-side-right" /> */}
           </div>

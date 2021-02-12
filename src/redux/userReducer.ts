@@ -1,14 +1,78 @@
 import { Reducer } from "redux";
-import { USER_LOADED } from "./actionTypes";
+import * as Actions from "./actionTypes";
+import { initialState, UserState } from "./store";
 
-const userReducer: Reducer = (state, action) => {
-  if (state === undefined) {
-    return null;
-  }
-
+const userReducer: Reducer<UserState> = (state = initialState.user, action) => {
   switch (action.type) {
-    case USER_LOADED:
-      return { ...state, user: action.payload };
+    case Actions.USER_LOADLOCAL:
+      return {
+        ...state,
+        currentStatus: "loading",
+      };
+    case Actions.USER_LOADLOCAL_SUCCESS:
+      return {
+        ...state,
+        currentStatus: "loadedLocal",
+        user: action.payload,
+      };
+    case Actions.USER_LOADLOCAL_ERROR:
+      return {
+        ...state,
+        currentStatus: "error",
+        user: null,
+        errorMessage: action.payload,
+      };
+    case Actions.USER_AUTH_LOCAL:
+      return {
+        ...state,
+        currentStatus: "loading",
+      };
+    case Actions.USER_AUTH_LOCAL_SUCCESS:
+      return {
+        ...state,
+        currentStatus: "loggedIn",
+        user: action.payload,
+      };
+    case Actions.USER_AUTH_LOCAL_ERROR:
+      return {
+        ...state,
+        currentStatus: "error",
+        error: action.payload,
+      };
+    case Actions.USER_AUTH_EMAIL:
+      return {
+        ...state,
+        currentStatus: "loading",
+      };
+    case Actions.USER_AUTH_EMAIL_SUCCESS:
+      return {
+        ...state,
+        currentStatus: "sentAuthEmail",
+        response: action.payload,
+      };
+    case Actions.USER_AUTH_EMAIL_ERROR:
+      return {
+        ...state,
+        currentStatus: "error",
+        error: action.payload,
+      };
+    case Actions.USER_FETCH:
+      return {
+        ...state,
+        currentStatus: "loading",
+      };
+    case Actions.USER_FETCH_SUCCESS:
+      return {
+        ...state,
+        currentStatus: "loggedIn",
+        user: action.payload,
+      };
+    case Actions.USER_FETCH_ERROR:
+      return {
+        ...state,
+        currentStatus: "error",
+        error: action.payload,
+      };
     default:
       return state;
   }

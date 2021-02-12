@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 import { io, Socket } from "socket.io-client";
-import { SERVER_ADDRESS } from "../constants";
+import { SERVER_ADDRESS } from "../api/constants";
 import RexUIPlugin from "phaser3-rex-plugins/templates/ui/ui-plugin.js";
 import MainScene from "./scenes/MainScene";
 import IUser from "../api/user";

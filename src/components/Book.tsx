@@ -1,20 +1,17 @@
 import React, { ReactElement } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import IUser from "../api/user";
 import "./Book.css";
 import BookPage, { PageFlip } from "./BookPage";
 import Banner from "./FITW banner.svg";
 import NewWorld from "./new world.svg";
 import WorldEllipse from "./world ellipse.svg";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NEW_WORLD } from "../redux/actionTypes";
+import { AppState } from "../redux/store";
 
-type BookProps = {
-  user: IUser;
-};
-
-const Book: React.FC<BookProps> = ({ user }) => {
-  const history = useHistory();
+const Book: React.FC<{}> = () => {
+  const user = useSelector<AppState, IUser>((state) => state.user.user!);
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = React.useState(-1);
   const [lastFlip, setLastFlip] = React.useState<PageFlip>({});
@@ -65,14 +62,9 @@ const Book: React.FC<BookProps> = ({ user }) => {
   addPage(
     <>
       <p>New World</p>
-      <img
-        src={NewWorld}
-        alt="Click to create a new world"
-        onClick={() => {
-          dispatch({ type: NEW_WORLD });
-          history.push("/game");
-        }}
-      />
+      <Link to="/game" onClick={() => dispatch({ type: NEW_WORLD })}>
+        <img src={NewWorld} alt="Click to create a new world" />
+      </Link>
     </>
   );
   // add existing worlds

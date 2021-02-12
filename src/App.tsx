@@ -23,31 +23,18 @@ import "@ionic/react/css/display.css";
 /* Theme variables */
 import "./theme/variables.css";
 import Login from "./pages/Login";
-import AuthVerify from "./pages/AuthVerify";
 import Game from "./pages/Game";
+import PrivateRoute from "./auth/PrivateRoute";
 
 const App: React.FC = () => {
-  const [isAuthed, setIsAuthed] = React.useState(false);
-
   return (
     <IonApp>
       <IonReactRouter>
         <IonRouterOutlet animated={true}>
           <Redirect exact path="/" to="/home" />
-          <Route exact path="/home" component={Home} />
-          <Route exact path="/game" component={Game} />
-          <Route
-            exact
-            path="/login"
-            render={(props) => <Login setIsAuthed={setIsAuthed} {...props} />}
-          />
-          <Route
-            exact
-            path="/auth/verify"
-            render={(props) => (
-              <AuthVerify setIsAuthed={setIsAuthed} {...props} />
-            )}
-          />
+          <Route exact path="/login" component={Login} />
+          <PrivateRoute exact path="/home" component={Home} />
+          <PrivateRoute exact path="/game" component={Game} />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>

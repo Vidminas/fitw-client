@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 import { Socket } from "socket.io-client";
-import { SERVER_ADDRESS } from "../../constants";
+import { SERVER_ADDRESS } from "../../api/constants";
 
 class MainScene extends Phaser.Scene {
   private rexUI: any;

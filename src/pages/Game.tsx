@@ -9,7 +9,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import IUser from "../api/user";
 import IWorld from "../api/world";
-import { SERVER_ADDRESS } from "../constants";
+import { SERVER_ADDRESS } from "../api/constants";
 import PhaserGame from "../game/PhaserGame";
 
 const Game: React.FC<{}> = () => {
