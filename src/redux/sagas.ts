@@ -33,7 +33,7 @@ function* authLocalUser() {
     } catch (error) {
       yield put({
         type: Actions.USER_AUTH_LOCAL_ERROR,
-        payload: error.response.data?.error?.message || error,
+        payload: error.response?.data?.error?.message || error,
       });
     }
   });
@@ -50,7 +50,7 @@ function* requestAuthFromServer() {
     } catch (error) {
       yield put({
         type: Actions.USER_AUTH_EMAIL_ERROR,
-        payload: error.response.data?.error?.message || error,
+        payload: error.response?.data?.error?.message || error,
       });
     }
   });
@@ -65,7 +65,7 @@ function* fetchUserFromServer() {
     } catch (error) {
       yield put({
         type: Actions.USER_FETCH_ERROR,
-        payload: error.response.data?.error?.message || error,
+        payload: error.response?.data?.error?.message || error,
       });
     }
   });
