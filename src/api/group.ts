@@ -1,5 +1,5 @@
-interface Group {
+interface IGroup {
   name: string;
 }
 
-export default Group;
+export default IGroup;

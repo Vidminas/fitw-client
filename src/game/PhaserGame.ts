@@ -25,13 +25,23 @@ class PhaserGame {
       console.log("Connected: " + this.socket!.connected);
     });
 
-    const mainScene = new MainScene(this.socket);
+    const mainScene = new MainScene(this.socket, this.world);
     this.game = new Phaser.Game({
       parent,
       type: Phaser.AUTO,
       width: 1024,
       height: 600,
       scene: mainScene,
+      dom: {
+        createContainer: true,
+      },
+      scale: {
+        mode: Phaser.Scale.FIT,
+        autoCenter: Phaser.Scale.CENTER_BOTH,
+      },
+      loader: {
+        baseURL: "assets",
+      },
       plugins: {
         scene: [
           {

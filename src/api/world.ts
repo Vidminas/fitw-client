@@ -1,5 +1,5 @@
-interface World {
+interface IWorld {
   name: string;
 }
 
-export default World;
+export default IWorld;

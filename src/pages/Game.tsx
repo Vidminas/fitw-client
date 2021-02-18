@@ -26,15 +26,10 @@ const Game: React.FC<{}> = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Connecting to {SERVER_ADDRESS}</IonTitle>
+          <IonTitle>Connected to server at {SERVER_ADDRESS}</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Blank</IonTitle>
-          </IonToolbar>
-        </IonHeader>
         <div id="game-root"></div>
       </IonContent>
     </IonPage>
