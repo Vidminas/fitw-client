@@ -28,12 +28,10 @@ class AddDialog {
         bottom: 10,
       },
     });
-    const inputBox = new InputText(scene, 0, 0, 200, 80, {
+    const inputBox = new InputText(scene, 0, 0, 400, 60, {
       color: "white",
       fontSize: "24px",
       placeholder: "Type in something",
-      fixedWidth: 200,
-      fixedHeight: 80,
       backgroundColor: "#333333",
       valign: "center",
     });
@@ -51,7 +49,7 @@ class AddDialog {
       () => {
         console.log("confirm");
       }
-    );
+    ).setDisplaySize(64, 64);
     const cancelButton = new Button(
       scene,
       0,
@@ -63,7 +61,7 @@ class AddDialog {
       () => {
         console.log("cancelled");
       }
-    );
+    ).setDisplaySize(64, 64);
 
     const dialog = scene.rexUI.add
       .dialog({

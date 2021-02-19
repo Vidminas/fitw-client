@@ -12,11 +12,13 @@ class MainScene extends Phaser.Scene {
   private socket: Socket;
   private world: IWorld;
   private controls?: Phaser.Cameras.Controls.SmoothedKeyControl;
+  private isDialogOpen: boolean;
 
   constructor(socket: Socket, world: IWorld) {
     super("MainScene");
     this.socket = socket;
     this.world = world;
+    this.isDialogOpen = false;
   }
 
   preload() {
@@ -35,7 +37,7 @@ class MainScene extends Phaser.Scene {
 
   create() {
     let addDialog: AddDialog | undefined = undefined;
-
+    this.isDialogOpen = true;
     const addButton = new Button(
       this,
       400,
@@ -45,10 +47,15 @@ class MainScene extends Phaser.Scene {
       "Button_163.png",
       "Button_164.png",
       () => {
+        this.isDialogOpen = false;
         addButton.destroy();
         if (addDialog === undefined) {
+          this.isDialogOpen = true;
           addDialog = new AddDialog(this, 400, 300, (text: string) => {
-            this.add.existing(new Fitwick(this, 400, 300, "buttons"));
+            this.isDialogOpen = false;
+            if (Fitwick.exists(text)) {
+              this.add.existing(new Fitwick(this, 400, 300, "buttons", text));
+            }
           });
         }
       }
@@ -92,7 +99,7 @@ class MainScene extends Phaser.Scene {
       right: cursors.right,
       up: cursors.up,
       down: cursors.down,
-      acceleration: 0.06,
+      acceleration: 0.02,
       drag: 0.0005,
       maxSpeed: 1.0,
     };
@@ -101,8 +108,7 @@ class MainScene extends Phaser.Scene {
       controlConfig
     );
 
-    var cam = this.cameras.main;
-
+    const cam = this.cameras.main;
     const pan = this.rexGestures.add.pan();
     pan.on(
       "pan",
@@ -111,17 +117,28 @@ class MainScene extends Phaser.Scene {
         _gameObject: Phaser.GameObjects.GameObject,
         _lastPointer: Phaser.Input.Pointer
       ) => {
-        cam.setScroll(cam.scrollX - pan.dx, cam.scrollY - pan.dy);
+        if (!this.isDialogOpen) {
+          cam.setScroll(cam.scrollX - pan.dx, cam.scrollY - pan.dy);
+        }
       }
     );
+    const pinch = this.rexGestures.add.pinch();
+    pinch.on("pinch", (pinch: any) => {
+      if (!this.isDialogOpen) {
+        const zoom = cam.zoom * pinch.scaleFactor;
+        if (zoom > 0.05 && zoom < 20) {
+          cam.setZoom(zoom);
+        }
+      }
+    });
 
     const gui = new dat.GUI();
 
-    var help = {
+    const help = {
       line1: "Cursors to move",
     };
 
-    var f1 = gui.addFolder("Camera");
+    const f1 = gui.addFolder("Camera");
     f1.add(cam, "x").listen();
     f1.add(cam, "y").listen();
     f1.add(cam, "scrollX").listen();
