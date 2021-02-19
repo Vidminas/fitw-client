@@ -8,6 +8,7 @@ import Fitwick from "../components/Fitwick";
 
 class MainScene extends Phaser.Scene {
   public rexUI: any;
+  public rexGestures: any;
   private socket: Socket;
   private world: IWorld;
   private controls?: Phaser.Cameras.Controls.SmoothedKeyControl;
@@ -101,6 +102,18 @@ class MainScene extends Phaser.Scene {
     );
 
     var cam = this.cameras.main;
+
+    const pan = this.rexGestures.add.pan();
+    pan.on(
+      "pan",
+      (
+        pan: any,
+        _gameObject: Phaser.GameObjects.GameObject,
+        _lastPointer: Phaser.Input.Pointer
+      ) => {
+        cam.setScroll(cam.scrollX - pan.dx, cam.scrollY - pan.dy);
+      }
+    );
 
     const gui = new dat.GUI();
 
