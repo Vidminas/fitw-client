@@ -1,5 +1,5 @@
 import axios from "axios";
-import { SERVER_AUTH, SERVER_AUTH_LOGIN } from "../api/constants";
+import { SERVER_AUTH, SERVER_AUTH_LOGIN } from "../api/endpoints";
 import IUser from "../api/user";
 
 export const requestUserAuthEmail = async (email: string) => {
