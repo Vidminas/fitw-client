@@ -1,20 +1,28 @@
 import InputText from "phaser3-rex-plugins/plugins/inputtext.js";
+import { COLOR_ORANGE } from "../colors";
+import {
+  FRAME_BUTTON_CANCEL_CLICK,
+  FRAME_BUTTON_CANCEL_HOVER,
+  FRAME_BUTTON_CANCEL_REST,
+  FRAME_BUTTON_CONFIRM_CLICK,
+  FRAME_BUTTON_CONFIRM_HOVER,
+  FRAME_BUTTON_CONFIRM_REST,
+  TEXTURE_BUTTONS,
+} from "../constants";
+import { RexScene } from "../scenes/RexScene";
 import Button from "./Button";
 
 class AddDialog {
-  constructor(
-    scene: Phaser.Scene & { rexUI: any },
-    x: number,
-    y: number,
-    callback: Function
-  ) {
+  private rexDialog: any;
+
+  constructor(scene: RexScene, onConfirm: Function, onCancel: Function) {
     const background = scene.rexUI.add.roundRectangle(
       0,
       0,
       100,
       100,
       20,
-      0xf57f17
+      COLOR_ORANGE
     );
     const title = scene.rexUI.add.label({
       background: scene.rexUI.add.roundRectangle(0, 0, 100, 40, 20, 0xbc5100),
@@ -42,31 +50,35 @@ class AddDialog {
       scene,
       0,
       0,
-      "buttons",
-      "Button_174.png",
-      "Button_175.png",
-      "Button_176.png",
+      TEXTURE_BUTTONS,
+      FRAME_BUTTON_CONFIRM_REST,
+      FRAME_BUTTON_CONFIRM_HOVER,
+      FRAME_BUTTON_CONFIRM_CLICK,
       () => {
         console.log("confirm");
       }
-    ).setDisplaySize(64, 64);
+    );
     const cancelButton = new Button(
       scene,
       0,
       0,
-      "buttons",
-      "Button_180.png",
-      "Button_181.png",
-      "Button_182.png",
+      TEXTURE_BUTTONS,
+      FRAME_BUTTON_CANCEL_REST,
+      FRAME_BUTTON_CANCEL_HOVER,
+      FRAME_BUTTON_CANCEL_CLICK,
       () => {
         console.log("cancelled");
       }
-    ).setDisplaySize(64, 64);
+    );
 
-    const dialog = scene.rexUI.add
+    this.rexDialog = scene.rexUI.add
       .dialog({
-        x,
-        y,
+        x: 0,
+        y: 0,
+        anchor: {
+          centerX: "center",
+          centerY: "center",
+        },
         background,
         title,
         content: inputBox,
@@ -85,15 +97,20 @@ class AddDialog {
       .pushIntoBounds()
       .popUp(500);
 
-    dialog.on(
+    this.rexDialog.on(
       "button.click",
       (button: Button, groupName: string, index: number) => {
-        dialog.scaleDownDestroy(100);
         if (button === confirmButton) {
-          callback(inputBox.text);
+          onConfirm(inputBox.text);
+        } else {
+          onCancel();
         }
       }
     );
+  }
+
+  public hide() {
+    this.rexDialog.scaleDownDestroy(100);
   }
 }
 

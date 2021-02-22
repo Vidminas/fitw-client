@@ -1,16 +1,19 @@
+import { UI_BUTTON_SIZE } from "../constants";
+
 class Button extends Phaser.GameObjects.Image {
   constructor(
     scene: Phaser.Scene,
     x: number,
     y: number,
     texture: string,
-    restFrame: string,
-    hoverFrame: string,
-    clickFrame: string,
+    private restFrame: string,
+    private hoverFrame: string,
+    private clickFrame: string,
     handleClick?: Function
   ) {
     super(scene, x, y, texture, restFrame);
     this.setOrigin(0, 0);
+    this.setDisplaySize(UI_BUTTON_SIZE, UI_BUTTON_SIZE);
     scene.add.existing(this);
 
     this.setInteractive();
@@ -33,6 +36,13 @@ class Button extends Phaser.GameObjects.Image {
         this.setFrame(hoverFrame);
       });
     }
+  }
+
+  onClick(handleClick: Function) {
+    this.on("pointerup", () => {
+      this.setFrame(this.hoverFrame);
+      handleClick();
+    });
   }
 }
 

@@ -3,9 +3,12 @@ import { io, Socket } from "socket.io-client";
 import { SERVER_ADDRESS } from "../api/endpoints";
 import RexUIPlugin from "phaser3-rex-plugins/templates/ui/ui-plugin.js";
 import RexGesturesPlugin from "phaser3-rex-plugins/plugins/gestures-plugin.js";
-import MainScene from "./scenes/MainScene";
 import IUser from "../api/user";
 import IWorld from "../api/world";
+import { GAME_HEIGHT, GAME_WIDTH } from "./constants";
+import MainScene from "./scenes/MainScene";
+import UIScene from "./scenes/UIScene";
+import PreloadScene from "./scenes/PreloadScene";
 
 class PhaserGame {
   private game?: Phaser.Game;
@@ -26,13 +29,16 @@ class PhaserGame {
       console.log("Connected: " + this.socket!.connected);
     });
 
+    const preloadScene = new PreloadScene();
+    const uiScene = new UIScene();
     const mainScene = new MainScene(this.socket, this.world);
+
     this.game = new Phaser.Game({
       parent,
       type: Phaser.AUTO,
-      width: 1024,
-      height: 600,
-      scene: mainScene,
+      width: GAME_WIDTH,
+      height: GAME_HEIGHT,
+      scene: [preloadScene, mainScene, uiScene],
       dom: {
         createContainer: true,
       },

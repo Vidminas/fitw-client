@@ -2,65 +2,40 @@ import Phaser from "phaser";
 import { Socket } from "socket.io-client";
 import * as dat from "dat.gui";
 import IWorld from "../../api/world";
-import Button from "../components/Button";
-import AddDialog from "../components/AddDialog";
-import Fitwick from "../components/Fitwick";
+import { RexScene } from "./RexScene";
 
-class MainScene extends Phaser.Scene {
-  public rexUI: any;
-  public rexGestures: any;
+class MainScene extends RexScene {
   private socket: Socket;
   private world: IWorld;
   private controls?: Phaser.Cameras.Controls.SmoothedKeyControl;
-  private isDialogOpen: boolean;
+  private backgroundTexture?: string;
+  private background?: Phaser.GameObjects.Image;
 
   constructor(socket: Socket, world: IWorld) {
-    super("MainScene");
+    super({ key: "MainScene", active: false });
     this.socket = socket;
     this.world = world;
-    this.isDialogOpen = false;
   }
 
-  preload() {
-    const progress = this.add.graphics();
-    this.load.on("progress", (value: number) => {
-      progress.clear();
-      progress.fillStyle(0xffffff, 1);
-      progress.fillRect(0, 270, 800 * value, 60);
-    });
-    this.load.on("complete", function () {
-      progress.destroy();
-    });
+  setBackground(backgroundTexture: string) {
+    this.backgroundTexture = backgroundTexture;
+    if (!this.background?.visible) {
+      this.background?.setVisible(true);
+    }
+    this.background?.setTexture(backgroundTexture);
+  }
 
-    this.load.multiatlas("buttons", "ui/buttons.json", "ui/");
+  updateData(_parent: Phaser.Game, key: string, data: any) {
+    if (key === "bgTexture") {
+      this.setBackground(data);
+    }
   }
 
   create() {
-    let addDialog: AddDialog | undefined = undefined;
-    this.isDialogOpen = true;
-    const addButton = new Button(
-      this,
-      400,
-      300,
-      "buttons",
-      "Button_162.png",
-      "Button_163.png",
-      "Button_164.png",
-      () => {
-        this.isDialogOpen = false;
-        addButton.destroy();
-        if (addDialog === undefined) {
-          this.isDialogOpen = true;
-          addDialog = new AddDialog(this, 400, 300, (text: string) => {
-            this.isDialogOpen = false;
-            if (Fitwick.exists(text)) {
-              this.add.existing(new Fitwick(this, 400, 300, "buttons", text));
-            }
-          });
-        }
-      }
-    );
-
+    this.background = this.add.image(0, 0, "").setOrigin(0).setVisible(false);
+    this.registry.set("bgTexture", undefined);
+    this.registry.events.on("changedata", this.updateData, this);
+    // this.scene.launch("UIScene");
     // const txt = this.rexUI.add.BBCodeText(
     //   100,
     //   200,
@@ -117,18 +92,14 @@ class MainScene extends Phaser.Scene {
         _gameObject: Phaser.GameObjects.GameObject,
         _lastPointer: Phaser.Input.Pointer
       ) => {
-        if (!this.isDialogOpen) {
-          cam.setScroll(cam.scrollX - pan.dx, cam.scrollY - pan.dy);
-        }
+        cam.setScroll(cam.scrollX - pan.dx, cam.scrollY - pan.dy);
       }
     );
     const pinch = this.rexGestures.add.pinch();
     pinch.on("pinch", (pinch: any) => {
-      if (!this.isDialogOpen) {
-        const zoom = cam.zoom * pinch.scaleFactor;
-        if (zoom > 0.05 && zoom < 20) {
-          cam.setZoom(zoom);
-        }
+      const zoom = cam.zoom * pinch.scaleFactor;
+      if (zoom > 0.05 && zoom < 20) {
+        cam.setZoom(zoom);
       }
     });
 
