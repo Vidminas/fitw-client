@@ -85,7 +85,8 @@ class AddDialog {
         actions: [cancelButton, confirmButton],
         actionsAlign: "left",
         space: {
-          title: 10,
+          title: 20,
+          content: 20,
           action: 5,
           left: 10,
           right: 10,

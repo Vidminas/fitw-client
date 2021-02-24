@@ -1,9 +1,9 @@
-All backgrounds:
+bg_forest_path.jpg, bg_valley.jpg, bg_bridge.jpg, bg_mountain.jpg, bg_road.jpg:
 - Free for commercial use
 - No attribution required
 https://pixabay.com/service/license/
 
-bg_forest.jpg
+bg_forest_path.jpg
 Image by <a href="https://pixabay.com/users/44833-44833/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=166733">Jim Semonik</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=166733">Pixabay</a>
 
 bg_valley.jpg
@@ -17,3 +17,27 @@ Image by <a href="https://pixabay.com/users/kinkate-4384506/?utm_source=link-att
 
 bg_road.jpg
 Image by <a href="https://pixabay.com/photos/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=381227">Free-Photos</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=381227">Pixabay</a>
+
+backgroundColorDesert.png, backgroundColorFall.png, backgroundColorForest.png, backgroundColorGrass.png, backgroundEmpty.png:
+	Background Elements Redux
+
+	Created/distributed by Kenney (www.kenney.nl)
+	Creation date: 26-02-2019
+
+			------------------------------
+
+	License: (Creative Commons Zero, CC0)
+	http://creativecommons.org/publicdomain/zero/1.0/
+
+	This content is free to use in personal, educational and commercial projects.
+
+	Support us by crediting Kenney or www.kenney.nl (this is not mandatory)
+
+			------------------------------
+
+	Donate:   http://support.kenney.nl
+	Request:  http://request.kenney.nl
+	Patreon:  http://patreon.com/kenney/
+
+	Follow on Twitter for updates:
+	http://twitter.com/KenneyNL

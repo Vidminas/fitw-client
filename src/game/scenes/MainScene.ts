@@ -6,16 +6,19 @@ import { RexScene } from "./RexScene";
 import {
   GAME_BG_HEIGHT,
   GAME_BG_WIDTH,
+  MAX_SCROLL_X,
+  MAX_SCROLL_Y,
   MAX_ZOOM_FACTOR,
   MIN_ZOOM_FACTOR,
+  TEXTURE_BACKGROUND_EMPTY,
 } from "../constants";
 
 class MainScene extends RexScene {
   private socket: Socket;
   private world: IWorld;
   private controls?: Phaser.Cameras.Controls.SmoothedKeyControl;
-  private backgroundTexture?: string;
-  private background?: Phaser.GameObjects.Image;
+  private backgroundTexture!: string;
+  private background!: Phaser.GameObjects.TileSprite;
 
   constructor(socket: Socket, world: IWorld) {
     super({ key: "MainScene", active: false });
@@ -25,9 +28,6 @@ class MainScene extends RexScene {
 
   setBackground(backgroundTexture: string) {
     this.backgroundTexture = backgroundTexture;
-    if (!this.background?.visible) {
-      this.background?.setVisible(true);
-    }
     this.background?.setTexture(backgroundTexture);
   }
 
@@ -38,8 +38,12 @@ class MainScene extends RexScene {
   }
 
   create() {
-    this.background = this.add.image(0, 0, "").setOrigin(0).setVisible(false);
-    this.registry.set("bgTexture", undefined);
+    this.backgroundTexture = TEXTURE_BACKGROUND_EMPTY;
+    this.background = this.add
+      .tileSprite(0, 0, GAME_BG_WIDTH, GAME_BG_HEIGHT, TEXTURE_BACKGROUND_EMPTY)
+      .setOrigin(0);
+    this.background.setScrollFactor(0);
+    this.registry.set("bgTexture", TEXTURE_BACKGROUND_EMPTY);
     this.registry.events.on("changedata", this.updateData, this);
     // this.scene.launch("UIScene");
     // const txt = this.rexUI.add.BBCodeText(
@@ -92,7 +96,7 @@ class MainScene extends RexScene {
     const cam = this.cameras.main;
 
     // this prevents camera from scrolling out of bounds
-    cam.setBounds(0, 0, GAME_BG_WIDTH, GAME_BG_HEIGHT, true);
+    cam.setBounds(0, 0, MAX_SCROLL_X, MAX_SCROLL_Y, true);
 
     const pan = this.rexGestures.add.pan();
     pan.on(
@@ -102,6 +106,12 @@ class MainScene extends RexScene {
         _gameObject: Phaser.GameObjects.GameObject,
         _lastPointer: Phaser.Input.Pointer
       ) => {
+        // this moves the background in sync with the camera
+        // and restricts the background scrolling to the same bounds as the camera
+        // but their scrolling is independent
+        const x = cam.clampX(this.background.tilePositionX - pan.dx);
+        const y = cam.clampY(this.background.tilePositionY - pan.dy);
+        this.background.setTilePosition(x, y);
         cam.setScroll(cam.scrollX - pan.dx, cam.scrollY - pan.dy);
       }
     );

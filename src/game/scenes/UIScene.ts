@@ -19,9 +19,11 @@ import RexScene from "./RexScene";
 class UIScene extends RexScene {
   private backgroundDialog?: BackgroundDialog;
   private addDialog?: AddDialog;
+  private isDialogOpen: boolean;
 
   constructor() {
     super({ key: "UIScene", active: false });
+    this.isDialogOpen = false;
   }
 
   create() {
@@ -30,7 +32,7 @@ class UIScene extends RexScene {
   }
 
   private createButtons() {
-    const changeBackgroundButton = new Button(
+    /* const changeBackgroundButton = */ new Button(
       this,
       GAME_WIDTH - 3 * UI_BUTTON_SIZE,
       0,
@@ -40,8 +42,7 @@ class UIScene extends RexScene {
       FRAME_BUTTON_SWITCH_CLICK,
       this.onChangeBackground.bind(this)
     );
-    // changeBackgroundButton.setScrollFactor(0);
-    const addFitwickButton = new Button(
+    /* const addFitwickButton = */ new Button(
       this,
       GAME_WIDTH / 2,
       GAME_HEIGHT - UI_BUTTON_SIZE,
@@ -51,26 +52,33 @@ class UIScene extends RexScene {
       FRAME_BUTTON_ADD_CLICK,
       this.onAddFitwick.bind(this)
     );
-    // addFitwickButton.setScrollFactor(0);
   }
 
   private onChangeBackground() {
     if (this.backgroundDialog) {
+      this.isDialogOpen = false;
       this.backgroundDialog.hide();
       this.backgroundDialog = undefined;
       return;
     }
 
+    if (this.isDialogOpen) {
+      return;
+    }
+
+    this.isDialogOpen = true;
     this.backgroundDialog = new BackgroundDialog(
       this,
       (newBackgroundTexture?: string) => {
         if (newBackgroundTexture) {
           this.registry.set("bgTexture", newBackgroundTexture);
         }
+        this.isDialogOpen = false;
         this.backgroundDialog!.hide();
         this.backgroundDialog = undefined;
       },
       () => {
+        this.isDialogOpen = false;
         this.backgroundDialog!.hide();
         this.backgroundDialog = undefined;
       }
@@ -79,21 +87,30 @@ class UIScene extends RexScene {
 
   private onAddFitwick() {
     if (this.addDialog) {
+      this.isDialogOpen = false;
       this.addDialog.hide();
       this.addDialog = undefined;
       return;
     }
 
+    if (this.isDialogOpen) {
+      return;
+    }
+
+    this.isDialogOpen = true;
     this.addDialog = new AddDialog(
       this,
       (text: string) => {
         if (Fitwick.exists(text)) {
-          this.add.existing(new Fitwick(this, 400, 300, "buttons", text));
+          const mainScene: Phaser.Scene = this.scene.get("MainScene");
+          mainScene.add.existing(new Fitwick(mainScene, 400, 300, text));
         }
+        this.isDialogOpen = false;
         this.addDialog!.hide();
         this.addDialog = undefined;
       },
       () => {
+        this.isDialogOpen = false;
         this.addDialog!.hide();
         this.addDialog = undefined;
       }

@@ -1,15 +1,26 @@
 export const GAME_WIDTH = 1024;
 export const GAME_HEIGHT = 768;
 export const UI_BUTTON_SIZE = 64;
-export const GAME_BG_WIDTH = 1920;
-export const GAME_BG_HEIGHT = 1200;
 
-export const MAX_ZOOM_FACTOR = 15;
+// the smallest width and height of all images (it's okay to have bigger)
+export const GAME_BG_WIDTH = 1024;
+export const GAME_BG_HEIGHT = 1024;
+// limits on camera scroll
+export const MAX_SCROLL_X = GAME_BG_WIDTH * 5;
+export const MAX_SCROLL_Y = GAME_BG_HEIGHT;
+// limits on camera zoom (besides limiting to bg height and width)
+export const MAX_ZOOM_FACTOR = 4;
 export const MIN_ZOOM_FACTOR = 0.05;
 
 export const TEXTURE_BUTTONS = "buttons";
+export const TEXTURE_KENNEY_ASSETS = "kenny_assets";
+export const TEXTURE_BACKGROUND_EMPTY = "backgroundEmpty";
+export const TEXTURE_BACKGROUND_FALL = "backgroundColorFall";
+export const TEXTURE_BACKGROUND_FOREST = "backgroundColorForest";
+export const TEXTURE_BACKGROUND_GRASS = "backgroundColorGrass";
+export const TEXTURE_BACKGROUND_DESERT = "backgroundColorDesert";
 export const TEXTURE_BACKGROUND_BRIDGE = "bg_bridge";
-export const TEXTURE_BACKGROUND_FOREST = "bg_forest";
+export const TEXTURE_BACKGROUND_FOREST_PATH = "bg_forest_path";
 export const TEXTURE_BACKGROUND_MOUNTAIN = "bg_mountain";
 export const TEXTURE_BACKGROUND_ROAD = "bg_road";
 export const TEXTURE_BACKGROUND_VALLEY = "bg_valley";
