@@ -3,6 +3,12 @@ import { Socket } from "socket.io-client";
 import * as dat from "dat.gui";
 import IWorld from "../../api/world";
 import { RexScene } from "./RexScene";
+import {
+  GAME_BG_HEIGHT,
+  GAME_BG_WIDTH,
+  MAX_ZOOM_FACTOR,
+  MIN_ZOOM_FACTOR,
+} from "../constants";
 
 class MainScene extends RexScene {
   private socket: Socket;
@@ -84,6 +90,10 @@ class MainScene extends RexScene {
     );
 
     const cam = this.cameras.main;
+
+    // this prevents camera from scrolling out of bounds
+    cam.setBounds(0, 0, GAME_BG_WIDTH, GAME_BG_HEIGHT, true);
+
     const pan = this.rexGestures.add.pan();
     pan.on(
       "pan",
@@ -95,10 +105,16 @@ class MainScene extends RexScene {
         cam.setScroll(cam.scrollX - pan.dx, cam.scrollY - pan.dy);
       }
     );
+
     const pinch = this.rexGestures.add.pinch();
     pinch.on("pinch", (pinch: any) => {
       const zoom = cam.zoom * pinch.scaleFactor;
-      if (zoom > 0.05 && zoom < 20) {
+      if (
+        zoom > MIN_ZOOM_FACTOR &&
+        zoom < MAX_ZOOM_FACTOR &&
+        cam.height / zoom < GAME_BG_HEIGHT &&
+        cam.width / zoom < GAME_BG_WIDTH
+      ) {
         cam.setZoom(zoom);
       }
     });

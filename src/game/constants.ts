@@ -1,6 +1,11 @@
 export const GAME_WIDTH = 1024;
 export const GAME_HEIGHT = 768;
 export const UI_BUTTON_SIZE = 64;
+export const GAME_BG_WIDTH = 1920;
+export const GAME_BG_HEIGHT = 1200;
+
+export const MAX_ZOOM_FACTOR = 15;
+export const MIN_ZOOM_FACTOR = 0.05;
 
 export const TEXTURE_BUTTONS = "buttons";
 export const TEXTURE_BACKGROUND_BRIDGE = "bg_bridge";
