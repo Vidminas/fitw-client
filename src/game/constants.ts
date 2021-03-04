@@ -12,6 +12,10 @@ export const MAX_SCROLL_Y = GAME_BG_HEIGHT;
 export const MAX_ZOOM_FACTOR = 4;
 export const MIN_ZOOM_FACTOR = 0.05;
 
+export const EVENT_FITWICK_NEW = "fitwick/new";
+export const EVENT_FITWICK_PLACE = "fitwick/place";
+export const EVENT_FITWICK_DELETE = "fitwick/delete";
+
 export const TEXTURE_BUTTONS = "buttons";
 export const TEXTURE_KENNEY_ASSETS = "kenny_assets";
 export const TEXTURE_BACKGROUND_EMPTY = "backgroundEmpty";
@@ -43,3 +47,6 @@ export const FRAME_BUTTON_LEFT_CLICK = "Button_176.png";
 export const FRAME_BUTTON_RIGHT_REST = "Button_158.png";
 export const FRAME_BUTTON_RIGHT_HOVER = "Button_159.png";
 export const FRAME_BUTTON_RIGHT_CLICK = "Button_160.png";
+export const FRAME_BUTTON_DELETE_REST = "Button_114.png";
+export const FRAME_BUTTON_DELETE_HOVER = "Button_115.png";
+export const FRAME_BUTTON_DELETE_CLICK = "Button_116.png";

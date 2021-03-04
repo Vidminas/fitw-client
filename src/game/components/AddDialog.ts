@@ -113,6 +113,10 @@ class AddDialog {
   public hide() {
     this.rexDialog.scaleDownDestroy(100);
   }
+
+  public showError(fitwickText: string) {
+    console.log(`${fitwickText} unknown!`);
+  }
 }
 
 export default AddDialog;

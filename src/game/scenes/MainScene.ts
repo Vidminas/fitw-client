@@ -6,12 +6,18 @@ import { RexScene } from "./RexScene";
 import {
   GAME_BG_HEIGHT,
   GAME_BG_WIDTH,
+  GAME_HEIGHT,
+  GAME_WIDTH,
   MAX_SCROLL_X,
   MAX_SCROLL_Y,
   MAX_ZOOM_FACTOR,
   MIN_ZOOM_FACTOR,
+  EVENT_FITWICK_NEW,
   TEXTURE_BACKGROUND_EMPTY,
+  EVENT_FITWICK_PLACE,
+  EVENT_FITWICK_DELETE,
 } from "../constants";
+import Fitwick from "../components/Fitwick";
 
 class MainScene extends RexScene {
   private socket: Socket;
@@ -19,6 +25,8 @@ class MainScene extends RexScene {
   private controls?: Phaser.Cameras.Controls.SmoothedKeyControl;
   private backgroundTexture!: string;
   private background!: Phaser.GameObjects.TileSprite;
+
+  private activeFitwick?: Fitwick;
 
   constructor(socket: Socket, world: IWorld) {
     super({ key: "MainScene", active: false });
@@ -43,8 +51,48 @@ class MainScene extends RexScene {
       .tileSprite(0, 0, GAME_BG_WIDTH, GAME_BG_HEIGHT, TEXTURE_BACKGROUND_EMPTY)
       .setOrigin(0);
     this.background.setScrollFactor(0);
+
     this.registry.set("bgTexture", TEXTURE_BACKGROUND_EMPTY);
     this.registry.events.on("changedata", this.updateData, this);
+
+    const cam = this.cameras.main;
+
+    const uiScene = this.scene.get("UIScene");
+    uiScene.events.on(EVENT_FITWICK_NEW, (fitwickName: string) => {
+      this.activeFitwick = new Fitwick(
+        this,
+        cam.scrollX + GAME_WIDTH / 2,
+        cam.scrollY + GAME_HEIGHT / 2,
+        fitwickName
+      );
+      this.activeFitwick.setInteractive();
+      this.input.setDraggable(this.activeFitwick);
+      this.activeFitwick.on(
+        "drag",
+        function (
+          this: Fitwick,
+          _pointer: Phaser.Input.Pointer,
+          dragX: number,
+          dragY: number
+        ) {
+          this.x = dragX;
+          this.y = dragY;
+        }
+      );
+      cam.startFollow(this.activeFitwick, true, 0.05);
+    });
+    uiScene.events.on(EVENT_FITWICK_PLACE, () => {
+      this.activeFitwick!.removeListener("drag");
+      this.activeFitwick!.placeDown();
+      cam.stopFollow();
+      this.activeFitwick = undefined;
+    });
+    uiScene.events.on(EVENT_FITWICK_DELETE, () => {
+      this.activeFitwick!.removeListener("drag");
+      this.activeFitwick!.destroy();
+      cam.stopFollow();
+      this.activeFitwick = undefined;
+    });
     // this.scene.launch("UIScene");
     // const txt = this.rexUI.add.BBCodeText(
     //   100,
@@ -61,19 +109,6 @@ class MainScene extends RexScene {
     //   const image = this.add.image(x, y, keys[i]).setInteractive();
     //   this.input.setDraggable(image);
     // }
-
-    // this.input.on(
-    //   "drag",
-    //   function (
-    //     pointer: any,
-    //     gameObject: { x: any; y: any },
-    //     dragX: any,
-    //     dragY: any
-    //   ) {
-    //     gameObject.x = dragX;
-    //     gameObject.y = dragY;
-    //   }
-    // );
 
     //  From here down is just camera controls and feedback
     var cursors = this.input.keyboard.createCursorKeys();
@@ -93,26 +128,21 @@ class MainScene extends RexScene {
       controlConfig
     );
 
-    const cam = this.cameras.main;
-
     // this prevents camera from scrolling out of bounds
-    cam.setBounds(0, 0, MAX_SCROLL_X, MAX_SCROLL_Y, true);
+    cam.setBounds(0, 0, MAX_SCROLL_X, MAX_SCROLL_Y, false);
 
     const pan = this.rexGestures.add.pan();
     pan.on(
       "pan",
       (
         pan: any,
-        _gameObject: Phaser.GameObjects.GameObject,
+        gameObject: Phaser.GameObjects.GameObject,
         _lastPointer: Phaser.Input.Pointer
       ) => {
-        // this moves the background in sync with the camera
-        // and restricts the background scrolling to the same bounds as the camera
-        // but their scrolling is independent
-        const x = cam.clampX(this.background.tilePositionX - pan.dx);
-        const y = cam.clampY(this.background.tilePositionY - pan.dy);
-        this.background.setTilePosition(x, y);
-        cam.setScroll(cam.scrollX - pan.dx, cam.scrollY - pan.dy);
+        // the active fitwick has its own input drag behaviour
+        if (!gameObject || gameObject !== this.activeFitwick) {
+          cam.setScroll(cam.scrollX - pan.dx, cam.scrollY - pan.dy);
+        }
       }
     );
 
@@ -147,6 +177,8 @@ class MainScene extends RexScene {
 
   update(time: any, delta: number) {
     this.controls?.update(delta);
+    const cam = this.cameras.main;
+    this.background.setTilePosition(cam.scrollX, cam.scrollY);
   }
 }
 

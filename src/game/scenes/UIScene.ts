@@ -13,6 +13,15 @@ import {
   FRAME_BUTTON_ADD_REST,
   FRAME_BUTTON_ADD_HOVER,
   FRAME_BUTTON_ADD_CLICK,
+  FRAME_BUTTON_CONFIRM_REST,
+  FRAME_BUTTON_CONFIRM_HOVER,
+  FRAME_BUTTON_CONFIRM_CLICK,
+  EVENT_FITWICK_PLACE,
+  EVENT_FITWICK_NEW,
+  FRAME_BUTTON_DELETE_REST,
+  FRAME_BUTTON_DELETE_HOVER,
+  FRAME_BUTTON_DELETE_CLICK,
+  EVENT_FITWICK_DELETE,
 } from "../constants";
 import RexScene from "./RexScene";
 
@@ -20,6 +29,10 @@ class UIScene extends RexScene {
   private backgroundDialog?: BackgroundDialog;
   private addDialog?: AddDialog;
   private isDialogOpen: boolean;
+  private changeBackgroundButton!: Button;
+  private addFitwickButton!: Button;
+  private confirmFitwickButton!: Button;
+  private deleteFitwickButton!: Button;
 
   constructor() {
     super({ key: "UIScene", active: false });
@@ -32,7 +45,7 @@ class UIScene extends RexScene {
   }
 
   private createButtons() {
-    /* const changeBackgroundButton = */ new Button(
+    this.changeBackgroundButton = new Button(
       this,
       GAME_WIDTH - 3 * UI_BUTTON_SIZE,
       0,
@@ -42,7 +55,7 @@ class UIScene extends RexScene {
       FRAME_BUTTON_SWITCH_CLICK,
       this.onChangeBackground.bind(this)
     );
-    /* const addFitwickButton = */ new Button(
+    this.addFitwickButton = new Button(
       this,
       GAME_WIDTH / 2,
       GAME_HEIGHT - UI_BUTTON_SIZE,
@@ -52,6 +65,28 @@ class UIScene extends RexScene {
       FRAME_BUTTON_ADD_CLICK,
       this.onAddFitwick.bind(this)
     );
+    this.confirmFitwickButton = new Button(
+      this,
+      GAME_WIDTH / 2 + UI_BUTTON_SIZE / 2,
+      GAME_HEIGHT - UI_BUTTON_SIZE,
+      TEXTURE_BUTTONS,
+      FRAME_BUTTON_CONFIRM_REST,
+      FRAME_BUTTON_CONFIRM_HOVER,
+      FRAME_BUTTON_CONFIRM_CLICK,
+      this.onConfirmFitwick.bind(this)
+    );
+    this.confirmFitwickButton.setVisible(false);
+    this.deleteFitwickButton = new Button(
+      this,
+      GAME_WIDTH / 2 - UI_BUTTON_SIZE / 2,
+      GAME_HEIGHT - UI_BUTTON_SIZE,
+      TEXTURE_BUTTONS,
+      FRAME_BUTTON_DELETE_REST,
+      FRAME_BUTTON_DELETE_HOVER,
+      FRAME_BUTTON_DELETE_CLICK,
+      this.onDeleteFitwick.bind(this)
+    );
+    this.deleteFitwickButton.setVisible(false);
   }
 
   private onChangeBackground() {
@@ -102,12 +137,18 @@ class UIScene extends RexScene {
       this,
       (text: string) => {
         if (Fitwick.exists(text)) {
-          const mainScene: Phaser.Scene = this.scene.get("MainScene");
-          mainScene.add.existing(new Fitwick(mainScene, 400, 300, text));
+          // let the main scene handle the addition of a new Fitwick
+          this.events.emit(EVENT_FITWICK_NEW, text);
+          this.isDialogOpen = false;
+          this.addDialog!.hide();
+          this.addDialog = undefined;
+
+          this.confirmFitwickButton.setVisible(true);
+          this.deleteFitwickButton.setVisible(true);
+          this.addFitwickButton.setVisible(false);
+        } else {
+          this.addDialog!.showError(text);
         }
-        this.isDialogOpen = false;
-        this.addDialog!.hide();
-        this.addDialog = undefined;
       },
       () => {
         this.isDialogOpen = false;
@@ -115,6 +156,20 @@ class UIScene extends RexScene {
         this.addDialog = undefined;
       }
     );
+  }
+
+  private onConfirmFitwick() {
+    this.events.emit(EVENT_FITWICK_PLACE);
+    this.confirmFitwickButton.setVisible(false);
+    this.deleteFitwickButton.setVisible(false);
+    this.addFitwickButton.setVisible(true);
+  }
+
+  private onDeleteFitwick() {
+    this.events.emit(EVENT_FITWICK_DELETE);
+    this.confirmFitwickButton.setVisible(false);
+    this.deleteFitwickButton.setVisible(false);
+    this.addFitwickButton.setVisible(true);
   }
 }
 
