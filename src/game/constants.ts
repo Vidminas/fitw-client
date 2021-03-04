@@ -15,6 +15,7 @@ export const MIN_ZOOM_FACTOR = 0.05;
 export const EVENT_FITWICK_NEW = "fitwick/new";
 export const EVENT_FITWICK_PLACE = "fitwick/place";
 export const EVENT_FITWICK_DELETE = "fitwick/delete";
+export const EVENT_FITWICK_MOVE = "fitwick/move";
 
 export const TEXTURE_BUTTONS = "buttons";
 export const TEXTURE_KENNEY_ASSETS = "kenny_assets";

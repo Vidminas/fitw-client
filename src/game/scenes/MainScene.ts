@@ -16,6 +16,7 @@ import {
   TEXTURE_BACKGROUND_EMPTY,
   EVENT_FITWICK_PLACE,
   EVENT_FITWICK_DELETE,
+  EVENT_FITWICK_MOVE,
 } from "../constants";
 import Fitwick from "../components/Fitwick";
 
@@ -85,13 +86,45 @@ class MainScene extends RexScene {
       this.activeFitwick!.removeListener("drag");
       this.activeFitwick!.placeDown();
       cam.stopFollow();
+      // TODO: there is probably a memory leak when this is not cleaned up on delete
+      this.rexGestures.add
+        .press(this.activeFitwick)
+        .on(
+          "pressstart",
+          (
+            _press: any,
+            gameObject: Phaser.GameObjects.GameObject | undefined,
+            _lastPointer: Phaser.Input.Pointer
+          ) => {
+            if (!this.activeFitwick && gameObject?.state === "rest") {
+              uiScene.events.emit(EVENT_FITWICK_MOVE, gameObject);
+            }
+          }
+        );
       this.activeFitwick = undefined;
     });
     uiScene.events.on(EVENT_FITWICK_DELETE, () => {
-      this.activeFitwick!.removeListener("drag");
-      this.activeFitwick!.destroy();
+      this.activeFitwick?.removeListener("drag");
+      this.activeFitwick?.destroy();
       cam.stopFollow();
       this.activeFitwick = undefined;
+    });
+    uiScene.events.on(EVENT_FITWICK_MOVE, (fitwick: Fitwick) => {
+      this.activeFitwick = fitwick;
+      this.activeFitwick.on(
+        "drag",
+        function (
+          this: Fitwick,
+          _pointer: Phaser.Input.Pointer,
+          dragX: number,
+          dragY: number
+        ) {
+          this.x = dragX;
+          this.y = dragY;
+        }
+      );
+      cam.startFollow(this.activeFitwick, true, 0.05);
+      this.activeFitwick.pickUp();
     });
     // this.scene.launch("UIScene");
     // const txt = this.rexUI.add.BBCodeText(

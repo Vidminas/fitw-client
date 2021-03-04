@@ -22,6 +22,7 @@ import {
   FRAME_BUTTON_DELETE_HOVER,
   FRAME_BUTTON_DELETE_CLICK,
   EVENT_FITWICK_DELETE,
+  EVENT_FITWICK_MOVE,
 } from "../constants";
 import RexScene from "./RexScene";
 
@@ -42,6 +43,10 @@ class UIScene extends RexScene {
   create() {
     this.input.setTopOnly(false);
     this.createButtons();
+
+    this.events.on(EVENT_FITWICK_PLACE, this.onConfirmFitwick.bind(this));
+    this.events.on(EVENT_FITWICK_DELETE, this.onDeleteFitwick.bind(this));
+    this.events.on(EVENT_FITWICK_MOVE, this.onMoveFitwick.bind(this));
   }
 
   private createButtons() {
@@ -73,7 +78,7 @@ class UIScene extends RexScene {
       FRAME_BUTTON_CONFIRM_REST,
       FRAME_BUTTON_CONFIRM_HOVER,
       FRAME_BUTTON_CONFIRM_CLICK,
-      this.onConfirmFitwick.bind(this)
+      () => this.events.emit(EVENT_FITWICK_PLACE)
     );
     this.confirmFitwickButton.setVisible(false);
     this.deleteFitwickButton = new Button(
@@ -84,7 +89,7 @@ class UIScene extends RexScene {
       FRAME_BUTTON_DELETE_REST,
       FRAME_BUTTON_DELETE_HOVER,
       FRAME_BUTTON_DELETE_CLICK,
-      this.onDeleteFitwick.bind(this)
+      () => this.events.emit(EVENT_FITWICK_DELETE)
     );
     this.deleteFitwickButton.setVisible(false);
   }
@@ -142,10 +147,7 @@ class UIScene extends RexScene {
           this.isDialogOpen = false;
           this.addDialog!.hide();
           this.addDialog = undefined;
-
-          this.confirmFitwickButton.setVisible(true);
-          this.deleteFitwickButton.setVisible(true);
-          this.addFitwickButton.setVisible(false);
+          this.onMoveFitwick();
         } else {
           this.addDialog!.showError(text);
         }
@@ -159,17 +161,21 @@ class UIScene extends RexScene {
   }
 
   private onConfirmFitwick() {
-    this.events.emit(EVENT_FITWICK_PLACE);
     this.confirmFitwickButton.setVisible(false);
     this.deleteFitwickButton.setVisible(false);
     this.addFitwickButton.setVisible(true);
   }
 
   private onDeleteFitwick() {
-    this.events.emit(EVENT_FITWICK_DELETE);
     this.confirmFitwickButton.setVisible(false);
     this.deleteFitwickButton.setVisible(false);
     this.addFitwickButton.setVisible(true);
+  }
+
+  private onMoveFitwick() {
+    this.confirmFitwickButton.setVisible(true);
+    this.deleteFitwickButton.setVisible(true);
+    this.addFitwickButton.setVisible(false);
   }
 }
 
