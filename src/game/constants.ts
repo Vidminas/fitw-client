@@ -12,10 +12,13 @@ export const MAX_SCROLL_Y = GAME_BG_HEIGHT;
 export const MAX_ZOOM_FACTOR = 4;
 export const MIN_ZOOM_FACTOR = 0.05;
 
+export const SPEECH_BUBBLE_HEIGHT = 50;
+
 export const EVENT_FITWICK_NEW = "fitwick/new";
 export const EVENT_FITWICK_PLACE = "fitwick/place";
 export const EVENT_FITWICK_DELETE = "fitwick/delete";
 export const EVENT_FITWICK_MOVE = "fitwick/move";
+export const EVENT_FITWICK_TAP = "fitwick/tap";
 
 export const TEXTURE_BUTTONS = "buttons";
 export const TEXTURE_KENNEY_ASSETS = "kenny_assets";

@@ -12,10 +12,12 @@ class Fitwick extends Phaser.GameObjects.Sprite {
   }
 
   state!: FitwickState;
+  name: string;
 
   constructor(scene: RexScene, x: number, y: number, inputName: string) {
     super(scene, x, y, TEXTURE_KENNEY_ASSETS, inputName);
     scene.add.existing(this);
+    this.name = inputName;
     this.pickUp();
   }
 

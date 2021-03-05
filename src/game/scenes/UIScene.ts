@@ -2,6 +2,7 @@ import AddDialog from "../components/AddDialog";
 import BackgroundDialog from "../components/BackgroundDialog";
 import Button from "../components/Button";
 import Fitwick from "../components/Fitwick";
+import createSpeechBubble from "../components/SpeechBubble";
 import {
   GAME_WIDTH,
   UI_BUTTON_SIZE,
@@ -23,6 +24,7 @@ import {
   FRAME_BUTTON_DELETE_CLICK,
   EVENT_FITWICK_DELETE,
   EVENT_FITWICK_MOVE,
+  EVENT_FITWICK_TAP,
 } from "../constants";
 import RexScene from "./RexScene";
 
@@ -47,6 +49,7 @@ class UIScene extends RexScene {
     this.events.on(EVENT_FITWICK_PLACE, this.onConfirmFitwick.bind(this));
     this.events.on(EVENT_FITWICK_DELETE, this.onDeleteFitwick.bind(this));
     this.events.on(EVENT_FITWICK_MOVE, this.onMoveFitwick.bind(this));
+    // this.events.on(EVENT_FITWICK_TAP, this.onTapFitwick.bind(this));
   }
 
   private createButtons() {

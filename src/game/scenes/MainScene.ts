@@ -17,8 +17,11 @@ import {
   EVENT_FITWICK_PLACE,
   EVENT_FITWICK_DELETE,
   EVENT_FITWICK_MOVE,
+  EVENT_FITWICK_TAP,
+  SPEECH_BUBBLE_HEIGHT,
 } from "../constants";
 import Fitwick from "../components/Fitwick";
+import SpeechBubble from "../components/SpeechBubble";
 
 class MainScene extends RexScene {
   private socket: Socket;
@@ -28,6 +31,7 @@ class MainScene extends RexScene {
   private background!: Phaser.GameObjects.TileSprite;
 
   private activeFitwick?: Fitwick;
+  private activeSpeechBubble?: SpeechBubble;
 
   constructor(socket: Socket, world: IWorld) {
     super({ key: "MainScene", active: false });
@@ -101,6 +105,42 @@ class MainScene extends RexScene {
             }
           }
         );
+      // TODO: same as with rexGestures.press
+      this.rexGestures.add
+        .tap(this.activeFitwick)
+        .on(
+          "tap",
+          (
+            _tap: any,
+            gameObject: Phaser.GameObjects.GameObject | undefined,
+            _lastPointer: Phaser.Input.Pointer
+          ) => {
+            if (!this.activeFitwick && gameObject?.state === "rest") {
+              uiScene.events.emit(EVENT_FITWICK_TAP, gameObject);
+              const fitwick = gameObject as Fitwick;
+
+              if (
+                this.activeSpeechBubble &&
+                this.activeSpeechBubble.parent !== fitwick
+              ) {
+                this.activeSpeechBubble.destroy(true);
+                this.activeSpeechBubble = undefined;
+              }
+
+              if (!this.activeSpeechBubble) {
+                this.activeSpeechBubble = new SpeechBubble(
+                  this,
+                  fitwick,
+                  fitwick.x - fitwick.displayWidth / 2,
+                  fitwick.y - fitwick.displayHeight,
+                  fitwick.displayWidth,
+                  SPEECH_BUBBLE_HEIGHT,
+                  fitwick.name
+                );
+              }
+            }
+          }
+        );
       this.activeFitwick = undefined;
     });
     uiScene.events.on(EVENT_FITWICK_DELETE, () => {
@@ -110,6 +150,11 @@ class MainScene extends RexScene {
       this.activeFitwick = undefined;
     });
     uiScene.events.on(EVENT_FITWICK_MOVE, (fitwick: Fitwick) => {
+      if (this.activeSpeechBubble) {
+        this.activeSpeechBubble.destroy(true);
+        this.activeSpeechBubble = undefined;
+      }
+
       this.activeFitwick = fitwick;
       this.activeFitwick.on(
         "drag",
@@ -191,6 +236,22 @@ class MainScene extends RexScene {
         cam.setZoom(zoom);
       }
     });
+
+    this.input.on(
+      "pointerdown",
+      (
+        _pointer: Phaser.Input.Pointer,
+        currentlyOver: Phaser.GameObjects.GameObject[]
+      ) => {
+        if (
+          this.activeSpeechBubble &&
+          !currentlyOver.includes(this.activeSpeechBubble.parent)
+        ) {
+          this.activeSpeechBubble.destroy(true);
+          this.activeSpeechBubble = undefined;
+        }
+      }
+    );
 
     const gui = new dat.GUI();
 
