@@ -132,7 +132,7 @@ class MainScene extends RexScene {
                   this,
                   fitwick,
                   fitwick.x - fitwick.displayWidth / 2,
-                  fitwick.y - fitwick.displayHeight,
+                  fitwick.y - fitwick.displayHeight / 2 - SPEECH_BUBBLE_HEIGHT,
                   fitwick.displayWidth,
                   SPEECH_BUBBLE_HEIGHT,
                   fitwick.name
@@ -274,7 +274,11 @@ class MainScene extends RexScene {
   update(time: any, delta: number) {
     this.controls?.update(delta);
     const cam = this.cameras.main;
-    this.background.setTilePosition(cam.scrollX, cam.scrollY);
+    // the clamping helps with jitter when scrolling past an edge
+    this.background.setTilePosition(
+      cam.clampX(cam.scrollX),
+      cam.clampY(cam.scrollY)
+    );
   }
 }
 
