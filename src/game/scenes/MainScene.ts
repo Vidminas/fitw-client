@@ -255,6 +255,32 @@ class MainScene extends RexScene {
       }
     );
 
+    this.input.on(
+      "wheel",
+      (
+        pointer: Phaser.Input.Pointer,
+        _currentlyOver: Phaser.GameObjects.GameObject[],
+        deltaX: number,
+        deltaY: number,
+        _deltaZ: number
+      ) => {
+        // for touchpads, event control key indicates zoom gestures
+        if (pointer.event.ctrlKey) {
+          const zoom = cam.zoom - deltaY * 0.01;
+          if (
+            zoom > MIN_ZOOM_FACTOR &&
+            zoom < MAX_ZOOM_FACTOR &&
+            cam.height / zoom < GAME_BG_HEIGHT &&
+            cam.width / zoom < GAME_BG_WIDTH
+          ) {
+            cam.setZoom(zoom);
+          }
+        } else {
+          cam.setScroll(cam.scrollX + deltaX, cam.scrollY + deltaY);
+        }
+      }
+    );
+
     const gui = new dat.GUI();
 
     const help = {
