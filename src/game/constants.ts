@@ -12,7 +12,7 @@ export const MAX_SCROLL_Y = GAME_BG_HEIGHT;
 export const MAX_ZOOM_FACTOR = 4;
 export const MIN_ZOOM_FACTOR = 0.05;
 
-export const SPEECH_BUBBLE_HEIGHT = 50;
+export const SPEECH_BUBBLE_HEIGHT = UI_BUTTON_SIZE + 10;
 
 export const EVENT_FITWICK_NEW = "fitwick/new";
 export const EVENT_FITWICK_PLACE = "fitwick/place";
@@ -54,3 +54,6 @@ export const FRAME_BUTTON_RIGHT_CLICK = "Button_160.png";
 export const FRAME_BUTTON_DELETE_REST = "Button_114.png";
 export const FRAME_BUTTON_DELETE_HOVER = "Button_115.png";
 export const FRAME_BUTTON_DELETE_CLICK = "Button_116.png";
+export const FRAME_BUTTON_SPEAKER_REST = "Button_134.png";
+export const FRAME_BUTTON_SPEAKER_HOVER = "Button_135.png";
+export const FRAME_BUTTON_SPEAKER_CLICK = "Button_136.png";

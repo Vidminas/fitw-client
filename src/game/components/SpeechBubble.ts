@@ -1,26 +1,44 @@
-// Code inspired by https://github.com/photonstorm/phaser3-examples/blob/master/public/src/game%20objects/text/speech%20bubble.js
-class SpeechBubble extends Phaser.GameObjects.Group {
-  private _parent: Phaser.GameObjects.GameObject;
+import ContainerLite from "phaser3-rex-plugins/plugins/containerlite.js";
+import {
+  FRAME_BUTTON_SPEAKER_CLICK,
+  FRAME_BUTTON_SPEAKER_HOVER,
+  FRAME_BUTTON_SPEAKER_REST,
+  TEXTURE_BUTTONS,
+  UI_BUTTON_SIZE,
+} from "../constants";
+import Button from "./Button";
+import Fitwick from "./Fitwick";
+
+class SpeechBubble extends ContainerLite {
+  readonly parent: Fitwick;
+  readonly speakerButton: Button;
   private bubble: Phaser.GameObjects.Graphics;
   private content: Phaser.GameObjects.Text;
 
   constructor(
     scene: Phaser.Scene,
-    parent: Phaser.GameObjects.GameObject,
+    parent: Fitwick,
     x: number,
     y: number,
     width: number,
     height: number,
     quote: string
   ) {
-    super(scene);
-    this._parent = parent;
-
     const bubbleWidth = width;
     const bubbleHeight = height;
     const bubblePadding = 10;
     const arrowHeight = bubbleHeight / 4;
 
+    super(
+      scene,
+      x,
+      y,
+      bubbleWidth + bubblePadding,
+      bubbleHeight + arrowHeight + bubblePadding
+    );
+    this.parent = parent;
+
+    // Code inspired by https://github.com/photonstorm/phaser3-examples/blob/master/public/src/game%20objects/text/speech%20bubble.js
     this.bubble = scene.add.graphics({ x: x, y: y });
 
     //  Bubble shadow
@@ -67,22 +85,36 @@ class SpeechBubble extends Phaser.GameObjects.Group {
       fontSize: "20px",
       color: "#000000",
       align: "center",
-      wordWrap: { width: bubbleWidth - bubblePadding * 2 },
+      wordWrap: { width: bubbleWidth - UI_BUTTON_SIZE - bubblePadding * 2 },
     });
 
     const b = this.content.getBounds();
-
     this.content.setPosition(
       this.bubble.x + bubbleWidth / 2 - b.width / 2,
       this.bubble.y + bubbleHeight / 2 - b.height / 2
     );
 
+    this.speakerButton = new Button(
+      scene,
+      this.content.x + b.width,
+      this.content.y - b.height,
+      TEXTURE_BUTTONS,
+      FRAME_BUTTON_SPEAKER_REST,
+      FRAME_BUTTON_SPEAKER_HOVER,
+      FRAME_BUTTON_SPEAKER_CLICK
+    );
+
+    this.setOrigin(0);
+    this.setInteractive();
     this.add(this.bubble);
     this.add(this.content);
-  }
+    this.add(this.speakerButton);
 
-  get parent() {
-    return this._parent;
+    // scene.add
+    //   .graphics()
+    //   .strokeRectShape(this.getBounds())
+    //   .lineStyle(3, 0xff0000);
+    scene.add.existing(this);
   }
 }
 

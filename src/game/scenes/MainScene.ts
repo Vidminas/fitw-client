@@ -123,7 +123,7 @@ class MainScene extends RexScene {
                 this.activeSpeechBubble &&
                 this.activeSpeechBubble.parent !== fitwick
               ) {
-                this.activeSpeechBubble.destroy(true);
+                this.activeSpeechBubble.destroy();
                 this.activeSpeechBubble = undefined;
               }
 
@@ -151,7 +151,7 @@ class MainScene extends RexScene {
     });
     uiScene.events.on(EVENT_FITWICK_MOVE, (fitwick: Fitwick) => {
       if (this.activeSpeechBubble) {
-        this.activeSpeechBubble.destroy(true);
+        this.activeSpeechBubble.destroy();
         this.activeSpeechBubble = undefined;
       }
 
@@ -245,9 +245,11 @@ class MainScene extends RexScene {
       ) => {
         if (
           this.activeSpeechBubble &&
+          !currentlyOver.includes(this.activeSpeechBubble) &&
+          !currentlyOver.includes(this.activeSpeechBubble.speakerButton) &&
           !currentlyOver.includes(this.activeSpeechBubble.parent)
         ) {
-          this.activeSpeechBubble.destroy(true);
+          this.activeSpeechBubble.destroy();
           this.activeSpeechBubble = undefined;
         }
       }

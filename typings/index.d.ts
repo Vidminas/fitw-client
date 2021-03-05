@@ -29,6 +29,21 @@ declare module "phaser3-rex-plugins/plugins/inputtext.js" {
   export default InputText;
 }
 
+declare module "phaser3-rex-plugins/plugins/containerlite.js" {
+  class ContainerLite extends Phaser.GameObjects.Zone {
+    constructor(
+      scene: Phaser.Scene,
+      x: number,
+      y: number,
+      width: number,
+      height: number,
+      children?: Phaser.GameObjects.GameObject[]
+    );
+    add(child: Phaser.GameObjects.GameObject);
+  }
+  export default ContainerLite;
+}
+
 declare module "phaser3-rex-plugins/templates/ui/ui-components.js" {
   export class BaseSizer extends Phaser.GameObjects.GameObject {
     constructor(scene: Phaser.Scene);
