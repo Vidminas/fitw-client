@@ -10,16 +10,22 @@ import {
 import FITWICKS from "../fitwicks";
 import RexScene from "../scenes/RexScene";
 
-const createFitwickList = (scene: RexScene) => {
-  const sizer = scene.rexUI.add.fixWidthSizer({
-    orientation: "vertical",
+const createFitwickList = (scene: RexScene, width: number, height: number) => {
+  const columns = Math.floor(width / (UI_BUTTON_SIZE * 3));
+  const rows = Math.ceil(FITWICKS.size / columns);
+
+  const sizer = scene.rexUI.add.gridSizer({
+    width,
+    height,
+    column: columns,
+    row: rows,
     space: {
       left: 3,
       right: 3,
       top: 3,
       bottom: 3,
-      item: 8,
-      line: 8,
+      column: 8,
+      row: 8,
     },
   });
 
@@ -28,7 +34,12 @@ const createFitwickList = (scene: RexScene) => {
       icon: scene.add
         .image(0, 0, TEXTURE_KENNEY_ASSETS, textures[0])
         .setDisplaySize(UI_BUTTON_SIZE, UI_BUTTON_SIZE),
-      text: scene.add.text(0, 0, name, { fontSize: UI_FONT_SIZE }),
+      text: scene.add.text(0, 0, name, {
+        fontSize: UI_FONT_SIZE,
+        wordWrap: {
+          width: UI_BUTTON_SIZE * 2,
+        },
+      }),
       space: { icon: 3 },
     });
     sizer.add(fitwickRow);
@@ -60,6 +71,17 @@ const createTitle = (scene: RexScene) =>
 
 class ListDialog extends ScrollablePanel {
   constructor(scene: RexScene) {
+    // this first takes the width of the whole game and leaves space of two buttons on either side
+    // then it divdes the panel width into how many fitwicks fit on one row
+    // (each fitwick is the size of 3 buttons)
+    // then it gets the floor of that and multiplies by the fitwick width
+    // to get rid of the unnecessary space
+    // and finally adds 20 for padding
+    const width =
+      Math.floor((GAME_WIDTH - UI_BUTTON_SIZE * 4) / (UI_BUTTON_SIZE * 3)) *
+        (UI_BUTTON_SIZE * 3) +
+      20;
+    const height = GAME_HEIGHT - UI_BUTTON_SIZE * 4;
     super(scene, {
       x: 0,
       y: 0,
@@ -67,8 +89,8 @@ class ListDialog extends ScrollablePanel {
         centerX: "center",
         centerY: "center",
       },
-      width: GAME_WIDTH - UI_BUTTON_SIZE * 4,
-      height: GAME_HEIGHT - UI_BUTTON_SIZE * 4,
+      width,
+      height,
       scrollMode: "vertical",
       background: scene.rexUI.add.roundRectangle(
         0,
@@ -80,7 +102,7 @@ class ListDialog extends ScrollablePanel {
       ),
       header: createTitle(scene),
       panel: {
-        child: createFitwickList(scene),
+        child: createFitwickList(scene, width - 20, height),
         mask: { padding: 1 },
       },
       slider: true,
