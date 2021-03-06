@@ -4,14 +4,11 @@ import * as dat from "dat.gui";
 import IWorld from "../../api/world";
 import { RexScene } from "./RexScene";
 import {
-  GAME_BG_HEIGHT,
-  GAME_BG_WIDTH,
   GAME_HEIGHT,
   GAME_WIDTH,
   MAX_SCROLL_X,
   MAX_SCROLL_Y,
   MAX_ZOOM_FACTOR,
-  MIN_ZOOM_FACTOR,
   EVENT_FITWICK_NEW,
   TEXTURE_BACKGROUND_EMPTY,
   EVENT_FITWICK_PLACE,
@@ -19,6 +16,7 @@ import {
   EVENT_FITWICK_MOVE,
   EVENT_FITWICK_TAP,
   SPEECH_BUBBLE_HEIGHT,
+  SCALE_RATIO,
 } from "../constants";
 import Fitwick from "../components/Fitwick";
 import SpeechBubble from "../components/SpeechBubble";
@@ -53,7 +51,7 @@ class MainScene extends RexScene {
   create() {
     this.backgroundTexture = TEXTURE_BACKGROUND_EMPTY;
     this.background = this.add
-      .tileSprite(0, 0, GAME_BG_WIDTH, GAME_BG_HEIGHT, TEXTURE_BACKGROUND_EMPTY)
+      .tileSprite(0, 0, GAME_WIDTH, GAME_HEIGHT, TEXTURE_BACKGROUND_EMPTY)
       .setOrigin(0);
     this.background.setScrollFactor(0);
 
@@ -226,15 +224,18 @@ class MainScene extends RexScene {
 
     const pinch = this.rexGestures.add.pinch();
     pinch.on("pinch", (pinch: any) => {
-      const zoom = cam.zoom * pinch.scaleFactor;
-      if (
-        zoom > MIN_ZOOM_FACTOR &&
-        zoom < MAX_ZOOM_FACTOR &&
-        cam.height / zoom < GAME_BG_HEIGHT &&
-        cam.width / zoom < GAME_BG_WIDTH
-      ) {
-        cam.setZoom(zoom);
+      let zoom = cam.zoom * pinch.scaleFactor;
+      if (zoom > MAX_ZOOM_FACTOR) {
+        zoom = MAX_ZOOM_FACTOR;
+      } else {
+        if (zoom < cam.height / GAME_HEIGHT) {
+          zoom = cam.height / GAME_HEIGHT;
+        }
+        if (zoom < cam.width / GAME_WIDTH) {
+          zoom = cam.width / GAME_WIDTH;
+        }
       }
+      cam.setZoom(zoom);
     });
 
     this.input.on(
@@ -266,15 +267,18 @@ class MainScene extends RexScene {
       ) => {
         // for touchpads, event control key indicates zoom gestures
         if (pointer.event.ctrlKey) {
-          const zoom = cam.zoom - deltaY * 0.01;
-          if (
-            zoom > MIN_ZOOM_FACTOR &&
-            zoom < MAX_ZOOM_FACTOR &&
-            cam.height / zoom < GAME_BG_HEIGHT &&
-            cam.width / zoom < GAME_BG_WIDTH
-          ) {
-            cam.setZoom(zoom);
+          let zoom = cam.zoom - deltaY * 0.01;
+          if (zoom > MAX_ZOOM_FACTOR) {
+            zoom = MAX_ZOOM_FACTOR;
+          } else {
+            if (zoom < cam.height / GAME_HEIGHT) {
+              zoom = cam.height / GAME_HEIGHT;
+            }
+            if (zoom < cam.width / GAME_WIDTH) {
+              zoom = cam.width / GAME_WIDTH;
+            }
           }
+          cam.setZoom(zoom);
         } else {
           cam.setScroll(cam.scrollX + deltaX, cam.scrollY + deltaY);
         }
@@ -292,7 +296,7 @@ class MainScene extends RexScene {
     f1.add(cam, "y").listen();
     f1.add(cam, "scrollX").listen();
     f1.add(cam, "scrollY").listen();
-    f1.add(cam, "rotation").min(0).step(0.01).listen();
+    f1.add(cam, "zoom").min(0).step(0.01).listen();
     f1.add(help, "line1");
     f1.open();
   }
@@ -305,6 +309,7 @@ class MainScene extends RexScene {
       cam.clampX(cam.scrollX),
       cam.clampY(cam.scrollY)
     );
+    // this.background.setTileScale(cam.zoom);
   }
 }
 
