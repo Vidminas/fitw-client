@@ -1,5 +1,5 @@
 import { Dialog } from "phaser3-rex-plugins/templates/ui/ui-components.js";
-import { COLOR_DIALOG_BACKGROUND } from "../colors";
+import { COLOR_DIALOG_BACKGROUND, COLOR_DIALOG_FOREGROUND } from "../colors";
 import {
   FRAME_BUTTON_CANCEL_CLICK,
   FRAME_BUTTON_CANCEL_HOVER,
@@ -11,10 +11,33 @@ import {
   GAME_WIDTH,
   TEXTURE_BUTTONS,
   UI_BUTTON_SIZE,
+  UI_FONT_SIZE,
 } from "../constants";
+import RexScene from "../scenes/RexScene";
 import UIScene from "../scenes/UIScene";
 import BackgroundGallery from "./BackgroundGallery";
 import Button from "./Button";
+
+const createTitle = (scene: RexScene) =>
+  scene.rexUI.add.label({
+    background: scene.rexUI.add.roundRectangle(
+      0,
+      0,
+      100,
+      40,
+      20,
+      COLOR_DIALOG_FOREGROUND
+    ),
+    text: scene.add.text(0, 0, "Choose a world background:", {
+      fontSize: UI_FONT_SIZE,
+    }),
+    space: {
+      left: 15,
+      right: 15,
+      top: 10,
+      bottom: 10,
+    },
+  });
 
 class BackgroundDialog extends Dialog {
   private confirmButton!: Button;
@@ -24,6 +47,12 @@ class BackgroundDialog extends Dialog {
     const minWidth = GAME_WIDTH - 4 * UI_BUTTON_SIZE;
     const minHeight = GAME_HEIGHT - 4 * UI_BUTTON_SIZE;
     super(scene, {
+      x: 0,
+      y: 0,
+      anchor: {
+        centerX: "center",
+        centerY: "center",
+      },
       background: scene.rexUI.add.roundRectangle(
         0,
         0,
@@ -32,8 +61,15 @@ class BackgroundDialog extends Dialog {
         20,
         COLOR_DIALOG_BACKGROUND
       ),
+      title: createTitle(scene),
       actions: [],
       content: new BackgroundGallery(scene),
+      space: {
+        top: 10,
+      },
+      expand: {
+        title: false,
+      },
     });
 
     this.createButtons(scene, onConfirm, onCancel);
@@ -41,12 +77,8 @@ class BackgroundDialog extends Dialog {
     this.addAction(this.cancelButton);
 
     this.layout();
-    this.setAnchor({
-      centerX: "center",
-      centerY: "center",
-    });
+    this.pushIntoBounds();
     this.popUp(500);
-
     scene.add.existing(this);
   }
 

@@ -61,6 +61,7 @@ declare module "phaser3-rex-plugins/templates/ui/ui-components.js" {
     drawBounds(graphics: Phaser.GameObjects.Graphics, color?: number);
     setAnchor(config: any);
     layout();
+    pushIntoBounds();
   }
 
   export class Dialog extends BaseSizer {
@@ -85,5 +86,12 @@ declare module "phaser3-rex-plugins/templates/ui/ui-components.js" {
     );
   }
 
-  export class ScrollablePanel extends Sizer {}
+  export class ScrollablePanel extends Sizer {
+    t: number;
+    childOY: number;
+    topChildOY: number;
+    bottomChildOY: number;
+    setT(percentage: number);
+    setChildOY(oy: number);
+  }
 }

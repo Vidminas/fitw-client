@@ -96,6 +96,24 @@ class ListDialog extends ScrollablePanel {
     this.layout();
     this.popUp(500);
     scene.add.existing(this);
+    this.setInteractive();
+    this.on(
+      "wheel",
+      (
+        _pointer: Phaser.Input.Pointer,
+        _deltaX: number,
+        deltaY: number,
+        _deltaZ: number
+      ) => {
+        let newScrollValue = this.childOY - deltaY;
+        if (newScrollValue < this.bottomChildOY) {
+          newScrollValue = this.bottomChildOY;
+        } else if (newScrollValue > this.topChildOY) {
+          newScrollValue = this.topChildOY;
+        }
+        this.setChildOY(newScrollValue);
+      }
+    );
   }
 
   public hide() {

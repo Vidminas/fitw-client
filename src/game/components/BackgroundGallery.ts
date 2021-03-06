@@ -85,6 +85,25 @@ class BackgroundGallery extends OverlapSizer {
       })
       .layout();
 
+    panel.setInteractive();
+    panel.on(
+      "wheel",
+      (
+        _pointer: Phaser.Input.Pointer,
+        deltaX: number,
+        _deltaY: number,
+        _deltaZ: number
+      ) => {
+        let newScrollValue = panel.childOY - deltaX;
+        if (newScrollValue < panel.bottomChildOY) {
+          newScrollValue = panel.bottomChildOY;
+        } else if (newScrollValue > panel.topChildOY) {
+          newScrollValue = panel.topChildOY;
+        }
+        panel.setChildOY(newScrollValue);
+      }
+    );
+
     this.add(panel);
 
     this.createButtons(scene);
