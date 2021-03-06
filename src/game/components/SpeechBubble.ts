@@ -5,6 +5,7 @@ import {
   FRAME_BUTTON_SPEAKER_REST,
   TEXTURE_BUTTONS,
   UI_BUTTON_SIZE,
+  UI_FONT_SIZE,
 } from "../constants";
 import Button from "./Button";
 import Fitwick from "./Fitwick";
@@ -82,7 +83,7 @@ class SpeechBubble extends ContainerLite {
 
     this.content = scene.add.text(0, 0, quote, {
       fontFamily: "Arial",
-      fontSize: "20px",
+      fontSize: UI_FONT_SIZE,
       color: "#000000",
       align: "center",
       wordWrap: { width: bubbleWidth - UI_BUTTON_SIZE - bubblePadding * 2 },

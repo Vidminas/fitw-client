@@ -1,5 +1,5 @@
 import { TINT_GREEN } from "../colors";
-import { TEXTURE_KENNEY_ASSETS } from "../constants";
+import { SCALE_RATIO, TEXTURE_KENNEY_ASSETS } from "../constants";
 import FITWICKS from "../fitwicks";
 import RexScene from "../scenes/RexScene";
 
@@ -21,6 +21,7 @@ class Fitwick extends Phaser.GameObjects.Sprite {
       TEXTURE_KENNEY_ASSETS,
       Phaser.Utils.Array.GetRandom(FITWICKS.get(inputName))
     );
+    this.setScale(SCALE_RATIO / 3);
     scene.add.existing(this);
     this.name = inputName;
     this.pickUp();

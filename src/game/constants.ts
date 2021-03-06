@@ -1,10 +1,10 @@
 // logic from https://www.joshmorony.com/how-to-scale-a-game-for-all-device-sizes-in-phaser/
 export const GAME_WIDTH = window.innerWidth * window.devicePixelRatio;
 export const GAME_HEIGHT = window.innerHeight * window.devicePixelRatio;
-export const SCALE_RATIO = window.devicePixelRatio / 3;
+export const SCALE_RATIO = window.devicePixelRatio;
 
-export const UI_BUTTON_SIZE = 64;
-export const UI_FONT_SIZE = "20px";
+export const UI_BUTTON_SIZE = 64 * SCALE_RATIO;
+export const UI_FONT_SIZE = `${20 * SCALE_RATIO}px`;
 
 // the smallest width and height of all images (it's okay to have bigger)
 const GAME_BG_WIDTH = 1024;
@@ -15,7 +15,7 @@ export const MAX_SCROLL_Y = GAME_BG_HEIGHT;
 // limits on camera zoom (besides limiting to game height and width)
 export const MAX_ZOOM_FACTOR = 4;
 
-export const SPEECH_BUBBLE_HEIGHT = UI_BUTTON_SIZE + 10;
+export const SPEECH_BUBBLE_HEIGHT = UI_BUTTON_SIZE + 10 * SCALE_RATIO;
 
 export const EVENT_FITWICK_NEW = "fitwick/new";
 export const EVENT_FITWICK_PLACE = "fitwick/place";

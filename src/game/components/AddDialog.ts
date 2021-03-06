@@ -46,7 +46,7 @@ class AddDialog {
     });
     const inputBox = new InputText(scene, 0, 0, 400, 60, {
       color: "white",
-      fontSize: "24px",
+      fontSize: UI_FONT_SIZE,
       placeholder: "Type in something",
       backgroundColor: "#333333",
       valign: "center",

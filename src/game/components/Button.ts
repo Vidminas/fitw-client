@@ -6,9 +6,9 @@ class Button extends Phaser.GameObjects.Image {
     x: number,
     y: number,
     texture: string,
-    private restFrame: string,
+    restFrame: string,
     private hoverFrame: string,
-    private clickFrame: string,
+    clickFrame: string,
     handleClick?: Function
   ) {
     super(scene, x, y, texture, restFrame);
