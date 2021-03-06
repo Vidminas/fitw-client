@@ -16,7 +16,6 @@ import {
   EVENT_FITWICK_MOVE,
   EVENT_FITWICK_TAP,
   SPEECH_BUBBLE_HEIGHT,
-  SCALE_RATIO,
 } from "../constants";
 import Fitwick from "../components/Fitwick";
 import SpeechBubble from "../components/SpeechBubble";
@@ -169,40 +168,6 @@ class MainScene extends RexScene {
       cam.startFollow(this.activeFitwick, true, 0.05);
       this.activeFitwick.pickUp();
     });
-    // this.scene.launch("UIScene");
-    // const txt = this.rexUI.add.BBCodeText(
-    //   100,
-    //   200,
-    //   `[color=yellow]Connected to [/color][color=green]${SERVER_ADDRESS}[/color]`
-    // );
-    // console.log(txt);
-    // this.socket.emit("Hey from MainScene");
-    // const keys = this.textures.getTextureKeys();
-
-    // for (let i = 0; i < keys.length; i++) {
-    //   const x = Phaser.Math.Between(0, 800);
-    //   const y = Phaser.Math.Between(0, 600);
-    //   const image = this.add.image(x, y, keys[i]).setInteractive();
-    //   this.input.setDraggable(image);
-    // }
-
-    //  From here down is just camera controls and feedback
-    var cursors = this.input.keyboard.createCursorKeys();
-
-    var controlConfig = {
-      camera: this.cameras.main,
-      left: cursors.left,
-      right: cursors.right,
-      up: cursors.up,
-      down: cursors.down,
-      acceleration: 0.02,
-      drag: 0.0005,
-      maxSpeed: 1.0,
-    };
-
-    this.controls = new Phaser.Cameras.Controls.SmoothedKeyControl(
-      controlConfig
-    );
 
     // this prevents camera from scrolling out of bounds
     cam.setBounds(0, 0, MAX_SCROLL_X, MAX_SCROLL_Y, false);
@@ -302,7 +267,6 @@ class MainScene extends RexScene {
   }
 
   update(time: any, delta: number) {
-    this.controls?.update(delta);
     const cam = this.cameras.main;
     // the clamping helps with jitter when scrolling past an edge
     this.background.setTilePosition(
