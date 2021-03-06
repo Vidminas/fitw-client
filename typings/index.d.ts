@@ -84,4 +84,6 @@ declare module "phaser3-rex-plugins/templates/ui/ui-components.js" {
       config?: any
     );
   }
+
+  export class ScrollablePanel extends Sizer {}
 }

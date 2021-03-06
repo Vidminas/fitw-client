@@ -2,7 +2,7 @@ import AddDialog from "../components/AddDialog";
 import BackgroundDialog from "../components/BackgroundDialog";
 import Button from "../components/Button";
 import Fitwick from "../components/Fitwick";
-import createSpeechBubble from "../components/SpeechBubble";
+import ListDialog from "../components/ListDialog";
 import {
   GAME_WIDTH,
   UI_BUTTON_SIZE,
@@ -24,15 +24,19 @@ import {
   FRAME_BUTTON_DELETE_CLICK,
   EVENT_FITWICK_DELETE,
   EVENT_FITWICK_MOVE,
-  EVENT_FITWICK_TAP,
+  FRAME_BUTTON_LIST_REST,
+  FRAME_BUTTON_LIST_HOVER,
+  FRAME_BUTTON_LIST_CLICK,
 } from "../constants";
 import RexScene from "./RexScene";
 
 class UIScene extends RexScene {
   private backgroundDialog?: BackgroundDialog;
+  private listDialog?: ListDialog;
   private addDialog?: AddDialog;
   private isDialogOpen: boolean;
   private changeBackgroundButton!: Button;
+  private listButton!: Button;
   private addFitwickButton!: Button;
   private confirmFitwickButton!: Button;
   private deleteFitwickButton!: Button;
@@ -63,9 +67,19 @@ class UIScene extends RexScene {
       FRAME_BUTTON_SWITCH_CLICK,
       this.onChangeBackground.bind(this)
     );
+    this.listButton = new Button(
+      this,
+      GAME_WIDTH / 2 - UI_BUTTON_SIZE / 2,
+      GAME_HEIGHT - UI_BUTTON_SIZE,
+      TEXTURE_BUTTONS,
+      FRAME_BUTTON_LIST_REST,
+      FRAME_BUTTON_LIST_HOVER,
+      FRAME_BUTTON_LIST_CLICK,
+      this.onListFitwicks.bind(this)
+    );
     this.addFitwickButton = new Button(
       this,
-      GAME_WIDTH / 2,
+      GAME_WIDTH / 2 + UI_BUTTON_SIZE / 2,
       GAME_HEIGHT - UI_BUTTON_SIZE,
       TEXTURE_BUTTONS,
       FRAME_BUTTON_ADD_REST,
@@ -126,6 +140,22 @@ class UIScene extends RexScene {
         this.backgroundDialog = undefined;
       }
     );
+  }
+
+  private onListFitwicks() {
+    if (this.listDialog) {
+      this.isDialogOpen = false;
+      this.listDialog.hide();
+      this.listDialog = undefined;
+      return;
+    }
+
+    if (this.isDialogOpen) {
+      return;
+    }
+
+    this.isDialogOpen = true;
+    this.listDialog = new ListDialog(this);
   }
 
   private onAddFitwick() {

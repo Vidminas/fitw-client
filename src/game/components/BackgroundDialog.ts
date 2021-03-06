@@ -1,5 +1,5 @@
 import { Dialog } from "phaser3-rex-plugins/templates/ui/ui-components.js";
-import { COLOR_ORANGE } from "../colors";
+import { COLOR_DIALOG_BACKGROUND } from "../colors";
 import {
   FRAME_BUTTON_CANCEL_CLICK,
   FRAME_BUTTON_CANCEL_HOVER,
@@ -30,7 +30,7 @@ class BackgroundDialog extends Dialog {
         minWidth,
         minHeight,
         20,
-        COLOR_ORANGE
+        COLOR_DIALOG_BACKGROUND
       ),
       actions: [],
       content: new BackgroundGallery(scene),

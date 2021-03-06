@@ -1,5 +1,5 @@
 import InputText from "phaser3-rex-plugins/plugins/inputtext.js";
-import { COLOR_ORANGE } from "../colors";
+import { COLOR_DIALOG_BACKGROUND, COLOR_DIALOG_FOREGROUND } from "../colors";
 import {
   FRAME_BUTTON_CANCEL_CLICK,
   FRAME_BUTTON_CANCEL_HOVER,
@@ -8,6 +8,7 @@ import {
   FRAME_BUTTON_CONFIRM_HOVER,
   FRAME_BUTTON_CONFIRM_REST,
   TEXTURE_BUTTONS,
+  UI_FONT_SIZE,
 } from "../constants";
 import { RexScene } from "../scenes/RexScene";
 import Button from "./Button";
@@ -22,12 +23,19 @@ class AddDialog {
       100,
       100,
       20,
-      COLOR_ORANGE
+      COLOR_DIALOG_BACKGROUND
     );
     const title = scene.rexUI.add.label({
-      background: scene.rexUI.add.roundRectangle(0, 0, 100, 40, 20, 0xbc5100),
+      background: scene.rexUI.add.roundRectangle(
+        0,
+        0,
+        100,
+        40,
+        20,
+        COLOR_DIALOG_FOREGROUND
+      ),
       text: scene.add.text(0, 0, "Add to world:", {
-        fontSize: "20px",
+        fontSize: UI_FONT_SIZE,
       }),
       space: {
         left: 15,

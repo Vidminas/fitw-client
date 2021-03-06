@@ -1,6 +1,7 @@
 export const GAME_WIDTH = 1024;
 export const GAME_HEIGHT = 768;
 export const UI_BUTTON_SIZE = 64;
+export const UI_FONT_SIZE = "20px";
 
 // the smallest width and height of all images (it's okay to have bigger)
 export const GAME_BG_WIDTH = 1024;
@@ -57,3 +58,6 @@ export const FRAME_BUTTON_DELETE_CLICK = "Button_116.png";
 export const FRAME_BUTTON_SPEAKER_REST = "Button_134.png";
 export const FRAME_BUTTON_SPEAKER_HOVER = "Button_135.png";
 export const FRAME_BUTTON_SPEAKER_CLICK = "Button_136.png";
+export const FRAME_BUTTON_LIST_REST = "Button_110.png";
+export const FRAME_BUTTON_LIST_HOVER = "Button_111.png";
+export const FRAME_BUTTON_LIST_CLICK = "Button_112.png";
