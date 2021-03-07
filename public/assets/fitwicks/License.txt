@@ -9,6 +9,12 @@ https://craftpix.net/freebies/free-2d-rpg-desert-tileset/
 
 All the above are under CraftPix royalty-free license: https://craftpix.net/file-licenses/
 
+
+winter_sprites.png (packed using ShoeBox) is from:
+https://opengameart.org/content/winter-platformer-game-tileset
+Licensed under CC0 (public domain) license
+
+
 kenney_spritesheet.png and kenney_spritesheet.xml are from:
 
 	Background Elements Redux

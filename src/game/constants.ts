@@ -28,6 +28,7 @@ export const TEXTURE_KENNEY_ASSETS = "kenney_assets";
 export const TEXTURE_UNDERWATER_SPRITES = "underwater_sprites";
 export const TEXTURE_DESERT_SPRITES = "desert_sprites";
 export const TEXTURE_MEDIEVAL_TROPICAL_SPRITES = "medieval_tropical_sprites";
+export const TEXTURE_WINTER_SPRITES = "winter_sprites";
 
 export const TEXTURE_BACKGROUND_EMPTY = "backgroundEmpty";
 const TEXTURE_BACKGROUND_FALL = "backgroundColorFall";
@@ -38,6 +39,7 @@ const TEXTURE_BACKGROUND_UNDERWATER1 = "underwater_background_1";
 const TEXTURE_BACKGROUND_UNDERWATER2 = "underwater_background_2";
 const TEXTURE_BACKGROUND_UNDERWATER3 = "underwater_background_3";
 const TEXTURE_BACKGROUND_UNDERWATER4 = "underwater_background_4";
+const TEXTURE_BACKGROUND_WINTER = "winter_background";
 export const BACKGROUND_TEXTURES = [
   TEXTURE_BACKGROUND_EMPTY,
   TEXTURE_BACKGROUND_FALL,
@@ -48,6 +50,7 @@ export const BACKGROUND_TEXTURES = [
   TEXTURE_BACKGROUND_UNDERWATER2,
   TEXTURE_BACKGROUND_UNDERWATER3,
   TEXTURE_BACKGROUND_UNDERWATER4,
+  TEXTURE_BACKGROUND_WINTER,
 ];
 
 export const FRAME_BUTTON_ADD_REST = "Button_162.png";

@@ -1,0 +1,12 @@
+<TextureAtlas imagePath="sprites.png">
+	<SubTexture name="Crate.png" x="592" y="389" width="101" height="101"/>
+	<SubTexture name="Crystal.png" x="693" y="288" width="97" height="78"/>
+	<SubTexture name="IceBox.png" x="592" y="288" width="101" height="101"/>
+	<SubTexture name="Igloo.png" x="0" y="0" width="511" height="201"/>
+	<SubTexture name="Sign_1.png" x="693" y="366" width="87" height="94"/>
+	<SubTexture name="Sign_2.png" x="780" y="366" width="87" height="93"/>
+	<SubTexture name="SnowMan.png" x="592" y="0" width="193" height="210"/>
+	<SubTexture name="Stone.png" x="592" y="210" width="124" height="78"/>
+	<SubTexture name="Tree_1.png" x="0" y="201" width="364" height="280"/>
+	<SubTexture name="Tree_2.png" x="364" y="201" width="228" height="280"/>
+</TextureAtlas>

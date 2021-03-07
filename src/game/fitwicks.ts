@@ -3,6 +3,7 @@ import {
   TEXTURE_KENNEY_ASSETS,
   TEXTURE_UNDERWATER_SPRITES,
   TEXTURE_DESERT_SPRITES,
+  TEXTURE_WINTER_SPRITES,
 } from "./constants";
 
 // a map of [fitwick name, array of possible fitwick [texture, frame]] pairs
@@ -87,6 +88,8 @@ FITWICKS.set("tree", [
   [TEXTURE_DESERT_SPRITES, "tree_10.png"],
   [TEXTURE_DESERT_SPRITES, "tree_11.png"],
   [TEXTURE_DESERT_SPRITES, "tree_12.png"],
+  [TEXTURE_WINTER_SPRITES, "Tree_1.png"],
+  [TEXTURE_WINTER_SPRITES, "Tree_2.png"],
 ]);
 FITWICKS.set("pine tree", [
   [TEXTURE_KENNEY_ASSETS, "treePine.png"],
@@ -181,6 +184,7 @@ FITWICKS.set("stone", [
   [TEXTURE_DESERT_SPRITES, "stones_10.png"],
   [TEXTURE_DESERT_SPRITES, "stones_11.png"],
   [TEXTURE_DESERT_SPRITES, "stones_12.png"],
+  [TEXTURE_WINTER_SPRITES, "Stone.png"],
 ]);
 // TODO: this is incorrect
 FITWICKS.set("tropical building", [
@@ -204,11 +208,13 @@ FITWICKS.set("tree stump", [
 FITWICKS.set("sign", [
   [TEXTURE_MEDIEVAL_TROPICAL_SPRITES, "decor_4.png"],
   [TEXTURE_DESERT_SPRITES, "decor_3.png"],
+  [TEXTURE_WINTER_SPRITES, "Sign_1.png"],
+  [TEXTURE_WINTER_SPRITES, "Sign_2.png"],
 ]);
 FITWICKS.set("bowl", [[TEXTURE_MEDIEVAL_TROPICAL_SPRITES, "decor_5.png"]]);
 FITWICKS.set("fire pit", [
   [TEXTURE_MEDIEVAL_TROPICAL_SPRITES, "decor_6.png"],
-  [TEXTURE_DESERT_SPRITES, "decor7.png"],
+  [TEXTURE_DESERT_SPRITES, "decor_7.png"],
 ]);
 FITWICKS.set("carved stone", [
   [TEXTURE_MEDIEVAL_TROPICAL_SPRITES, "decor_7.png"],
@@ -242,6 +248,7 @@ FITWICKS.set("stone vase", [
 // decor_17.png is a barrel (included above)
 FITWICKS.set("wooden crate", [
   [TEXTURE_MEDIEVAL_TROPICAL_SPRITES, "decor_18.png"],
+  [TEXTURE_WINTER_SPRITES, "Crate.png"],
 ]);
 FITWICKS.set("shrub", [
   [TEXTURE_MEDIEVAL_TROPICAL_SPRITES, "greenery_1.png"],
@@ -275,5 +282,9 @@ FITWICKS.set("stairs", [
   [TEXTURE_DESERT_SPRITES, "land_4.png"],
   [TEXTURE_DESERT_SPRITES, "land_8.png"],
 ]);
+FITWICKS.set("crystal", [[TEXTURE_WINTER_SPRITES, "Crystal.png"]]);
+FITWICKS.set("block of ice", [[TEXTURE_WINTER_SPRITES, "IceBox.png"]]);
+FITWICKS.set("igloo", [[TEXTURE_WINTER_SPRITES, "Igloo.png"]]);
+FITWICKS.set("snowman", [[TEXTURE_WINTER_SPRITES, "SnowMan.png"]]);
 
 export default FITWICKS;
