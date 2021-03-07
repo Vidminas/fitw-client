@@ -17,6 +17,8 @@ import {
   EVENT_FITWICK_TAP,
   SPEECH_BUBBLE_HEIGHT,
   SPEECH_BUBBLE_MIN_WIDTH,
+  EVENT_EXIT_WORLD,
+  EVENT_NAVIGATE_HOME,
 } from "../constants";
 import Fitwick from "../components/Fitwick";
 import SpeechBubble from "../components/SpeechBubble";
@@ -171,6 +173,10 @@ class MainScene extends RexScene {
       );
       cam.startFollow(this.activeFitwick, true, 0.05);
       this.activeFitwick.pickUp();
+    });
+    uiScene.events.on(EVENT_EXIT_WORLD, () => {
+      // save world state ...
+      this.game.events.emit(EVENT_NAVIGATE_HOME);
     });
 
     // this prevents camera from scrolling out of bounds

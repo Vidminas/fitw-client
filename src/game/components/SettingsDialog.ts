@@ -5,6 +5,7 @@ import {
   COLOR_YELLOW,
 } from "../colors";
 import {
+  EVENT_EXIT_WORLD,
   EVENT_MUSIC_CHANGE,
   EVENT_MUSIC_PAUSE,
   EVENT_MUSIC_PLAY,
@@ -15,6 +16,9 @@ import {
   FRAME_BUTTON_CONFIRM_CLICK,
   FRAME_BUTTON_CONFIRM_HOVER,
   FRAME_BUTTON_CONFIRM_REST,
+  FRAME_BUTTON_EXIT_CLICK,
+  FRAME_BUTTON_EXIT_HOVER,
+  FRAME_BUTTON_EXIT_REST,
   FRAME_BUTTON_NOTE_CLICK,
   FRAME_BUTTON_NOTE_HOVER,
   FRAME_BUTTON_NOTE_REST,
@@ -110,6 +114,7 @@ const createSettingsGrid = (scene: RexScene, currentVolume: number) => {
   musicVolume.add(
     scene.rexUI.add
       .slider({
+        height: UI_BUTTON_SIZE / 2,
         width: UI_BUTTON_SIZE * 3,
         track: scene.rexUI.add.roundRectangle(
           0,
@@ -119,7 +124,7 @@ const createSettingsGrid = (scene: RexScene, currentVolume: number) => {
           6,
           COLOR_DIALOG_FOREGROUND
         ),
-        thumb: scene.rexUI.add.roundRectangle(0, 0, 0, 0, 10, COLOR_YELLOW),
+        thumb: scene.rexUI.add.roundRectangle(0, 0, 0, 0, 25, COLOR_YELLOW),
         value: currentVolume,
         input: "drag",
       })
@@ -128,13 +133,33 @@ const createSettingsGrid = (scene: RexScene, currentVolume: number) => {
       })
   );
 
+  const exitWorld = scene.rexUI.add.label({
+    icon: new Button(
+      scene,
+      0,
+      0,
+      TEXTURE_BUTTONS,
+      FRAME_BUTTON_EXIT_REST,
+      FRAME_BUTTON_EXIT_HOVER,
+      FRAME_BUTTON_EXIT_CLICK,
+      () => scene.events.emit(EVENT_EXIT_WORLD)
+    ),
+    text: scene.add.text(0, 0, "Exit World", { fontSize: UI_FONT_SIZE }),
+  });
+
   grid.add(musicTrack);
   grid.add(musicPause);
   grid.add(musicVolume);
+  grid.add(exitWorld);
   return grid;
 };
 
-const createPanel = (scene: RexScene, currentVolume: number) => {
+const createPanel = (
+  scene: RexScene,
+  currentVolume: number,
+  onConfirm: Function,
+  onCancel: Function
+) => {
   const confirmButton = new Button(
     scene,
     0,
@@ -143,9 +168,7 @@ const createPanel = (scene: RexScene, currentVolume: number) => {
     FRAME_BUTTON_CONFIRM_REST,
     FRAME_BUTTON_CONFIRM_HOVER,
     FRAME_BUTTON_CONFIRM_CLICK,
-    () => {
-      console.log("confirm");
-    }
+    onConfirm
   );
   const cancelButton = new Button(
     scene,
@@ -155,9 +178,7 @@ const createPanel = (scene: RexScene, currentVolume: number) => {
     FRAME_BUTTON_CANCEL_REST,
     FRAME_BUTTON_CANCEL_HOVER,
     FRAME_BUTTON_CANCEL_CLICK,
-    () => {
-      console.log("cancelled");
-    }
+    onCancel
   );
 
   return scene.rexUI.add.dialog({
@@ -167,7 +188,12 @@ const createPanel = (scene: RexScene, currentVolume: number) => {
 };
 
 class SettingsDialog extends ScrollablePanel {
-  constructor(scene: RexScene, currentVolume: number) {
+  constructor(
+    scene: RexScene,
+    currentVolume: number,
+    onConfirm: Function,
+    onCancel: Function
+  ) {
     super(scene, {
       x: 0,
       y: 0,
@@ -188,7 +214,7 @@ class SettingsDialog extends ScrollablePanel {
       ),
       header: createTitle(scene),
       panel: {
-        child: createPanel(scene, currentVolume),
+        child: createPanel(scene, currentVolume, onConfirm, onCancel),
         mask: { padding: 1 },
       },
       space: {

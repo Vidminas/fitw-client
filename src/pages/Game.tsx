@@ -11,14 +11,18 @@ import IUser from "../api/user";
 import IWorld from "../api/world";
 import PhaserGame from "../game/PhaserGame";
 import "./Clock.css";
+import { useHistory } from "react-router";
 
 const Game: React.FC<{}> = () => {
+  const history = useHistory();
   const user: IUser = useSelector((state: any) => state.user?.user);
   const world: IWorld = useSelector((state: any) => state.world?.world);
   const [time, setTime] = React.useState("");
 
   React.useEffect(() => {
-    const newGame = new PhaserGame(user, world);
+    const newGame = new PhaserGame(user, world, () => {
+      history.push("/home");
+    });
     newGame.init("game-root");
     return () => newGame.destroy();
   }, [user, world]);

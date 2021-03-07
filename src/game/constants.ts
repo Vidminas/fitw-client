@@ -27,6 +27,8 @@ export const EVENT_MUSIC_CHANGE = "music/change";
 export const EVENT_MUSIC_PLAY = "music/play";
 export const EVENT_MUSIC_PAUSE = "music/pause";
 export const EVENT_VOLUME_CHANGE = "volume/change";
+export const EVENT_EXIT_WORLD = "world/exit";
+export const EVENT_NAVIGATE_HOME = "world/exit-and-nav-home";
 
 const MUSIC_CALM_BEAR = "16-Dark Fantasy Studio- Calm bear.wav";
 const MUSIC_PLAYING_IN_WATER = "26-Dark Fantasy Studio- Playing in water.wav";
@@ -106,3 +108,6 @@ export const FRAME_BUTTON_PLAY_CLICK = "Button_048.png";
 export const FRAME_BUTTON_PAUSE_REST = "Button_142.png";
 export const FRAME_BUTTON_PAUSE_HOVER = "Button_143.png";
 export const FRAME_BUTTON_PAUSE_CLICK = "Button_144.png";
+export const FRAME_BUTTON_EXIT_REST = "Button_086.png";
+export const FRAME_BUTTON_EXIT_HOVER = "Button_087.png";
+export const FRAME_BUTTON_EXIT_CLICK = "Button_088.png";

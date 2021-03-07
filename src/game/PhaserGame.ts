@@ -5,7 +5,7 @@ import RexUIPlugin from "phaser3-rex-plugins/templates/ui/ui-plugin.js";
 import RexGesturesPlugin from "phaser3-rex-plugins/plugins/gestures-plugin.js";
 import IUser from "../api/user";
 import IWorld from "../api/world";
-import { GAME_HEIGHT, GAME_WIDTH } from "./constants";
+import { EVENT_NAVIGATE_HOME, GAME_HEIGHT, GAME_WIDTH } from "./constants";
 import MainScene from "./scenes/MainScene";
 import UIScene from "./scenes/UIScene";
 import PreloadScene from "./scenes/PreloadScene";
@@ -15,12 +15,14 @@ class PhaserGame {
   private socket?: Socket;
   private user: IUser;
   private world: IWorld;
+  private exitWorld: Function;
 
-  constructor(user: IUser, world: IWorld) {
+  constructor(user: IUser, world: IWorld, exitWorld: Function) {
     this.game = undefined;
     this.socket = undefined;
     this.user = user;
     this.world = world;
+    this.exitWorld = exitWorld;
   }
 
   public init(parent: string) {
@@ -63,6 +65,11 @@ class PhaserGame {
           },
         ],
       },
+    });
+
+    this.game.events.on(EVENT_NAVIGATE_HOME, () => {
+      this.destroy();
+      this.exitWorld();
     });
     return this.game;
   }

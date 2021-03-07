@@ -207,7 +207,20 @@ class UIScene extends RexScene {
     }
 
     this.isDialogOpen = true;
-    this.settingsDialog = new SettingsDialog(this, this.sound.volume);
+    this.settingsDialog = new SettingsDialog(
+      this,
+      this.sound.volume,
+      () => {
+        this.settingsDialog!.hide();
+        this.isDialogOpen = false;
+        this.settingsDialog = undefined;
+      },
+      () => {
+        this.settingsDialog!.hide();
+        this.isDialogOpen = false;
+        this.settingsDialog = undefined;
+      }
+    );
   }
 
   private onListFitwicks() {
