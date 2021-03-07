@@ -81,3 +81,6 @@ export const FRAME_BUTTON_SPEAKER_CLICK = "Button_136.png";
 export const FRAME_BUTTON_LIST_REST = "Button_110.png";
 export const FRAME_BUTTON_LIST_HOVER = "Button_111.png";
 export const FRAME_BUTTON_LIST_CLICK = "Button_112.png";
+export const FRAME_BUTTON_SETTINGS_REST = "Button_029.png";
+export const FRAME_BUTTON_SETTINGS_HOVER = "Button_030.png";
+export const FRAME_BUTTON_SETTINGS_CLICK = "Button_031.png";

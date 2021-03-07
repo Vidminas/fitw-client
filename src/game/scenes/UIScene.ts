@@ -3,6 +3,7 @@ import BackgroundDialog from "../components/BackgroundDialog";
 import Button from "../components/Button";
 import Fitwick from "../components/Fitwick";
 import ListDialog from "../components/ListDialog";
+import SettingsDialog from "../components/SettingsDialog";
 import {
   GAME_WIDTH,
   UI_BUTTON_SIZE,
@@ -27,15 +28,20 @@ import {
   FRAME_BUTTON_LIST_REST,
   FRAME_BUTTON_LIST_HOVER,
   FRAME_BUTTON_LIST_CLICK,
+  FRAME_BUTTON_SETTINGS_REST,
+  FRAME_BUTTON_SETTINGS_HOVER,
+  FRAME_BUTTON_SETTINGS_CLICK,
 } from "../constants";
 import RexScene from "./RexScene";
 
 class UIScene extends RexScene {
   private backgroundDialog?: BackgroundDialog;
+  private settingsDialog?: SettingsDialog;
   private listDialog?: ListDialog;
   private addDialog?: AddDialog;
   private isDialogOpen: boolean;
   private changeBackgroundButton!: Button;
+  private settingsButton!: Button;
   private listButton!: Button;
   private addFitwickButton!: Button;
   private confirmFitwickButton!: Button;
@@ -66,6 +72,16 @@ class UIScene extends RexScene {
       FRAME_BUTTON_SWITCH_HOVER,
       FRAME_BUTTON_SWITCH_CLICK,
       this.onChangeBackground.bind(this)
+    );
+    this.settingsButton = new Button(
+      this,
+      GAME_WIDTH - 2 * UI_BUTTON_SIZE,
+      0,
+      TEXTURE_BUTTONS,
+      FRAME_BUTTON_SETTINGS_REST,
+      FRAME_BUTTON_SETTINGS_HOVER,
+      FRAME_BUTTON_SETTINGS_CLICK,
+      this.onOpenSettings.bind(this)
     );
     this.listButton = new Button(
       this,
@@ -140,6 +156,22 @@ class UIScene extends RexScene {
         this.backgroundDialog = undefined;
       }
     );
+  }
+
+  private onOpenSettings() {
+    if (this.settingsDialog) {
+      this.isDialogOpen = false;
+      this.settingsDialog.hide();
+      this.settingsDialog = undefined;
+      return;
+    }
+
+    if (this.isDialogOpen) {
+      return;
+    }
+
+    this.isDialogOpen = true;
+    this.settingsDialog = new SettingsDialog(this);
   }
 
   private onListFitwicks() {

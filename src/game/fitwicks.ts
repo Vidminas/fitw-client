@@ -242,9 +242,7 @@ FITWICKS.set("wooden cart", [
 FITWICKS.set("tray with potatoes", [
   [TEXTURE_MEDIEVAL_TROPICAL_SPRITES, "decor_15.png"],
 ]);
-FITWICKS.set("stone vase", [
-  [TEXTURE_MEDIEVAL_TROPICAL_SPRITES, "decor_16.png"],
-]);
+FITWICKS.set("mud vase", [[TEXTURE_MEDIEVAL_TROPICAL_SPRITES, "decor_16.png"]]);
 // decor_17.png is a barrel (included above)
 FITWICKS.set("wooden crate", [
   [TEXTURE_MEDIEVAL_TROPICAL_SPRITES, "decor_18.png"],
