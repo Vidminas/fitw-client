@@ -31,6 +31,10 @@ import {
   FRAME_BUTTON_SETTINGS_REST,
   FRAME_BUTTON_SETTINGS_HOVER,
   FRAME_BUTTON_SETTINGS_CLICK,
+  MUSIC_TRACKS,
+  EVENT_MUSIC_CHANGE,
+  EVENT_MUSIC_PLAY,
+  EVENT_MUSIC_PAUSE,
 } from "../constants";
 import RexScene from "./RexScene";
 
@@ -47,6 +51,10 @@ class UIScene extends RexScene {
   private confirmFitwickButton!: Button;
   private deleteFitwickButton!: Button;
 
+  private musicTrack!: Phaser.Sound.BaseSound;
+  private musicTrackIndex!: number;
+  private isMusicPlaying!: boolean;
+
   constructor() {
     super({ key: "UIScene", active: false });
     this.isDialogOpen = false;
@@ -55,11 +63,34 @@ class UIScene extends RexScene {
   create() {
     this.input.setTopOnly(false);
     this.createButtons();
+    this.musicTrack = this.sound.add(MUSIC_TRACKS[0]);
+    this.musicTrackIndex = 0;
+    this.musicTrack.play();
+    this.isMusicPlaying = true;
 
     this.events.on(EVENT_FITWICK_PLACE, this.onConfirmFitwick.bind(this));
     this.events.on(EVENT_FITWICK_DELETE, this.onDeleteFitwick.bind(this));
     this.events.on(EVENT_FITWICK_MOVE, this.onMoveFitwick.bind(this));
     // this.events.on(EVENT_FITWICK_TAP, this.onTapFitwick.bind(this));
+    this.events.on(EVENT_MUSIC_CHANGE, () => {
+      this.musicTrackIndex++;
+      this.musicTrackIndex %= MUSIC_TRACKS.length;
+      this.musicTrack.destroy();
+      this.musicTrack = this.sound.add(MUSIC_TRACKS[this.musicTrackIndex]);
+      this.musicTrack.play();
+    });
+    this.events.on(EVENT_MUSIC_PLAY, () => {
+      if (!this.isMusicPlaying) {
+        this.musicTrack.play();
+      }
+      this.isMusicPlaying = true;
+    });
+    this.events.on(EVENT_MUSIC_PAUSE, () => {
+      if (this.isMusicPlaying) {
+        this.musicTrack.pause();
+      }
+      this.isMusicPlaying = false;
+    });
   }
 
   private createButtons() {
@@ -171,7 +202,7 @@ class UIScene extends RexScene {
     }
 
     this.isDialogOpen = true;
-    this.settingsDialog = new SettingsDialog(this);
+    this.settingsDialog = new SettingsDialog(this, this.isMusicPlaying);
   }
 
   private onListFitwicks() {

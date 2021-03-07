@@ -1,5 +1,6 @@
 import {
   BACKGROUND_TEXTURES,
+  MUSIC_TRACKS,
   TEXTURE_BUTTONS,
   TEXTURE_DESERT_SPRITES,
   TEXTURE_KENNEY_ASSETS,
@@ -22,6 +23,10 @@ class PreloadScene extends Phaser.Scene {
     });
     this.load.on("complete", function () {
       progress.destroy();
+    });
+
+    MUSIC_TRACKS.forEach((track) => {
+      this.load.audio(track, `music/${track}`);
     });
 
     this.load.multiatlas(TEXTURE_BUTTONS, "ui/buttons.json", "ui/");

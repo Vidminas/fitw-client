@@ -1,12 +1,24 @@
 import { ScrollablePanel } from "phaser3-rex-plugins/templates/ui/ui-components.js";
 import { COLOR_DIALOG_BACKGROUND, COLOR_DIALOG_FOREGROUND } from "../colors";
 import {
+  EVENT_MUSIC_CHANGE,
+  EVENT_MUSIC_PAUSE,
+  EVENT_MUSIC_PLAY,
   FRAME_BUTTON_CANCEL_CLICK,
   FRAME_BUTTON_CANCEL_HOVER,
   FRAME_BUTTON_CANCEL_REST,
   FRAME_BUTTON_CONFIRM_CLICK,
   FRAME_BUTTON_CONFIRM_HOVER,
   FRAME_BUTTON_CONFIRM_REST,
+  FRAME_BUTTON_NOTE_CLICK,
+  FRAME_BUTTON_NOTE_HOVER,
+  FRAME_BUTTON_NOTE_REST,
+  FRAME_BUTTON_PAUSE_CLICK,
+  FRAME_BUTTON_PAUSE_HOVER,
+  FRAME_BUTTON_PAUSE_REST,
+  FRAME_BUTTON_PLAY_CLICK,
+  FRAME_BUTTON_PLAY_HOVER,
+  FRAME_BUTTON_PLAY_REST,
   GAME_HEIGHT,
   GAME_WIDTH,
   TEXTURE_BUTTONS,
@@ -37,17 +49,58 @@ const createTitle = (scene: RexScene) =>
     },
   });
 
-const createSettingsGrid = (scene: RexScene) => {
+const createSettingsGrid = (scene: RexScene, isMusicPlaying: boolean) => {
   const grid = scene.rexUI.add.gridSizer({
     column: 1,
     row: 5,
   });
 
-  grid.add(scene.add.text(0, 0, "Volume: 999%"));
+  const musicTrack = scene.rexUI.add.label({
+    icon: new Button(
+      scene,
+      0,
+      0,
+      TEXTURE_BUTTONS,
+      FRAME_BUTTON_NOTE_REST,
+      FRAME_BUTTON_NOTE_HOVER,
+      FRAME_BUTTON_NOTE_CLICK,
+      () => scene.events.emit(EVENT_MUSIC_CHANGE)
+    ),
+    text: scene.add.text(0, 0, "Change Music", { fontSize: UI_FONT_SIZE }),
+  });
+
+  const playPauseButton = new Button(
+    scene,
+    0,
+    0,
+    TEXTURE_BUTTONS,
+    isMusicPlaying ? FRAME_BUTTON_PAUSE_REST : FRAME_BUTTON_PLAY_REST,
+    isMusicPlaying ? FRAME_BUTTON_PAUSE_HOVER : FRAME_BUTTON_PLAY_HOVER,
+    isMusicPlaying ? FRAME_BUTTON_PAUSE_CLICK : FRAME_BUTTON_PLAY_CLICK,
+    () => {
+      playPauseButton.changeFrames(
+        isMusicPlaying ? FRAME_BUTTON_PAUSE_REST : FRAME_BUTTON_PLAY_REST,
+        isMusicPlaying ? FRAME_BUTTON_PAUSE_HOVER : FRAME_BUTTON_PLAY_HOVER,
+        isMusicPlaying ? FRAME_BUTTON_PAUSE_CLICK : FRAME_BUTTON_PLAY_CLICK
+      );
+      playPauseButton.setFrame(
+        isMusicPlaying ? FRAME_BUTTON_PAUSE_HOVER : FRAME_BUTTON_PLAY_HOVER
+      );
+      scene.events.emit(isMusicPlaying ? EVENT_MUSIC_PAUSE : EVENT_MUSIC_PLAY);
+      isMusicPlaying = !isMusicPlaying;
+    }
+  );
+  const musicPause = scene.rexUI.add.label({
+    icon: playPauseButton,
+    text: scene.add.text(0, 0, "Play/Pause Music", { fontSize: UI_FONT_SIZE }),
+  });
+
+  grid.add(musicTrack);
+  grid.add(musicPause);
   return grid;
 };
 
-const createPanel = (scene: RexScene) => {
+const createPanel = (scene: RexScene, isMusicPlaying: boolean) => {
   const confirmButton = new Button(
     scene,
     0,
@@ -74,13 +127,13 @@ const createPanel = (scene: RexScene) => {
   );
 
   return scene.rexUI.add.dialog({
-    content: createSettingsGrid(scene),
+    content: createSettingsGrid(scene, isMusicPlaying),
     actions: [confirmButton, cancelButton],
   });
 };
 
 class SettingsDialog extends ScrollablePanel {
-  constructor(scene: RexScene) {
+  constructor(scene: RexScene, isMusicPlaying: boolean) {
     super(scene, {
       x: 0,
       y: 0,
@@ -101,7 +154,7 @@ class SettingsDialog extends ScrollablePanel {
       ),
       header: createTitle(scene),
       panel: {
-        child: createPanel(scene),
+        child: createPanel(scene, isMusicPlaying),
         mask: { padding: 1 },
       },
       space: {

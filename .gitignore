@@ -11,6 +11,9 @@
 # production
 /build
 
+# assets that are bundled with the game
+/public/assets/music/
+
 # misc
 .DS_Store
 .env.local

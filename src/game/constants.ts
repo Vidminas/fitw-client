@@ -23,6 +23,18 @@ export const EVENT_FITWICK_PLACE = "fitwick/place";
 export const EVENT_FITWICK_DELETE = "fitwick/delete";
 export const EVENT_FITWICK_MOVE = "fitwick/move";
 export const EVENT_FITWICK_TAP = "fitwick/tap";
+export const EVENT_MUSIC_CHANGE = "music/change";
+export const EVENT_MUSIC_PLAY = "music/play";
+export const EVENT_MUSIC_PAUSE = "music/pause";
+
+const MUSIC_CALM_BEAR = "16-Dark Fantasy Studio- Calm bear.wav";
+const MUSIC_PLAYING_IN_WATER = "26-Dark Fantasy Studio- Playing in water.wav";
+const MUSIC_TREASURE = "29-Dark Fantasy Studio- Treasure.wav";
+export const MUSIC_TRACKS = [
+  MUSIC_CALM_BEAR,
+  MUSIC_PLAYING_IN_WATER,
+  MUSIC_TREASURE,
+];
 
 export const TEXTURE_BUTTONS = "buttons";
 export const TEXTURE_KENNEY_ASSETS = "kenney_assets";
@@ -84,3 +96,12 @@ export const FRAME_BUTTON_LIST_CLICK = "Button_112.png";
 export const FRAME_BUTTON_SETTINGS_REST = "Button_029.png";
 export const FRAME_BUTTON_SETTINGS_HOVER = "Button_030.png";
 export const FRAME_BUTTON_SETTINGS_CLICK = "Button_031.png";
+export const FRAME_BUTTON_NOTE_REST = "Button_118.png";
+export const FRAME_BUTTON_NOTE_HOVER = "Button_119.png";
+export const FRAME_BUTTON_NOTE_CLICK = "Button_120.png";
+export const FRAME_BUTTON_PLAY_REST = "Button_046.png";
+export const FRAME_BUTTON_PLAY_HOVER = "Button_047.png";
+export const FRAME_BUTTON_PLAY_CLICK = "Button_048.png";
+export const FRAME_BUTTON_PAUSE_REST = "Button_142.png";
+export const FRAME_BUTTON_PAUSE_HOVER = "Button_143.png";
+export const FRAME_BUTTON_PAUSE_CLICK = "Button_144.png";
