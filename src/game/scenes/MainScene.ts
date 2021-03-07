@@ -16,6 +16,7 @@ import {
   EVENT_FITWICK_MOVE,
   EVENT_FITWICK_TAP,
   SPEECH_BUBBLE_HEIGHT,
+  SPEECH_BUBBLE_MIN_WIDTH,
 } from "../constants";
 import Fitwick from "../components/Fitwick";
 import SpeechBubble from "../components/SpeechBubble";
@@ -67,7 +68,6 @@ class MainScene extends RexScene {
         cam.scrollY + GAME_HEIGHT / 2,
         fitwickName
       );
-      this.activeFitwick.setInteractive();
       this.input.setDraggable(this.activeFitwick);
       this.activeFitwick.on(
         "drag",
@@ -125,12 +125,16 @@ class MainScene extends RexScene {
               }
 
               if (!this.activeSpeechBubble) {
+                const speechBubbleWidth = Math.max(
+                  SPEECH_BUBBLE_MIN_WIDTH,
+                  fitwick.displayWidth
+                );
                 this.activeSpeechBubble = new SpeechBubble(
                   this,
                   fitwick,
-                  fitwick.x - fitwick.displayWidth / 2,
+                  fitwick.x - speechBubbleWidth / 2,
                   fitwick.y - fitwick.displayHeight / 2 - SPEECH_BUBBLE_HEIGHT,
-                  fitwick.displayWidth,
+                  speechBubbleWidth,
                   SPEECH_BUBBLE_HEIGHT,
                   fitwick.name
                 );

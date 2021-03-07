@@ -15,6 +15,7 @@ export const MAX_SCROLL_Y = GAME_BG_HEIGHT;
 // limits on camera zoom (besides limiting to game height and width)
 export const MAX_ZOOM_FACTOR = 4;
 
+export const SPEECH_BUBBLE_MIN_WIDTH = UI_BUTTON_SIZE * 2;
 export const SPEECH_BUBBLE_HEIGHT = UI_BUTTON_SIZE + 10 * SCALE_RATIO;
 
 export const EVENT_FITWICK_NEW = "fitwick/new";
