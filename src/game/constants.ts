@@ -26,6 +26,8 @@ export const EVENT_FITWICK_TAP = "fitwick/tap";
 export const TEXTURE_BUTTONS = "buttons";
 export const TEXTURE_KENNEY_ASSETS = "kenney_assets";
 export const TEXTURE_UNDERWATER_SPRITES = "underwater_sprites";
+export const TEXTURE_DESERT_SPRITES = "desert_sprites";
+export const TEXTURE_MEDIEVAL_TROPICAL_SPRITES = "medieval_tropical_sprites";
 
 export const TEXTURE_BACKGROUND_EMPTY = "backgroundEmpty";
 const TEXTURE_BACKGROUND_FALL = "backgroundColorFall";

@@ -1,7 +1,13 @@
 underwater_sprites.png (packed using ShoeBox) is from:
 https://craftpix.net/freebies/free-underwater-world-2d-game-objects/
-CraftPix royalty-free license: https://craftpix.net/file-licenses/
 
+medieval_tropical_sprites.png (packed using Shoebox) is from:
+https://craftpix.net/freebies/free-tropical-medieval-city-2d-tileset/
+
+desert_sprites.png (packed using ShoeBox) is from:
+https://craftpix.net/freebies/free-2d-rpg-desert-tileset/
+
+All the above are under CraftPix royalty-free license: https://craftpix.net/file-licenses/
 
 kenney_spritesheet.png and kenney_spritesheet.xml are from:
 
