@@ -69,29 +69,32 @@ const createSettingsGrid = (scene: RexScene, isMusicPlaying: boolean) => {
     text: scene.add.text(0, 0, "Change Music", { fontSize: UI_FONT_SIZE }),
   });
 
-  const playPauseButton = new Button(
+  const pauseButton = new Button(
     scene,
     0,
     0,
     TEXTURE_BUTTONS,
-    isMusicPlaying ? FRAME_BUTTON_PAUSE_REST : FRAME_BUTTON_PLAY_REST,
-    isMusicPlaying ? FRAME_BUTTON_PAUSE_HOVER : FRAME_BUTTON_PLAY_HOVER,
-    isMusicPlaying ? FRAME_BUTTON_PAUSE_CLICK : FRAME_BUTTON_PLAY_CLICK,
+    FRAME_BUTTON_PAUSE_REST,
+    FRAME_BUTTON_PAUSE_HOVER,
+    FRAME_BUTTON_PAUSE_CLICK,
     () => {
-      playPauseButton.changeFrames(
-        isMusicPlaying ? FRAME_BUTTON_PAUSE_REST : FRAME_BUTTON_PLAY_REST,
-        isMusicPlaying ? FRAME_BUTTON_PAUSE_HOVER : FRAME_BUTTON_PLAY_HOVER,
-        isMusicPlaying ? FRAME_BUTTON_PAUSE_CLICK : FRAME_BUTTON_PLAY_CLICK
-      );
-      playPauseButton.setFrame(
-        isMusicPlaying ? FRAME_BUTTON_PAUSE_HOVER : FRAME_BUTTON_PLAY_HOVER
-      );
-      scene.events.emit(isMusicPlaying ? EVENT_MUSIC_PAUSE : EVENT_MUSIC_PLAY);
-      isMusicPlaying = !isMusicPlaying;
+      scene.events.emit(EVENT_MUSIC_PAUSE);
+    }
+  );
+  const playButton = new Button(
+    scene,
+    0,
+    0,
+    TEXTURE_BUTTONS,
+    FRAME_BUTTON_PLAY_REST,
+    FRAME_BUTTON_PLAY_HOVER,
+    FRAME_BUTTON_PLAY_CLICK,
+    () => {
+      scene.events.emit(EVENT_MUSIC_PLAY);
     }
   );
   const musicPause = scene.rexUI.add.label({
-    icon: playPauseButton,
+    icon: scene.rexUI.add.sizer().add(playButton).add(pauseButton),
     text: scene.add.text(0, 0, "Play/Pause Music", { fontSize: UI_FONT_SIZE }),
   });
 
