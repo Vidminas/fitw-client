@@ -1,22 +1,7 @@
-bg_forest_path.jpg, bg_valley.jpg, bg_bridge.jpg, bg_mountain.jpg, bg_road.jpg:
-- Free for commercial use
-- No attribution required
-https://pixabay.com/service/license/
+underwater_background_1.png, underwater_background_2.png, underwater_background_3.png, underwater_background_4.png:
+https://craftpix.net/freebies/free-underwater-world-parallax-game-backgrounds/
+CraftPix royalty-free license: https://craftpix.net/file-licenses/
 
-bg_forest_path.jpg
-Image by <a href="https://pixabay.com/users/44833-44833/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=166733">Jim Semonik</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=166733">Pixabay</a>
-
-bg_valley.jpg
-Image by <a href="https://pixabay.com/users/steppinstars-3941/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=63564">Steppinstars</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=63564">Pixabay</a>
-
-bg_bridge.jpg
-Image by <a href="https://pixabay.com/users/jamesdemers-3416/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=53769">JamesDeMers</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=53769">Pixabay</a>
-
-bg_mountain.jpg
-Image by <a href="https://pixabay.com/users/kinkate-4384506/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2031539">kinkate</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2031539">Pixabay</a>
-
-bg_road.jpg
-Image by <a href="https://pixabay.com/photos/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=381227">Free-Photos</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=381227">Pixabay</a>
 
 backgroundColorDesert.png, backgroundColorFall.png, backgroundColorForest.png, backgroundColorGrass.png, backgroundEmpty.png:
 	Background Elements Redux

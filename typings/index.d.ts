@@ -24,6 +24,7 @@ declare module "phaser3-rex-plugins/plugins/inputtext.js" {
       config: any
     );
     setStyle: (key: string, value: string) => void;
+    setFocus();
     get text(): string;
   }
   export default InputText;

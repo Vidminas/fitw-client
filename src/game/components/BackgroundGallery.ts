@@ -9,17 +9,8 @@ import {
   FRAME_BUTTON_RIGHT_HOVER,
   FRAME_BUTTON_RIGHT_CLICK,
   UI_BUTTON_SIZE,
-  TEXTURE_BACKGROUND_BRIDGE,
-  TEXTURE_BACKGROUND_FOREST,
-  TEXTURE_BACKGROUND_MOUNTAIN,
-  TEXTURE_BACKGROUND_ROAD,
-  TEXTURE_BACKGROUND_VALLEY,
   GAME_WIDTH,
-  TEXTURE_BACKGROUND_EMPTY,
-  TEXTURE_BACKGROUND_DESERT,
-  TEXTURE_BACKGROUND_FALL,
-  TEXTURE_BACKGROUND_GRASS,
-  TEXTURE_BACKGROUND_FOREST_PATH,
+  BACKGROUND_TEXTURES,
 } from "../constants";
 import UIScene from "../scenes/UIScene";
 import Button from "./Button";
@@ -156,20 +147,7 @@ class BackgroundGallery extends OverlapSizer {
   }
 
   private createBackgrounds(scene: UIScene, bgSize: number) {
-    const bgTextures = [
-      TEXTURE_BACKGROUND_EMPTY,
-      TEXTURE_BACKGROUND_DESERT,
-      TEXTURE_BACKGROUND_FOREST,
-      TEXTURE_BACKGROUND_FALL,
-      TEXTURE_BACKGROUND_GRASS,
-      TEXTURE_BACKGROUND_BRIDGE,
-      TEXTURE_BACKGROUND_FOREST_PATH,
-      TEXTURE_BACKGROUND_MOUNTAIN,
-      TEXTURE_BACKGROUND_ROAD,
-      TEXTURE_BACKGROUND_VALLEY,
-    ];
-
-    this.backgrounds = bgTextures.map((texture) =>
+    this.backgrounds = BACKGROUND_TEXTURES.map((texture) =>
       scene.rexUI.add.label({
         name: texture,
         width: bgSize,

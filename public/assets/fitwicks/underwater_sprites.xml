@@ -1,0 +1,32 @@
+<TextureAtlas imagePath="sprites.png">
+	<SubTexture name="Acceleration.png" x="861" y="1740" width="106" height="161"/>
+	<SubTexture name="Anchor.png" x="620" y="1163" width="219" height="277"/>
+	<SubTexture name="Barrel_1.png" x="803" y="341" width="192" height="237"/>
+	<SubTexture name="Barrel_2.png" x="597" y="1786" width="264" height="212"/>
+	<SubTexture name="Bomb.png" x="609" y="1451" width="239" height="227"/>
+	<SubTexture name="Bubble_1.png" x="849" y="234" width="85" height="84"/>
+	<SubTexture name="Bubble_2.png" x="922" y="711" width="85" height="84"/>
+	<SubTexture name="Bubble_3.png" x="922" y="795" width="85" height="84"/>
+	<SubTexture name="Chest_ajar.png" x="313" y="1786" width="284" height="217"/>
+	<SubTexture name="Chest_closed.png" x="338" y="1239" width="282" height="212"/>
+	<SubTexture name="Chest_open.png" x="406" y="909" width="281" height="254"/>
+	<SubTexture name="Chain.png" x="972" y="1624" width="34" height="343"/>
+	<SubTexture name="Coin.png" x="849" y="0" width="118" height="131"/>
+	<SubTexture name="Crown.png" x="803" y="578" width="126" height="133"/>
+	<SubTexture name="Heart.png" x="849" y="131" width="107" height="103"/>
+	<SubTexture name="Magnet.png" x="848" y="1624" width="124" height="116"/>
+	<SubTexture name="Mast.png" x="0" y="341" width="523" height="568"/>
+	<SubTexture name="Net.png" x="0" y="0" width="849" height="341"/>
+	<SubTexture name="Pearl.png" x="523" y="716" width="140" height="119"/>
+	<SubTexture name="Seaweed_1.png" x="0" y="1239" width="338" height="269"/>
+	<SubTexture name="Seaweed_2.png" x="687" y="716" width="235" height="293"/>
+	<SubTexture name="Shield.png" x="861" y="1901" width="98" height="124"/>
+	<SubTexture name="Small-bomb.png" x="687" y="1009" width="136" height="153"/>
+	<SubTexture name="Steering-wheel.png" x="313" y="1508" width="296" height="278"/>
+	<SubTexture name="Stone_1.png" x="523" y="341" width="280" height="375"/>
+	<SubTexture name="Stone_2.png" x="0" y="1508" width="313" height="527"/>
+	<SubTexture name="Stone_3.png" x="609" y="1678" width="203" height="97"/>
+	<SubTexture name="Stone_4.png" x="848" y="1300" width="144" height="324"/>
+	<SubTexture name="Stone_5.png" x="839" y="1009" width="172" height="291"/>
+	<SubTexture name="Stone_6.png" x="0" y="909" width="406" height="330"/>
+</TextureAtlas>

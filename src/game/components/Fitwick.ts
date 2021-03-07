@@ -1,5 +1,5 @@
 import { TINT_GREEN } from "../colors";
-import { SCALE_RATIO, TEXTURE_KENNEY_ASSETS } from "../constants";
+import { SCALE_RATIO } from "../constants";
 import FITWICKS from "../fitwicks";
 import RexScene from "../scenes/RexScene";
 
@@ -14,13 +14,15 @@ class Fitwick extends Phaser.GameObjects.Sprite {
   name: string;
 
   constructor(scene: RexScene, x: number, y: number, inputName: string) {
-    super(
-      scene,
-      x,
-      y,
-      TEXTURE_KENNEY_ASSETS,
-      Phaser.Utils.Array.GetRandom(FITWICKS.get(inputName))
+    if (!FITWICKS.has(inputName)) {
+      throw new Error(`Fitwick ${inputName} not found but created anyway!`);
+    }
+    const randomAtlasElement = Phaser.Utils.Array.GetRandom(
+      FITWICKS.get(inputName)!
     );
+    const texture = randomAtlasElement[0];
+    const frame = randomAtlasElement[1];
+    super(scene, x, y, texture, frame);
     this.setScale(SCALE_RATIO / 3);
     scene.add.existing(this);
     this.name = inputName;

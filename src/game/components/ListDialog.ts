@@ -3,7 +3,6 @@ import { COLOR_DIALOG_BACKGROUND, COLOR_DIALOG_FOREGROUND } from "../colors";
 import {
   GAME_HEIGHT,
   GAME_WIDTH,
-  TEXTURE_KENNEY_ASSETS,
   UI_BUTTON_SIZE,
   UI_FONT_SIZE,
 } from "../constants";
@@ -29,10 +28,12 @@ const createFitwickList = (scene: RexScene, width: number, height: number) => {
     },
   });
 
-  FITWICKS.forEach((textures: string[], name: string) => {
+  FITWICKS.forEach((atlasElements: [string, string][], name: string) => {
+    const firstTexture = atlasElements[0][0];
+    const firstFrame = atlasElements[0][1];
     const fitwickRow = scene.rexUI.add.label({
       icon: scene.add
-        .image(0, 0, TEXTURE_KENNEY_ASSETS, textures[0])
+        .image(0, 0, firstTexture, firstFrame)
         .setDisplaySize(UI_BUTTON_SIZE, UI_BUTTON_SIZE),
       text: scene.add.text(0, 0, name, {
         fontSize: UI_FONT_SIZE,

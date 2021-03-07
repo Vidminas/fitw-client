@@ -1,4 +1,9 @@
-spritesheet_retina.png and spritesheet_retina.xml are from:
+underwater_sprites.png (packed using ShoeBox) is from:
+https://craftpix.net/freebies/free-underwater-world-2d-game-objects/
+CraftPix royalty-free license: https://craftpix.net/file-licenses/
+
+
+kenney_spritesheet.png and kenney_spritesheet.xml are from:
 
 	Background Elements Redux
 

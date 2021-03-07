@@ -24,17 +24,29 @@ export const EVENT_FITWICK_MOVE = "fitwick/move";
 export const EVENT_FITWICK_TAP = "fitwick/tap";
 
 export const TEXTURE_BUTTONS = "buttons";
-export const TEXTURE_KENNEY_ASSETS = "kenny_assets";
+export const TEXTURE_KENNEY_ASSETS = "kenney_assets";
+export const TEXTURE_UNDERWATER_SPRITES = "underwater_sprites";
+
 export const TEXTURE_BACKGROUND_EMPTY = "backgroundEmpty";
-export const TEXTURE_BACKGROUND_FALL = "backgroundColorFall";
-export const TEXTURE_BACKGROUND_FOREST = "backgroundColorForest";
-export const TEXTURE_BACKGROUND_GRASS = "backgroundColorGrass";
-export const TEXTURE_BACKGROUND_DESERT = "backgroundColorDesert";
-export const TEXTURE_BACKGROUND_BRIDGE = "bg_bridge";
-export const TEXTURE_BACKGROUND_FOREST_PATH = "bg_forest_path";
-export const TEXTURE_BACKGROUND_MOUNTAIN = "bg_mountain";
-export const TEXTURE_BACKGROUND_ROAD = "bg_road";
-export const TEXTURE_BACKGROUND_VALLEY = "bg_valley";
+const TEXTURE_BACKGROUND_FALL = "backgroundColorFall";
+const TEXTURE_BACKGROUND_FOREST = "backgroundColorForest";
+const TEXTURE_BACKGROUND_GRASS = "backgroundColorGrass";
+const TEXTURE_BACKGROUND_DESERT = "backgroundColorDesert";
+const TEXTURE_BACKGROUND_UNDERWATER1 = "underwater_background_1";
+const TEXTURE_BACKGROUND_UNDERWATER2 = "underwater_background_2";
+const TEXTURE_BACKGROUND_UNDERWATER3 = "underwater_background_3";
+const TEXTURE_BACKGROUND_UNDERWATER4 = "underwater_background_4";
+export const BACKGROUND_TEXTURES = [
+  TEXTURE_BACKGROUND_EMPTY,
+  TEXTURE_BACKGROUND_FALL,
+  TEXTURE_BACKGROUND_FOREST,
+  TEXTURE_BACKGROUND_GRASS,
+  TEXTURE_BACKGROUND_DESERT,
+  TEXTURE_BACKGROUND_UNDERWATER1,
+  TEXTURE_BACKGROUND_UNDERWATER2,
+  TEXTURE_BACKGROUND_UNDERWATER3,
+  TEXTURE_BACKGROUND_UNDERWATER4,
+];
 
 export const FRAME_BUTTON_ADD_REST = "Button_162.png";
 export const FRAME_BUTTON_ADD_HOVER = "Button_163.png";
