@@ -26,6 +26,9 @@ class Fitwick extends Phaser.GameObjects.Sprite {
     this.setScale(SCALE_RATIO / 3);
     scene.add.existing(this);
     this.name = inputName;
+    this.setInteractive({
+      useHandCursor: true,
+    });
     this.pickUp();
   }
 
