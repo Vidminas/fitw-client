@@ -26,6 +26,7 @@ export const EVENT_FITWICK_TAP = "fitwick/tap";
 export const EVENT_MUSIC_CHANGE = "music/change";
 export const EVENT_MUSIC_PLAY = "music/play";
 export const EVENT_MUSIC_PAUSE = "music/pause";
+export const EVENT_VOLUME_CHANGE = "volume/change";
 
 const MUSIC_CALM_BEAR = "16-Dark Fantasy Studio- Calm bear.wav";
 const MUSIC_PLAYING_IN_WATER = "26-Dark Fantasy Studio- Playing in water.wav";

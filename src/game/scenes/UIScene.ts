@@ -35,6 +35,7 @@ import {
   EVENT_MUSIC_CHANGE,
   EVENT_MUSIC_PLAY,
   EVENT_MUSIC_PAUSE,
+  EVENT_VOLUME_CHANGE,
 } from "../constants";
 import RexScene from "./RexScene";
 
@@ -77,6 +78,7 @@ class UIScene extends RexScene {
       this.musicTrackIndex %= MUSIC_TRACKS.length;
       this.musicTrack.destroy();
       this.musicTrack = this.sound.add(MUSIC_TRACKS[this.musicTrackIndex]);
+      this.isMusicPlaying = true;
       this.musicTrack.play();
     });
     this.events.on(EVENT_MUSIC_PLAY, () => {
@@ -90,6 +92,9 @@ class UIScene extends RexScene {
         this.musicTrack.pause();
       }
       this.isMusicPlaying = false;
+    });
+    this.events.on(EVENT_VOLUME_CHANGE, (newVolume: number) => {
+      this.sound.volume = newVolume;
     });
   }
 
@@ -202,7 +207,7 @@ class UIScene extends RexScene {
     }
 
     this.isDialogOpen = true;
-    this.settingsDialog = new SettingsDialog(this, this.isMusicPlaying);
+    this.settingsDialog = new SettingsDialog(this, this.sound.volume);
   }
 
   private onListFitwicks() {

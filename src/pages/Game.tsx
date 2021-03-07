@@ -30,7 +30,7 @@ const Game: React.FC<{}> = () => {
       const s = date.getSeconds();
       let session = "AM";
 
-      if (h == 0) {
+      if (h === 0) {
         h = 12;
       } else if (h > 12) {
         h -= 12;

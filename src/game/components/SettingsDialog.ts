@@ -1,9 +1,14 @@
 import { ScrollablePanel } from "phaser3-rex-plugins/templates/ui/ui-components.js";
-import { COLOR_DIALOG_BACKGROUND, COLOR_DIALOG_FOREGROUND } from "../colors";
+import {
+  COLOR_DIALOG_BACKGROUND,
+  COLOR_DIALOG_FOREGROUND,
+  COLOR_YELLOW,
+} from "../colors";
 import {
   EVENT_MUSIC_CHANGE,
   EVENT_MUSIC_PAUSE,
   EVENT_MUSIC_PLAY,
+  EVENT_VOLUME_CHANGE,
   FRAME_BUTTON_CANCEL_CLICK,
   FRAME_BUTTON_CANCEL_HOVER,
   FRAME_BUTTON_CANCEL_REST,
@@ -49,7 +54,7 @@ const createTitle = (scene: RexScene) =>
     },
   });
 
-const createSettingsGrid = (scene: RexScene, isMusicPlaying: boolean) => {
+const createSettingsGrid = (scene: RexScene, currentVolume: number) => {
   const grid = scene.rexUI.add.gridSizer({
     column: 1,
     row: 5,
@@ -98,12 +103,38 @@ const createSettingsGrid = (scene: RexScene, isMusicPlaying: boolean) => {
     text: scene.add.text(0, 0, "Play/Pause Music", { fontSize: UI_FONT_SIZE }),
   });
 
+  const musicVolume = scene.rexUI.add.sizer();
+  musicVolume.add(
+    scene.add.text(0, 0, "Change Music Volume", { fontSize: UI_FONT_SIZE })
+  );
+  musicVolume.add(
+    scene.rexUI.add
+      .slider({
+        width: UI_BUTTON_SIZE * 3,
+        track: scene.rexUI.add.roundRectangle(
+          0,
+          0,
+          0,
+          0,
+          6,
+          COLOR_DIALOG_FOREGROUND
+        ),
+        thumb: scene.rexUI.add.roundRectangle(0, 0, 0, 0, 10, COLOR_YELLOW),
+        value: currentVolume,
+        input: "drag",
+      })
+      .on("valuechange", (newValue: number) => {
+        scene.events.emit(EVENT_VOLUME_CHANGE, newValue);
+      })
+  );
+
   grid.add(musicTrack);
   grid.add(musicPause);
+  grid.add(musicVolume);
   return grid;
 };
 
-const createPanel = (scene: RexScene, isMusicPlaying: boolean) => {
+const createPanel = (scene: RexScene, currentVolume: number) => {
   const confirmButton = new Button(
     scene,
     0,
@@ -130,13 +161,13 @@ const createPanel = (scene: RexScene, isMusicPlaying: boolean) => {
   );
 
   return scene.rexUI.add.dialog({
-    content: createSettingsGrid(scene, isMusicPlaying),
+    content: createSettingsGrid(scene, currentVolume),
     actions: [confirmButton, cancelButton],
   });
 };
 
 class SettingsDialog extends ScrollablePanel {
-  constructor(scene: RexScene, isMusicPlaying: boolean) {
+  constructor(scene: RexScene, currentVolume: number) {
     super(scene, {
       x: 0,
       y: 0,
@@ -157,7 +188,7 @@ class SettingsDialog extends ScrollablePanel {
       ),
       header: createTitle(scene),
       panel: {
-        child: createPanel(scene, isMusicPlaying),
+        child: createPanel(scene, currentVolume),
         mask: { padding: 1 },
       },
       space: {
