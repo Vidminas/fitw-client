@@ -64,7 +64,7 @@ class UIScene extends RexScene {
   create() {
     this.input.setTopOnly(false);
     this.createButtons();
-    this.musicTrack = this.sound.add(MUSIC_TRACKS[0]);
+    this.musicTrack = this.sound.add(MUSIC_TRACKS[0], { loop: true });
     this.musicTrackIndex = 0;
     this.musicTrack.play();
     this.isMusicPlaying = true;
@@ -77,7 +77,9 @@ class UIScene extends RexScene {
       this.musicTrackIndex++;
       this.musicTrackIndex %= MUSIC_TRACKS.length;
       this.musicTrack.destroy();
-      this.musicTrack = this.sound.add(MUSIC_TRACKS[this.musicTrackIndex]);
+      this.musicTrack = this.sound.add(MUSIC_TRACKS[this.musicTrackIndex], {
+        loop: true,
+      });
       this.isMusicPlaying = true;
       this.musicTrack.play();
     });
