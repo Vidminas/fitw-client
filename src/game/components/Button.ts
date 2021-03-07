@@ -27,10 +27,19 @@ class Button extends Phaser.GameObjects.Image {
       this.setFrame(clickFrame);
     });
     if (handleClick) {
-      this.on("pointerup", () => {
-        this.setFrame(hoverFrame);
-        handleClick();
-      });
+      this.on(
+        "pointerup",
+        (
+          _pointer: Phaser.Input.Pointer,
+          _localX: number,
+          _localY: number,
+          event: Phaser.Types.Input.EventData
+        ) => {
+          this.setFrame(hoverFrame);
+          event.stopPropagation();
+          handleClick();
+        }
+      );
     } else {
       this.on("pointerup", () => {
         this.setFrame(hoverFrame);
