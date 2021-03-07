@@ -81,7 +81,7 @@ class MainScene extends RexScene {
           this.y = dragY;
         }
       );
-      cam.startFollow(this.activeFitwick, true, 0.05);
+      cam.startFollow(this.activeFitwick, true, 0.5);
     });
     uiScene.events.on(EVENT_FITWICK_PLACE, () => {
       this.activeFitwick!.removeListener("drag");
