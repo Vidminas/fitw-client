@@ -1,5 +1,4 @@
 import Phaser from "phaser";
-import { Socket } from "socket.io-client";
 import * as dat from "dat.gui";
 import IWorld from "../../api/world";
 import { RexScene } from "./RexScene";
@@ -24,7 +23,6 @@ import Fitwick from "../components/Fitwick";
 import SpeechBubble from "../components/SpeechBubble";
 
 class MainScene extends RexScene {
-  private socket: Socket;
   private world: IWorld;
   private controls?: Phaser.Cameras.Controls.SmoothedKeyControl;
   private backgroundTexture!: string;
@@ -33,9 +31,8 @@ class MainScene extends RexScene {
   private activeFitwick?: Fitwick;
   private activeSpeechBubble?: SpeechBubble;
 
-  constructor(socket: Socket, world: IWorld) {
+  constructor(world: IWorld) {
     super({ key: "MainScene", active: false });
-    this.socket = socket;
     this.world = world;
   }
 
@@ -62,8 +59,7 @@ class MainScene extends RexScene {
 
     const cam = this.cameras.main;
 
-    const uiScene = this.scene.get("UIScene");
-    uiScene.events.on(EVENT_FITWICK_NEW, (fitwickName: string) => {
+    this.game.events.on(EVENT_FITWICK_NEW, (fitwickName: string) => {
       this.activeFitwick = new Fitwick(
         this,
         cam.scrollX + GAME_WIDTH / 2,
@@ -85,7 +81,7 @@ class MainScene extends RexScene {
       );
       cam.startFollow(this.activeFitwick, true, 0.5);
     });
-    uiScene.events.on(EVENT_FITWICK_PLACE, () => {
+    this.game.events.on(EVENT_FITWICK_PLACE, () => {
       this.activeFitwick!.removeListener("drag");
       this.activeFitwick!.placeDown();
       cam.stopFollow();
@@ -100,7 +96,7 @@ class MainScene extends RexScene {
             _lastPointer: Phaser.Input.Pointer
           ) => {
             if (!this.activeFitwick && gameObject?.state === "rest") {
-              uiScene.events.emit(EVENT_FITWICK_MOVE, gameObject);
+              this.game.events.emit(EVENT_FITWICK_MOVE, gameObject);
             }
           }
         );
@@ -115,7 +111,7 @@ class MainScene extends RexScene {
             _lastPointer: Phaser.Input.Pointer
           ) => {
             if (!this.activeFitwick && gameObject?.state === "rest") {
-              uiScene.events.emit(EVENT_FITWICK_TAP, gameObject);
+              this.game.events.emit(EVENT_FITWICK_TAP, gameObject);
               const fitwick = gameObject as Fitwick;
 
               if (
@@ -146,13 +142,13 @@ class MainScene extends RexScene {
         );
       this.activeFitwick = undefined;
     });
-    uiScene.events.on(EVENT_FITWICK_DELETE, () => {
+    this.game.events.on(EVENT_FITWICK_DELETE, () => {
       this.activeFitwick?.removeListener("drag");
       this.activeFitwick?.destroy();
       cam.stopFollow();
       this.activeFitwick = undefined;
     });
-    uiScene.events.on(EVENT_FITWICK_MOVE, (fitwick: Fitwick) => {
+    this.game.events.on(EVENT_FITWICK_MOVE, (fitwick: Fitwick) => {
       if (this.activeSpeechBubble) {
         this.activeSpeechBubble.destroy();
         this.activeSpeechBubble = undefined;
@@ -174,7 +170,7 @@ class MainScene extends RexScene {
       cam.startFollow(this.activeFitwick, true, 0.05);
       this.activeFitwick.pickUp();
     });
-    uiScene.events.on(EVENT_EXIT_WORLD, () => {
+    this.game.events.on(EVENT_EXIT_WORLD, () => {
       // save world state ...
       this.game.events.emit(EVENT_NAVIGATE_HOME);
     });

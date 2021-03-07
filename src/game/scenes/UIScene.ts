@@ -69,11 +69,11 @@ class UIScene extends RexScene {
     this.musicTrack.play();
     this.isMusicPlaying = true;
 
-    this.events.on(EVENT_FITWICK_PLACE, this.onConfirmFitwick.bind(this));
-    this.events.on(EVENT_FITWICK_DELETE, this.onDeleteFitwick.bind(this));
-    this.events.on(EVENT_FITWICK_MOVE, this.onMoveFitwick.bind(this));
+    this.game.events.on(EVENT_FITWICK_PLACE, this.onConfirmFitwick.bind(this));
+    this.game.events.on(EVENT_FITWICK_DELETE, this.onDeleteFitwick.bind(this));
+    this.game.events.on(EVENT_FITWICK_MOVE, this.onMoveFitwick.bind(this));
     // this.events.on(EVENT_FITWICK_TAP, this.onTapFitwick.bind(this));
-    this.events.on(EVENT_MUSIC_CHANGE, () => {
+    this.game.events.on(EVENT_MUSIC_CHANGE, () => {
       this.musicTrackIndex++;
       this.musicTrackIndex %= MUSIC_TRACKS.length;
       this.musicTrack.destroy();
@@ -83,19 +83,19 @@ class UIScene extends RexScene {
       this.isMusicPlaying = true;
       this.musicTrack.play();
     });
-    this.events.on(EVENT_MUSIC_PLAY, () => {
+    this.game.events.on(EVENT_MUSIC_PLAY, () => {
       if (!this.isMusicPlaying) {
         this.musicTrack.play();
       }
       this.isMusicPlaying = true;
     });
-    this.events.on(EVENT_MUSIC_PAUSE, () => {
+    this.game.events.on(EVENT_MUSIC_PAUSE, () => {
       if (this.isMusicPlaying) {
         this.musicTrack.pause();
       }
       this.isMusicPlaying = false;
     });
-    this.events.on(EVENT_VOLUME_CHANGE, (newVolume: number) => {
+    this.game.events.on(EVENT_VOLUME_CHANGE, (newVolume: number) => {
       this.sound.volume = newVolume;
     });
   }
@@ -149,7 +149,7 @@ class UIScene extends RexScene {
       FRAME_BUTTON_CONFIRM_REST,
       FRAME_BUTTON_CONFIRM_HOVER,
       FRAME_BUTTON_CONFIRM_CLICK,
-      () => this.events.emit(EVENT_FITWICK_PLACE)
+      () => this.game.events.emit(EVENT_FITWICK_PLACE)
     );
     this.confirmFitwickButton.setVisible(false);
     this.deleteFitwickButton = new Button(
@@ -160,7 +160,7 @@ class UIScene extends RexScene {
       FRAME_BUTTON_DELETE_REST,
       FRAME_BUTTON_DELETE_HOVER,
       FRAME_BUTTON_DELETE_CLICK,
-      () => this.events.emit(EVENT_FITWICK_DELETE)
+      () => this.game.events.emit(EVENT_FITWICK_DELETE)
     );
     this.deleteFitwickButton.setVisible(false);
   }
@@ -259,7 +259,7 @@ class UIScene extends RexScene {
       (text: string) => {
         if (Fitwick.exists(text)) {
           // let the main scene handle the addition of a new Fitwick
-          this.events.emit(EVENT_FITWICK_NEW, text);
+          this.game.events.emit(EVENT_FITWICK_NEW, text);
           this.isDialogOpen = false;
           this.addDialog!.hide();
           this.addDialog = undefined;

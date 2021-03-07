@@ -25,7 +25,7 @@ const Game: React.FC<{}> = () => {
     });
     newGame.init("game-root");
     return () => newGame.destroy();
-  }, [user, world]);
+  }, [user, world, history]);
 
   React.useEffect(() => {
     const getTimeString = (date: Date) => {

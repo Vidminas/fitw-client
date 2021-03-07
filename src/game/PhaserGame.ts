@@ -5,7 +5,15 @@ import RexUIPlugin from "phaser3-rex-plugins/templates/ui/ui-plugin.js";
 import RexGesturesPlugin from "phaser3-rex-plugins/plugins/gestures-plugin.js";
 import IUser from "../api/user";
 import IWorld from "../api/world";
-import { EVENT_NAVIGATE_HOME, GAME_HEIGHT, GAME_WIDTH } from "./constants";
+import {
+  EVENT_FITWICK_DELETE,
+  EVENT_FITWICK_MOVE,
+  EVENT_FITWICK_NEW,
+  EVENT_FITWICK_PLACE,
+  EVENT_NAVIGATE_HOME,
+  GAME_HEIGHT,
+  GAME_WIDTH,
+} from "./constants";
 import MainScene from "./scenes/MainScene";
 import UIScene from "./scenes/UIScene";
 import PreloadScene from "./scenes/PreloadScene";
@@ -33,7 +41,7 @@ class PhaserGame {
 
     const preloadScene = new PreloadScene();
     const uiScene = new UIScene();
-    const mainScene = new MainScene(this.socket, this.world);
+    const mainScene = new MainScene(this.world);
 
     this.game = new Phaser.Game({
       parent,
@@ -51,32 +59,34 @@ class PhaserGame {
       loader: {
         baseURL: "assets",
       },
-      plugins: {
-        scene: [
-          {
-            key: "rexUI",
-            plugin: RexUIPlugin,
-            mapping: "rexUI",
-          },
-          {
-            key: "rexGestures",
-            plugin: RexGesturesPlugin,
-            mapping: "rexGestures",
-          },
-        ],
-      },
     });
+    this.registerGameEvents();
+    return this.game;
+  }
+
+  private registerGameEvents() {
+    if (!this.game) {
+      return;
+    }
+
+    this.game.events.on(EVENT_FITWICK_NEW, (fitwickName: string) => {
+      this.socket?.emit(EVENT_FITWICK_NEW, fitwickName);
+    });
+    // this.game.events.on(EVENT_FITWICK_PLACE, () => {
+    //   this.socket?.emit(EVENT_FITWICK_PLACE, )
+    // });
+    // this.game.events.on(EVENT_FITWICK_DELETE, this.onDeleteFitwick.bind(this));
+    // this.game.events.on(EVENT_FITWICK_MOVE, this.onMoveFitwick.bind(this));
 
     this.game.events.on(EVENT_NAVIGATE_HOME, () => {
       this.destroy();
       this.exitWorld();
     });
-    return this.game;
   }
 
   public destroy() {
     if (this.game) {
-      this.game.destroy(true, true);
+      this.game.destroy(true, false);
       this.game = undefined;
     }
     if (this.socket?.connected) {
