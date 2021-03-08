@@ -1,15 +1,17 @@
 import { ScrollablePanel } from "phaser3-rex-plugins/templates/ui/ui-components.js";
 import {
-  COLOR_DIALOG_BACKGROUND,
-  COLOR_DIALOG_FOREGROUND,
-  COLOR_YELLOW,
-} from "../colors";
-import {
   EVENT_EXIT_WORLD,
   EVENT_MUSIC_CHANGE,
   EVENT_MUSIC_PAUSE,
   EVENT_MUSIC_PLAY,
   EVENT_VOLUME_CHANGE,
+} from "../../api/events";
+import {
+  COLOR_DIALOG_BACKGROUND,
+  COLOR_DIALOG_FOREGROUND,
+  COLOR_YELLOW,
+} from "../colors";
+import {
   FRAME_BUTTON_CANCEL_CLICK,
   FRAME_BUTTON_CANCEL_HOVER,
   FRAME_BUTTON_CANCEL_REST,

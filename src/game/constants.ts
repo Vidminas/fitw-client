@@ -18,18 +18,6 @@ export const MAX_ZOOM_FACTOR = 4;
 export const SPEECH_BUBBLE_MIN_WIDTH = UI_BUTTON_SIZE * 2;
 export const SPEECH_BUBBLE_HEIGHT = UI_BUTTON_SIZE + 10 * SCALE_RATIO;
 
-export const EVENT_FITWICK_NEW = "fitwick/new";
-export const EVENT_FITWICK_PLACE = "fitwick/place";
-export const EVENT_FITWICK_DELETE = "fitwick/delete";
-export const EVENT_FITWICK_MOVE = "fitwick/move";
-export const EVENT_FITWICK_TAP = "fitwick/tap";
-export const EVENT_MUSIC_CHANGE = "music/change";
-export const EVENT_MUSIC_PLAY = "music/play";
-export const EVENT_MUSIC_PAUSE = "music/pause";
-export const EVENT_VOLUME_CHANGE = "volume/change";
-export const EVENT_EXIT_WORLD = "world/exit";
-export const EVENT_NAVIGATE_HOME = "world/exit-and-nav-home";
-
 const MUSIC_CALM_BEAR = "16-Dark Fantasy Studio- Calm bear.wav";
 const MUSIC_PLAYING_IN_WATER = "26-Dark Fantasy Studio- Playing in water.wav";
 const MUSIC_TREASURE = "29-Dark Fantasy Studio- Treasure.wav";

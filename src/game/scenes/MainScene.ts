@@ -1,6 +1,15 @@
 import Phaser from "phaser";
 import * as dat from "dat.gui";
 import IWorld from "../../api/world";
+import {
+  EVENT_FITWICK_NEW,
+  EVENT_FITWICK_PLACE,
+  EVENT_FITWICK_DELETE,
+  EVENT_FITWICK_MOVE,
+  EVENT_FITWICK_TAP,
+  EVENT_EXIT_WORLD,
+  EVENT_NAVIGATE_HOME,
+} from "../../api/events";
 import { RexScene } from "./RexScene";
 import {
   GAME_HEIGHT,
@@ -8,16 +17,9 @@ import {
   MAX_SCROLL_X,
   MAX_SCROLL_Y,
   MAX_ZOOM_FACTOR,
-  EVENT_FITWICK_NEW,
   TEXTURE_BACKGROUND_EMPTY,
-  EVENT_FITWICK_PLACE,
-  EVENT_FITWICK_DELETE,
-  EVENT_FITWICK_MOVE,
-  EVENT_FITWICK_TAP,
   SPEECH_BUBBLE_HEIGHT,
   SPEECH_BUBBLE_MIN_WIDTH,
-  EVENT_EXIT_WORLD,
-  EVENT_NAVIGATE_HOME,
 } from "../constants";
 import Fitwick from "../components/Fitwick";
 import SpeechBubble from "../components/SpeechBubble";

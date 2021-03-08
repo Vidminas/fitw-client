@@ -4,14 +4,15 @@ import { SERVER_ADDRESS } from "../api/endpoints";
 import IUser from "../api/user";
 import IWorld from "../api/world";
 import {
+  EVENT_CONNECT,
   EVENT_FITWICK_DELETE,
   EVENT_FITWICK_MOVE,
   EVENT_FITWICK_NEW,
   EVENT_FITWICK_PLACE,
   EVENT_NAVIGATE_HOME,
-  GAME_HEIGHT,
-  GAME_WIDTH,
-} from "./constants";
+  EVENT_SELF_IDENTIFY,
+} from "../api/events";
+import { GAME_HEIGHT, GAME_WIDTH } from "./constants";
 import MainScene from "./scenes/MainScene";
 import UIScene from "./scenes/UIScene";
 import PreloadScene from "./scenes/PreloadScene";
@@ -35,11 +36,9 @@ class PhaserGame {
 
   public init(parent: string) {
     this.socket = io(SERVER_ADDRESS);
-    this.socket.on("connected", () => {
-      console.log("Connected: " + this.socket!.connected);
+    this.socket.on(EVENT_CONNECT, () => {
+      this.socket?.emit(EVENT_SELF_IDENTIFY, this.user);
     });
-
-    console.log("Creating a new game");
 
     const preloadScene = new PreloadScene();
     const uiScene = new UIScene();
