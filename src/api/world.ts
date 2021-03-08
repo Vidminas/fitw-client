@@ -1,4 +1,5 @@
 interface IWorld {
+  id: any;
   name: string;
 }
 

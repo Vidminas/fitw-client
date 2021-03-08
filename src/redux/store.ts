@@ -4,8 +4,9 @@ import createSagaMiddleware from "redux-saga";
 import IUser from "../api/user";
 import IWorld from "../api/world";
 import userReducer from "./userReducer";
-import worldReducer from "./worldReducer";
+import worldsReducer from "./worldsReducer";
 import rootSaga from "./sagas";
+import IGroup from "../api/group";
 
 export type UserStateStatus =
   | "initial"
@@ -22,13 +23,18 @@ export type UserState = {
   response?: any;
 };
 
-export type WorldState = {
-  world: IWorld | null;
+export type WorldsState = {
+  worlds: IWorld[];
+};
+
+export type GroupsState = {
+  groups: IGroup[];
 };
 
 export type AppState = {
   user: UserState;
-  world: WorldState;
+  worlds: WorldsState;
+  groups: GroupsState;
 };
 
 export const initialState: AppState = {
@@ -36,15 +42,18 @@ export const initialState: AppState = {
     currentStatus: "initial",
     user: null,
   },
-  world: {
-    world: null,
+  worlds: {
+    worlds: [],
+  },
+  groups: {
+    groups: [],
   },
 };
 
 const createRootReducer = () =>
   combineReducers({
     user: userReducer,
-    world: worldReducer,
+    worlds: worldsReducer,
   });
 
 const sagaMiddleware = createSagaMiddleware();
