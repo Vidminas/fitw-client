@@ -1,8 +1,6 @@
 import Phaser from "phaser";
 import { io, Socket } from "socket.io-client";
 import { SERVER_ADDRESS } from "../api/endpoints";
-import RexUIPlugin from "phaser3-rex-plugins/templates/ui/ui-plugin.js";
-import RexGesturesPlugin from "phaser3-rex-plugins/plugins/gestures-plugin.js";
 import IUser from "../api/user";
 import IWorld from "../api/world";
 import {
@@ -19,6 +17,7 @@ import UIScene from "./scenes/UIScene";
 import PreloadScene from "./scenes/PreloadScene";
 
 class PhaserGame {
+  public isInitialised: boolean;
   private game?: Phaser.Game;
   private socket?: Socket;
   private user: IUser;
@@ -26,6 +25,7 @@ class PhaserGame {
   private exitWorld: Function;
 
   constructor(user: IUser, world: IWorld, exitWorld: Function) {
+    this.isInitialised = false;
     this.game = undefined;
     this.socket = undefined;
     this.user = user;
@@ -38,6 +38,8 @@ class PhaserGame {
     this.socket.on("connected", () => {
       console.log("Connected: " + this.socket!.connected);
     });
+
+    console.log("Creating a new game");
 
     const preloadScene = new PreloadScene();
     const uiScene = new UIScene();
@@ -61,6 +63,7 @@ class PhaserGame {
       },
     });
     this.registerGameEvents();
+    this.isInitialised = true;
     return this.game;
   }
 
@@ -85,8 +88,9 @@ class PhaserGame {
   }
 
   public destroy() {
+    this.isInitialised = false;
     if (this.game) {
-      this.game.destroy(true, false);
+      this.game.destroy(true);
       this.game = undefined;
     }
     if (this.socket?.connected) {

@@ -73,7 +73,7 @@ const createSettingsGrid = (scene: RexScene, currentVolume: number) => {
       FRAME_BUTTON_NOTE_REST,
       FRAME_BUTTON_NOTE_HOVER,
       FRAME_BUTTON_NOTE_CLICK,
-      () => scene.events.emit(EVENT_MUSIC_CHANGE)
+      () => scene.game.events.emit(EVENT_MUSIC_CHANGE)
     ),
     text: scene.add.text(0, 0, "Change Music", { fontSize: UI_FONT_SIZE }),
   });
@@ -87,7 +87,7 @@ const createSettingsGrid = (scene: RexScene, currentVolume: number) => {
     FRAME_BUTTON_PAUSE_HOVER,
     FRAME_BUTTON_PAUSE_CLICK,
     () => {
-      scene.events.emit(EVENT_MUSIC_PAUSE);
+      scene.game.events.emit(EVENT_MUSIC_PAUSE);
     }
   );
   const playButton = new Button(
@@ -99,7 +99,7 @@ const createSettingsGrid = (scene: RexScene, currentVolume: number) => {
     FRAME_BUTTON_PLAY_HOVER,
     FRAME_BUTTON_PLAY_CLICK,
     () => {
-      scene.events.emit(EVENT_MUSIC_PLAY);
+      scene.game.events.emit(EVENT_MUSIC_PLAY);
     }
   );
   const musicPause = scene.rexUI.add.label({
@@ -129,7 +129,7 @@ const createSettingsGrid = (scene: RexScene, currentVolume: number) => {
         input: "drag",
       })
       .on("valuechange", (newValue: number) => {
-        scene.events.emit(EVENT_VOLUME_CHANGE, newValue);
+        scene.game.events.emit(EVENT_VOLUME_CHANGE, newValue);
       })
   );
 
@@ -142,7 +142,7 @@ const createSettingsGrid = (scene: RexScene, currentVolume: number) => {
       FRAME_BUTTON_EXIT_REST,
       FRAME_BUTTON_EXIT_HOVER,
       FRAME_BUTTON_EXIT_CLICK,
-      () => scene.events.emit(EVENT_EXIT_WORLD)
+      () => scene.game.events.emit(EVENT_EXIT_WORLD)
     ),
     text: scene.add.text(0, 0, "Exit World", { fontSize: UI_FONT_SIZE }),
   });
@@ -202,7 +202,7 @@ class SettingsDialog extends ScrollablePanel {
         centerY: "center",
       },
       width: GAME_WIDTH - 4 * UI_BUTTON_SIZE,
-      height: GAME_HEIGHT - 4 * UI_BUTTON_SIZE,
+      height: Math.max(GAME_HEIGHT - 4 * UI_BUTTON_SIZE, 2 * UI_BUTTON_SIZE),
       scrollMode: "vertical",
       background: scene.rexUI.add.roundRectangle(
         0,
