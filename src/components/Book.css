@@ -117,3 +117,8 @@
 .page-side-right p {
   margin: 0;
 }
+
+.worldName {
+  text-align: center;
+  font-size: large;
+}

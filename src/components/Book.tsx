@@ -5,7 +5,6 @@ import "./Book.css";
 import BookPage, { PageFlip } from "./BookPage";
 import Banner from "./FITW banner.svg";
 import NewWorld from "./new world.svg";
-import WorldEllipse from "./world ellipse.svg";
 import { useDispatch, useSelector } from "react-redux";
 import {
   USER_CREATE_WORLD,
@@ -72,7 +71,7 @@ const Book: React.FC<{}> = () => {
   // add new world page
   addPage(
     <>
-      <p>New World</p>
+      <p className="worldName">New World</p>
       <Link to="/game" onClick={() => dispatch({ type: USER_CREATE_WORLD })}>
         <img src={NewWorld} alt="Click to create a new world" />
       </Link>
@@ -83,17 +82,46 @@ const Book: React.FC<{}> = () => {
   for (let i = 0; i < worlds.length; i++) {
     const makeWorldDiv = (index: number) => (
       <>
-        <p>{worlds[index].name}</p>
+        <p className="worldName">{worlds[index].name}</p>
         <Link
           to="/game"
           onClick={() =>
             dispatch({ type: USER_ENTER_WORLD, payload: worlds[index] })
           }
         >
-          <img
-            src={WorldEllipse}
-            alt={`Click to enter the world ${worlds[index].name}`}
-          />
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+            <defs>
+              <pattern
+                id="worldBackground"
+                patternUnits="userSpaceOnUse"
+                width="512"
+                height="512"
+              >
+                <image
+                  href={`assets/backgrounds/${
+                    worlds[index].background || "backgroundEmpty.png"
+                  }`}
+                  x="0"
+                  y="0"
+                  width="512"
+                  height="512"
+                />
+              </pattern>
+            </defs>
+            <ellipse
+              fill="url(#worldBackground)"
+              opacity="1"
+              fillOpacity="1"
+              stroke="#0000ff"
+              strokeWidth="0.8"
+              strokeOpacity="1"
+              strokeMiterlimit="4"
+              cx="256"
+              cy="256"
+              rx="256"
+              ry="200"
+            />
+          </svg>
         </Link>
       </>
     );

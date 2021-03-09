@@ -57,7 +57,7 @@ class PreloadScene extends Phaser.Scene {
     );
 
     BACKGROUND_TEXTURES.forEach((texture: string) => {
-      this.load.image(texture, `backgrounds/${texture}.png`);
+      this.load.image(texture, `backgrounds/${texture}`);
     });
   }
 

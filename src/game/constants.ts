@@ -34,16 +34,16 @@ export const TEXTURE_DESERT_SPRITES = "desert_sprites";
 export const TEXTURE_MEDIEVAL_TROPICAL_SPRITES = "medieval_tropical_sprites";
 export const TEXTURE_WINTER_SPRITES = "winter_sprites";
 
-export const TEXTURE_BACKGROUND_EMPTY = "backgroundEmpty";
-const TEXTURE_BACKGROUND_FALL = "backgroundColorFall";
-const TEXTURE_BACKGROUND_FOREST = "backgroundColorForest";
-const TEXTURE_BACKGROUND_GRASS = "backgroundColorGrass";
-const TEXTURE_BACKGROUND_DESERT = "backgroundColorDesert";
-const TEXTURE_BACKGROUND_UNDERWATER1 = "underwater_background_1";
-const TEXTURE_BACKGROUND_UNDERWATER2 = "underwater_background_2";
-const TEXTURE_BACKGROUND_UNDERWATER3 = "underwater_background_3";
-const TEXTURE_BACKGROUND_UNDERWATER4 = "underwater_background_4";
-const TEXTURE_BACKGROUND_WINTER = "winter_background";
+export const TEXTURE_BACKGROUND_EMPTY = "backgroundEmpty.png";
+const TEXTURE_BACKGROUND_FALL = "backgroundColorFall.png";
+const TEXTURE_BACKGROUND_FOREST = "backgroundColorForest.png";
+const TEXTURE_BACKGROUND_GRASS = "backgroundColorGrass.png";
+const TEXTURE_BACKGROUND_DESERT = "backgroundColorDesert.png";
+const TEXTURE_BACKGROUND_UNDERWATER1 = "underwater_background_1.png";
+const TEXTURE_BACKGROUND_UNDERWATER2 = "underwater_background_2.png";
+const TEXTURE_BACKGROUND_UNDERWATER3 = "underwater_background_3.png";
+const TEXTURE_BACKGROUND_UNDERWATER4 = "underwater_background_4.png";
+const TEXTURE_BACKGROUND_WINTER = "winter_background.png";
 export const BACKGROUND_TEXTURES = [
   TEXTURE_BACKGROUND_EMPTY,
   TEXTURE_BACKGROUND_FALL,
