@@ -12,19 +12,25 @@ import IWorld from "../api/world";
 import PhaserGame from "../game/PhaserGame";
 import "./Clock.css";
 import { useHistory } from "react-router";
+import { AppState } from "../redux/store";
 
 const Game: React.FC<{}> = () => {
   const history = useHistory();
-  const user: IUser = useSelector((state: any) => state.user?.user);
-  const world: IWorld = useSelector((state: any) => state.world?.world);
+  const user = useSelector<AppState, IUser | null>((state) => state.user.user);
+  const currentWorld = useSelector<AppState, IWorld | null>(
+    (state) => state.user.currentWorld
+  );
   const [time, setTime] = React.useState("");
 
   React.useEffect(() => {
-    const newGame = new PhaserGame(user, world, () => {
+    if (!user || !currentWorld) {
+      return;
+    }
+    const newGame = new PhaserGame(user, currentWorld, () => {
       // navigating back home should work, but game does not get cleaned up properly
       // this may be related to:
       // https://stackoverflow.com/questions/57081820/changing-routes-breaks-game-in-phaser-3
-      // history.push("/home");
+      history.push("/home");
       // for now, the workaround is to refresh the page
       history.go(0);
     });
@@ -37,7 +43,7 @@ const Game: React.FC<{}> = () => {
         newGame.destroy();
       }
     };
-  }, [user, world, history]);
+  }, [user, currentWorld, history]);
 
   React.useEffect(() => {
     const getTimeString = (date: Date) => {

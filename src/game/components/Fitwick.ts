@@ -1,16 +1,15 @@
+import IFitwick from "../../api/fitwick";
 import { TINT_GREEN } from "../colors";
 import { SCALE_RATIO } from "../constants";
 import FITWICKS from "../fitwicks";
 import RexScene from "../scenes/RexScene";
 
-type FitwickState = "rest" | "move";
-
-class Fitwick extends Phaser.GameObjects.Sprite {
+class Fitwick extends Phaser.GameObjects.Sprite implements IFitwick {
   static exists(name: string) {
     return FITWICKS.has(name);
   }
 
-  state!: FitwickState;
+  state: "rest" | "move";
   name: string;
 
   constructor(scene: RexScene, x: number, y: number, inputName: string) {
@@ -29,7 +28,8 @@ class Fitwick extends Phaser.GameObjects.Sprite {
     this.setInteractive({
       useHandCursor: true,
     });
-    this.pickUp();
+    this.state = "move";
+    this.setTintFill(TINT_GREEN);
   }
 
   pickUp() {

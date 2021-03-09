@@ -13,7 +13,9 @@ export const USER_FETCH = "user/fetch-from-server";
 export const USER_FETCH_SUCCESS = "user/fetch-from-server-success";
 export const USER_FETCH_ERROR = "user/fetch-from-server-error";
 
+export const USER_ENTER_WORLD = "user/enter-world";
+export const USER_CREATE_WORLD = "user/create-world";
+
 export const WORLD_FETCH = "world/fetch-from-server";
 export const WORLD_FETCH_SUCCESS = "world/fetch-from-server-success";
 export const WORLD_FETCH_ERROR = "world/fetch-from-server-error";
-export const NEW_WORLD = "world/new";

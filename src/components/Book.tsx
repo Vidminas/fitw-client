@@ -7,7 +7,11 @@ import Banner from "./FITW banner.svg";
 import NewWorld from "./new world.svg";
 import WorldEllipse from "./world ellipse.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { NEW_WORLD, WORLD_FETCH } from "../redux/actionTypes";
+import {
+  USER_CREATE_WORLD,
+  USER_ENTER_WORLD,
+  WORLD_FETCH,
+} from "../redux/actionTypes";
 import { AppState } from "../redux/store";
 import IWorld from "../api/world";
 
@@ -69,7 +73,7 @@ const Book: React.FC<{}> = () => {
   addPage(
     <>
       <p>New World</p>
-      <Link to="/game" onClick={() => dispatch({ type: NEW_WORLD })}>
+      <Link to="/game" onClick={() => dispatch({ type: USER_CREATE_WORLD })}>
         <img src={NewWorld} alt="Click to create a new world" />
       </Link>
     </>
@@ -81,10 +85,10 @@ const Book: React.FC<{}> = () => {
       <>
         <p>{worlds[index].name}</p>
         <Link
-          to={{
-            pathname: "/game",
-            state: { user: user, world: worlds[index] },
-          }}
+          to="/game"
+          onClick={() =>
+            dispatch({ type: USER_ENTER_WORLD, payload: worlds[index] })
+          }
         >
           <img
             src={WorldEllipse}

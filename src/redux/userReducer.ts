@@ -73,6 +73,10 @@ const userReducer: Reducer<UserState> = (state = initialState.user, action) => {
         currentStatus: "error",
         error: action.payload,
       };
+    case Actions.USER_CREATE_WORLD:
+      return { ...state, currentWorld: { name: "a whole new world" } };
+    case Actions.USER_ENTER_WORLD:
+      return { ...state, currentWorld: action.payload };
     default:
       return state;
   }

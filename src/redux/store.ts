@@ -7,6 +7,7 @@ import userReducer from "./userReducer";
 import worldsReducer from "./worldsReducer";
 import rootSaga from "./sagas";
 import IGroup from "../api/group";
+import groupsReducer from "./groupsReducer";
 
 export type UserStateStatus =
   | "initial"
@@ -19,11 +20,15 @@ export type UserStateStatus =
 export type UserState = {
   currentStatus: UserStateStatus;
   user: IUser | null;
+  currentWorld: IWorld | null;
   error?: string;
   response?: any;
 };
 
+export type WorldsStateStatus = "initial" | "error" | "loading" | "loaded";
+
 export type WorldsState = {
+  currentStatus: WorldsStateStatus;
   worlds: IWorld[];
 };
 
@@ -41,8 +46,10 @@ export const initialState: AppState = {
   user: {
     currentStatus: "initial",
     user: null,
+    currentWorld: null,
   },
   worlds: {
+    currentStatus: "initial",
     worlds: [],
   },
   groups: {
@@ -54,6 +61,7 @@ const createRootReducer = () =>
   combineReducers({
     user: userReducer,
     worlds: worldsReducer,
+    groups: groupsReducer,
   });
 
 const sagaMiddleware = createSagaMiddleware();
