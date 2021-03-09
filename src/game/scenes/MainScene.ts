@@ -32,17 +32,97 @@ class MainScene extends RexScene {
   private background!: Phaser.GameObjects.TileSprite;
   private activeFitwick?: Fitwick;
   private activeSpeechBubble?: SpeechBubble;
+  private world: IWorld;
 
   constructor(world: IWorld) {
     super({ key: "MainScene", active: false });
     // create scene using world fitwicks
+    this.world = world;
+  }
+
+  private registerFitwickEvents(fitwick: Fitwick) {
+    // TODO: there is probably a memory leak when this is not cleaned up on delete
+    this.rexGestures.add
+      .press(fitwick)
+      .on(
+        "pressstart",
+        (
+          _press: any,
+          _gameObject: Phaser.GameObjects.GameObject | undefined,
+          _lastPointer: Phaser.Input.Pointer
+        ) => {
+          if (!this.activeFitwick && fitwick.state === "rest") {
+            this.game.events.emit(EVENT_FITWICK_PICK_UP, fitwick);
+          }
+        }
+      );
+    // TODO: same as with rexGestures.press
+    this.rexGestures.add
+      .tap(fitwick)
+      .on(
+        "tap",
+        (
+          _tap: any,
+          _gameObject: Phaser.GameObjects.GameObject | undefined,
+          _lastPointer: Phaser.Input.Pointer
+        ) => {
+          if (!this.activeFitwick && fitwick.state === "rest") {
+            this.game.events.emit(EVENT_FITWICK_TAP, fitwick);
+
+            if (
+              this.activeSpeechBubble &&
+              this.activeSpeechBubble.parent !== fitwick
+            ) {
+              this.activeSpeechBubble.destroy();
+              this.activeSpeechBubble = undefined;
+            }
+
+            if (!this.activeSpeechBubble) {
+              const speechBubbleWidth = Math.max(
+                SPEECH_BUBBLE_MIN_WIDTH,
+                fitwick.displayWidth
+              );
+              this.activeSpeechBubble = new SpeechBubble(
+                this,
+                fitwick,
+                fitwick.x - speechBubbleWidth / 2,
+                fitwick.y - fitwick.displayHeight / 2 - SPEECH_BUBBLE_HEIGHT,
+                speechBubbleWidth,
+                SPEECH_BUBBLE_HEIGHT,
+                fitwick.name
+              );
+            }
+          }
+        }
+      );
   }
 
   create() {
     this.background = this.add
-      .tileSprite(0, 0, GAME_WIDTH, GAME_HEIGHT, TEXTURE_BACKGROUND_EMPTY)
+      .tileSprite(
+        0,
+        0,
+        GAME_WIDTH,
+        GAME_HEIGHT,
+        this.world.background || TEXTURE_BACKGROUND_EMPTY
+      )
       .setOrigin(0);
     this.background.setScrollFactor(0);
+
+    for (const fitwickData of this.world.fitwicks) {
+      console.log(fitwickData);
+      const fitwick = new Fitwick(
+        this,
+        fitwickData.name,
+        fitwickData.x,
+        fitwickData.y,
+        fitwickData.worldId,
+        fitwickData.atlasTexture,
+        fitwickData.atlasFrame
+      );
+      this.registerFitwickEvents(fitwick);
+      this.input.setDraggable(fitwick);
+    }
 
     this.game.events.on(
       EVENT_WORLD_CHANGE_BACKGROUND,
@@ -56,7 +136,8 @@ class MainScene extends RexScene {
     this.game.events.on(EVENT_DO_FITWICK_NEW, (fitwickName: string) => {
       const x = cam.scrollX + GAME_WIDTH / 2;
       const y = cam.scrollY + GAME_HEIGHT / 2;
-      this.activeFitwick = new Fitwick(this, x, y, fitwickName);
+      this.activeFitwick = new Fitwick(this, fitwickName, x, y);
+      this.activeFitwick.pickUp();
       this.input.setDraggable(this.activeFitwick);
       this.activeFitwick.on(
         "drag",
@@ -81,61 +162,7 @@ class MainScene extends RexScene {
       this.activeFitwick.placeDown();
       cam.stopFollow();
       this.game.events.emit(EVENT_DONE_FITWICK_PLACE, this.activeFitwick);
-      // TODO: there is probably a memory leak when this is not cleaned up on delete
-      this.rexGestures.add
-        .press(this.activeFitwick)
-        .on(
-          "pressstart",
-          (
-            _press: any,
-            gameObject: Phaser.GameObjects.GameObject | undefined,
-            _lastPointer: Phaser.Input.Pointer
-          ) => {
-            if (!this.activeFitwick && gameObject?.state === "rest") {
-              this.game.events.emit(EVENT_FITWICK_PICK_UP, gameObject);
-            }
-          }
-        );
-      // TODO: same as with rexGestures.press
-      this.rexGestures.add
-        .tap(this.activeFitwick)
-        .on(
-          "tap",
-          (
-            _tap: any,
-            gameObject: Phaser.GameObjects.GameObject | undefined,
-            _lastPointer: Phaser.Input.Pointer
-          ) => {
-            if (!this.activeFitwick && gameObject?.state === "rest") {
-              this.game.events.emit(EVENT_FITWICK_TAP, gameObject);
-              const fitwick = gameObject as Fitwick;
-
-              if (
-                this.activeSpeechBubble &&
-                this.activeSpeechBubble.parent !== fitwick
-              ) {
-                this.activeSpeechBubble.destroy();
-                this.activeSpeechBubble = undefined;
-              }
-
-              if (!this.activeSpeechBubble) {
-                const speechBubbleWidth = Math.max(
-                  SPEECH_BUBBLE_MIN_WIDTH,
-                  fitwick.displayWidth
-                );
-                this.activeSpeechBubble = new SpeechBubble(
-                  this,
-                  fitwick,
-                  fitwick.x - speechBubbleWidth / 2,
-                  fitwick.y - fitwick.displayHeight / 2 - SPEECH_BUBBLE_HEIGHT,
-                  speechBubbleWidth,
-                  SPEECH_BUBBLE_HEIGHT,
-                  fitwick.name
-                );
-              }
-            }
-          }
-        );
+      this.registerFitwickEvents(this.activeFitwick);
       this.activeFitwick = undefined;
     });
     this.game.events.on(EVENT_FITWICK_DELETE, () => {
@@ -161,19 +188,7 @@ class MainScene extends RexScene {
         ) {
           this.x = dragX;
           this.y = dragY;
-        }
-      );
-      this.activeFitwick.on(
-        "dragend",
-        (_pointer: Phaser.Input.Pointer, dragX: number, dragY: number) => {
-          this.game.events.emit(
-            EVENT_FITWICK_MOVE,
-            this.activeFitwick?.name,
-            this.activeFitwick?.input.dragStartX,
-            this.activeFitwick?.input.dragStartY,
-            dragX,
-            dragY
-          );
+          this.scene.game.events.emit(EVENT_FITWICK_MOVE, this);
         }
       );
       cam.startFollow(this.activeFitwick, true, 0.05);

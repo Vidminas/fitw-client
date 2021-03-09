@@ -26,7 +26,7 @@ const Game: React.FC<{}> = () => {
     if (!user || !currentWorld) {
       return;
     }
-    const newGame = new PhaserGame(user, currentWorld, () => {
+    const newGame = new PhaserGame(() => {
       // navigating back home should work, but game does not get cleaned up properly
       // this may be related to:
       // https://stackoverflow.com/questions/57081820/changing-routes-breaks-game-in-phaser-3
@@ -34,14 +34,12 @@ const Game: React.FC<{}> = () => {
       // for now, the workaround is to refresh the page
       history.go(0);
     });
-    newGame.init("game-root");
+    newGame.init("game-root", user, currentWorld);
     return () => {
       // this cleanup gets called if the game is exited without using
       // the in-game "Exit World" button
       // e.g. by clicking back in the browser
-      if (newGame.isInitialised) {
-        newGame.destroy();
-      }
+      newGame.destroy();
     };
   }, [user, currentWorld, history]);
 

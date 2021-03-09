@@ -8,8 +8,6 @@ import {
   EVENT_CONNECT,
   EVENT_FITWICK_DELETE,
   EVENT_FITWICK_PICK_UP,
-  EVENT_DO_FITWICK_NEW,
-  EVENT_DO_FITWICK_PLACE,
   EVENT_NAVIGATE_HOME,
   EVENT_DONE_FITWICK_NEW,
   EVENT_DONE_FITWICK_PLACE,
@@ -22,33 +20,59 @@ import { GAME_HEIGHT, GAME_WIDTH } from "./constants";
 import MainScene from "./scenes/MainScene";
 import UIScene from "./scenes/UIScene";
 import PreloadScene from "./scenes/PreloadScene";
+import Fitwick from "./components/Fitwick";
+
+// logic borrowed from:
+// https://stackoverflow.com/questions/31829951/how-to-reduce-javascript-object-to-only-contain-properties-from-interface
+const fitwickDataKeys = [
+  "worldId",
+  "name",
+  "x",
+  "y",
+  "atlasTexture",
+  "atlasFrame",
+] as const;
+// These two types are not used, they will just cause an error
+// if the data keys do not match the IFitwick interface
+/* eslint-disable @typescript-eslint/no-unused-vars */
+type ExtraTestKeysWarning<
+  T extends never = Exclude<typeof fitwickDataKeys[number], keyof IFitwick>
+> = void;
+type MissingTestKeysWarning<
+  T extends never = Exclude<keyof IFitwick, typeof fitwickDataKeys[number]>
+> = void;
+/* eslint-enable @typescript-eslint/no-unused-vars */
+function pick<T, K extends keyof T>(obj: T, ...keys: K[]): Pick<T, K> {
+  return keys.reduce((o, k) => {
+    o[k] = obj[k];
+    return o;
+  }, {} as Pick<T, K>);
+}
+
+const removeExtraFitwickProps = (fitwick: Fitwick): IFitwick => {
+  return pick(fitwick, ...fitwickDataKeys);
+};
 
 class PhaserGame {
-  public isInitialised: boolean;
   private game?: Phaser.Game;
   private socket?: Socket;
-  private user: IUser;
-  private world: IWorld;
-  private exitWorld: Function;
+  private exitWorldCallback: Function;
 
-  constructor(user: IUser, world: IWorld, exitWorld: Function) {
-    this.isInitialised = false;
+  constructor(exitWorldCallback: Function) {
     this.game = undefined;
     this.socket = undefined;
-    this.user = user;
-    this.world = world;
-    this.exitWorld = exitWorld;
+    this.exitWorldCallback = exitWorldCallback;
   }
 
-  public init(parent: string) {
+  public init(parent: string, user: IUser, world: IWorld) {
     this.socket = io(SERVER_ADDRESS);
     this.socket.on(EVENT_CONNECT, () => {
-      this.socket?.emit(EVENT_WORLD_ENTER, this.user, this.world);
+      this.socket?.emit(EVENT_WORLD_ENTER, user, world);
     });
 
     const preloadScene = new PreloadScene();
     const uiScene = new UIScene();
-    const mainScene = new MainScene(this.world);
+    const mainScene = new MainScene(world);
 
     this.game = new Phaser.Game({
       parent,
@@ -68,7 +92,6 @@ class PhaserGame {
       },
     });
     this.registerGameEvents();
-    this.isInitialised = true;
     return this.game;
   }
 
@@ -84,37 +107,28 @@ class PhaserGame {
       }
     );
     // EVENT_DO_FITWICK_NEW is just from UIScene to MainScene
-    this.game.events.on(EVENT_DONE_FITWICK_NEW, (fitwick: IFitwick) => {
-      this.socket?.emit(EVENT_DONE_FITWICK_NEW, fitwick);
+    this.game.events.on(EVENT_DONE_FITWICK_NEW, (fitwick: Fitwick) => {
+      this.socket?.emit(
+        EVENT_DONE_FITWICK_NEW,
+        removeExtraFitwickProps(fitwick)
+      );
+      console.log(fitwick);
     });
-    this.game.events.on(
-      EVENT_FITWICK_MOVE,
-      (
-        fitwickName: string,
-        oldX: number,
-        oldY: number,
-        newX: number,
-        newY: number
-      ) => {
-        this.socket?.emit(
-          EVENT_FITWICK_MOVE,
-          fitwickName,
-          oldX,
-          oldY,
-          newX,
-          newY
-        );
-      }
-    );
+    this.game.events.on(EVENT_FITWICK_MOVE, (fitwick: Fitwick) => {
+      this.socket?.emit(EVENT_FITWICK_MOVE, removeExtraFitwickProps(fitwick));
+    });
     // EVENT_DO_FITWICK_PLACE is just from UIScene to MainScene
-    this.game.events.on(EVENT_DONE_FITWICK_PLACE, (fitwick: IFitwick) => {
+    this.game.events.on(EVENT_DONE_FITWICK_PLACE, (fitwick: Fitwick) => {
       this.socket?.emit(EVENT_DONE_FITWICK_PLACE, fitwick);
     });
-    this.game.events.on(EVENT_FITWICK_PICK_UP, (fitwick: IFitwick) => {
-      this.socket?.emit(EVENT_FITWICK_PICK_UP, fitwick);
+    this.game.events.on(EVENT_FITWICK_PICK_UP, (fitwick: Fitwick) => {
+      this.socket?.emit(
+        EVENT_FITWICK_PICK_UP,
+        removeExtraFitwickProps(fitwick)
+      );
     });
-    this.game.events.on(EVENT_FITWICK_DELETE, (fitwick: IFitwick) => {
-      this.socket?.emit(EVENT_FITWICK_DELETE, fitwick);
+    this.game.events.on(EVENT_FITWICK_DELETE, (fitwick: Fitwick) => {
+      this.socket?.emit(EVENT_FITWICK_DELETE, removeExtraFitwickProps(fitwick));
     });
     // No need to inform server about EVENT_FITWICK_TAP
     // this is for local client only
@@ -124,12 +138,11 @@ class PhaserGame {
     // Also no need to inform about navigating away from the game page
     this.game.events.on(EVENT_NAVIGATE_HOME, () => {
       this.destroy();
-      this.exitWorld();
+      this.exitWorldCallback();
     });
   }
 
   public destroy() {
-    this.isInitialised = false;
     if (this.game) {
       this.game.destroy(true);
       this.game = undefined;

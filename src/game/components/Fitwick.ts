@@ -8,30 +8,47 @@ class Fitwick extends Phaser.GameObjects.Sprite implements IFitwick {
     return FITWICKS.has(name);
   }
 
-  id: string;
-  state: "rest" | "move";
-  name: string;
+  public worldId: string;
+  public state: "rest" | "move";
+  public name: string;
+  public atlasTexture: string;
+  public atlasFrame: string;
 
-  constructor(scene: Phaser.Scene, x: number, y: number, inputName: string) {
+  constructor(
+    scene: Phaser.Scene,
+    inputName: string,
+    x: number,
+    y: number,
+    worldId?: string,
+    atlasTexture?: string,
+    atlasFrame?: string
+  ) {
     if (!FITWICKS.has(inputName)) {
       throw new Error(`Fitwick ${inputName} not found but created anyway!`);
     }
-    const randomAtlasElement = Phaser.Utils.Array.GetRandom(
-      FITWICKS.get(inputName)!
-    );
-    const texture = randomAtlasElement[0];
-    const frame = randomAtlasElement[1];
-    super(scene, x, y, texture, frame);
+
+    const existingFitwick = worldId && atlasTexture && atlasFrame;
+    if (!existingFitwick) {
+      worldId = `${inputName}/${x}:${y}:${Date.now()}`;
+      const randomAtlasElement = Phaser.Utils.Array.GetRandom(
+        FITWICKS.get(inputName)!
+      );
+      atlasTexture = randomAtlasElement[0];
+      atlasFrame = randomAtlasElement[1];
+    }
+
+    super(scene, x, y, atlasTexture!, atlasFrame);
     this.setScale(SCALE_RATIO / 3);
     scene.add.existing(this);
 
-    this.id = `${inputName}/${x}:${y}:${Date.now()}`;
     this.name = inputName;
+    this.worldId = worldId!;
+    this.atlasTexture = atlasTexture!;
+    this.atlasFrame = atlasFrame!;
+    this.state = "rest";
     this.setInteractive({
       useHandCursor: true,
     });
-    this.state = "move";
-    this.setTintFill(TINT_GREEN);
   }
 
   pickUp() {
