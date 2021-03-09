@@ -83,6 +83,7 @@ class PhaserGame {
         this.socket?.emit(EVENT_WORLD_CHANGE_BACKGROUND, newBackgroundTexture);
       }
     );
+    // EVENT_DO_FITWICK_NEW is just from UIScene to MainScene
     this.game.events.on(EVENT_DONE_FITWICK_NEW, (fitwick: IFitwick) => {
       this.socket?.emit(EVENT_DONE_FITWICK_NEW, fitwick);
     });
@@ -105,19 +106,22 @@ class PhaserGame {
         );
       }
     );
+    // EVENT_DO_FITWICK_PLACE is just from UIScene to MainScene
     this.game.events.on(EVENT_DONE_FITWICK_PLACE, (fitwick: IFitwick) => {
       this.socket?.emit(EVENT_DONE_FITWICK_PLACE, fitwick);
     });
-
-    // this.game.events.on(EVENT_FITWICK_PLACE, () => {
-    //   this.socket?.emit(EVENT_FITWICK_PLACE, )
-    // });
-    // this.game.events.on(EVENT_FITWICK_DELETE, this.onDeleteFitwick.bind(this));
-    // this.game.events.on(EVENT_FITWICK_MOVE, this.onMoveFitwick.bind(this));
-
+    this.game.events.on(EVENT_FITWICK_PICK_UP, (fitwick: IFitwick) => {
+      this.socket?.emit(EVENT_FITWICK_PICK_UP, fitwick);
+    });
+    this.game.events.on(EVENT_FITWICK_DELETE, (fitwick: IFitwick) => {
+      this.socket?.emit(EVENT_FITWICK_DELETE, fitwick);
+    });
+    // No need to inform server about EVENT_FITWICK_TAP
+    // this is for local client only
     this.game.events.on(EVENT_WORLD_EXIT, () => {
       this.socket?.emit(EVENT_WORLD_EXIT);
     });
+    // Also no need to inform about navigating away from the game page
     this.game.events.on(EVENT_NAVIGATE_HOME, () => {
       this.destroy();
       this.exitWorld();

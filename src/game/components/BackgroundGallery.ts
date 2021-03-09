@@ -12,7 +12,7 @@ import {
   GAME_WIDTH,
   BACKGROUND_TEXTURES,
 } from "../constants";
-import UIScene from "../scenes/UIScene";
+import RexScene from "../scenes/RexScene";
 import Button from "./Button";
 
 class BackgroundGallery extends OverlapSizer {
@@ -21,7 +21,7 @@ class BackgroundGallery extends OverlapSizer {
   private backgrounds!: Phaser.GameObjects.Image[];
   public newBackgroundTexture?: string;
 
-  constructor(scene: UIScene) {
+  constructor(scene: RexScene) {
     const width = GAME_WIDTH - 4 * UI_BUTTON_SIZE;
     const height = 4 * UI_BUTTON_SIZE;
     const bgSize = 4 * UI_BUTTON_SIZE;
@@ -125,7 +125,7 @@ class BackgroundGallery extends OverlapSizer {
     scene.add.existing(this);
   }
 
-  private createButtons(scene: UIScene) {
+  private createButtons(scene: RexScene) {
     this.leftButton = new Button(
       scene,
       0,
@@ -146,7 +146,7 @@ class BackgroundGallery extends OverlapSizer {
     );
   }
 
-  private createBackgrounds(scene: UIScene, bgSize: number) {
+  private createBackgrounds(scene: RexScene, bgSize: number) {
     this.backgrounds = BACKGROUND_TEXTURES.map((texture) =>
       scene.rexUI.add.label({
         name: texture,

@@ -14,7 +14,6 @@ import {
   EVENT_FITWICK_MOVE,
   EVENT_WORLD_CHANGE_BACKGROUND,
 } from "../../api/events";
-import { RexScene } from "./RexScene";
 import {
   GAME_HEIGHT,
   GAME_WIDTH,
@@ -27,23 +26,19 @@ import {
 } from "../constants";
 import Fitwick from "../components/Fitwick";
 import SpeechBubble from "../components/SpeechBubble";
+import RexScene from "./RexScene";
 
 class MainScene extends RexScene {
-  private world: IWorld;
-  private controls?: Phaser.Cameras.Controls.SmoothedKeyControl;
-  private backgroundTexture!: string;
   private background!: Phaser.GameObjects.TileSprite;
-
   private activeFitwick?: Fitwick;
   private activeSpeechBubble?: SpeechBubble;
 
   constructor(world: IWorld) {
     super({ key: "MainScene", active: false });
-    this.world = world;
+    // create scene using world fitwicks
   }
 
   create() {
-    this.backgroundTexture = TEXTURE_BACKGROUND_EMPTY;
     this.background = this.add
       .tileSprite(0, 0, GAME_WIDTH, GAME_HEIGHT, TEXTURE_BACKGROUND_EMPTY)
       .setOrigin(0);
@@ -52,7 +47,6 @@ class MainScene extends RexScene {
     this.game.events.on(
       EVENT_WORLD_CHANGE_BACKGROUND,
       (newBackgroundTexture: string) => {
-        this.backgroundTexture = newBackgroundTexture;
         this.background.setTexture(newBackgroundTexture);
       }
     );

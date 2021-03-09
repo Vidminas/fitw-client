@@ -1,5 +1,5 @@
 interface IUser {
-  id: any;
+  id?: any;
   emailHash: string;
   username: string;
   groups: any[];

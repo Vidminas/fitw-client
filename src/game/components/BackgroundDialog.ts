@@ -14,7 +14,6 @@ import {
   UI_FONT_SIZE,
 } from "../constants";
 import RexScene from "../scenes/RexScene";
-import UIScene from "../scenes/UIScene";
 import BackgroundGallery from "./BackgroundGallery";
 import Button from "./Button";
 
@@ -43,7 +42,7 @@ class BackgroundDialog extends Dialog {
   private confirmButton!: Button;
   private cancelButton!: Button;
 
-  constructor(scene: UIScene, onConfirm: Function, onCancel: Function) {
+  constructor(scene: RexScene, onConfirm: Function, onCancel: Function) {
     const minWidth = GAME_WIDTH - 4 * UI_BUTTON_SIZE;
     const minHeight = GAME_HEIGHT - 4 * UI_BUTTON_SIZE;
     super(scene, {
@@ -87,7 +86,7 @@ class BackgroundDialog extends Dialog {
   }
 
   private createButtons(
-    scene: UIScene,
+    scene: RexScene,
     onConfirm: Function,
     onCancel: Function
   ) {

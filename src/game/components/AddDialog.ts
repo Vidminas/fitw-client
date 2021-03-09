@@ -10,7 +10,7 @@ import {
   TEXTURE_BUTTONS,
   UI_FONT_SIZE,
 } from "../constants";
-import { RexScene } from "../scenes/RexScene";
+import RexScene from "../scenes/RexScene";
 import Button from "./Button";
 
 class AddDialog {
