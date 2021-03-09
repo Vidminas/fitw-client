@@ -3,14 +3,20 @@ import { io, Socket } from "socket.io-client";
 import { SERVER_ADDRESS } from "../api/endpoints";
 import IUser from "../api/user";
 import IWorld from "../api/world";
+import IFitwick from "../api/fitwick";
 import {
   EVENT_CONNECT,
   EVENT_FITWICK_DELETE,
-  EVENT_FITWICK_MOVE,
-  EVENT_FITWICK_NEW,
-  EVENT_FITWICK_PLACE,
+  EVENT_FITWICK_PICK_UP,
+  EVENT_DO_FITWICK_NEW,
+  EVENT_DO_FITWICK_PLACE,
   EVENT_NAVIGATE_HOME,
-  EVENT_SELF_IDENTIFY,
+  EVENT_DONE_FITWICK_NEW,
+  EVENT_DONE_FITWICK_PLACE,
+  EVENT_FITWICK_MOVE,
+  EVENT_WORLD_CHANGE_BACKGROUND,
+  EVENT_WORLD_EXIT,
+  EVENT_WORLD_ENTER,
 } from "../api/events";
 import { GAME_HEIGHT, GAME_WIDTH } from "./constants";
 import MainScene from "./scenes/MainScene";
@@ -37,7 +43,7 @@ class PhaserGame {
   public init(parent: string) {
     this.socket = io(SERVER_ADDRESS);
     this.socket.on(EVENT_CONNECT, () => {
-      this.socket?.emit(EVENT_SELF_IDENTIFY, this.user);
+      this.socket?.emit(EVENT_WORLD_ENTER, this.user, this.world);
     });
 
     const preloadScene = new PreloadScene();
@@ -71,15 +77,47 @@ class PhaserGame {
       return;
     }
 
-    this.game.events.on(EVENT_FITWICK_NEW, (fitwickName: string) => {
-      this.socket?.emit(EVENT_FITWICK_NEW, fitwickName);
+    this.game.events.on(
+      EVENT_WORLD_CHANGE_BACKGROUND,
+      (newBackgroundTexture: string) => {
+        this.socket?.emit(EVENT_WORLD_CHANGE_BACKGROUND, newBackgroundTexture);
+      }
+    );
+    this.game.events.on(EVENT_DONE_FITWICK_NEW, (fitwick: IFitwick) => {
+      this.socket?.emit(EVENT_DONE_FITWICK_NEW, fitwick);
     });
+    this.game.events.on(
+      EVENT_FITWICK_MOVE,
+      (
+        fitwickName: string,
+        oldX: number,
+        oldY: number,
+        newX: number,
+        newY: number
+      ) => {
+        this.socket?.emit(
+          EVENT_FITWICK_MOVE,
+          fitwickName,
+          oldX,
+          oldY,
+          newX,
+          newY
+        );
+      }
+    );
+    this.game.events.on(EVENT_DONE_FITWICK_PLACE, (fitwick: IFitwick) => {
+      this.socket?.emit(EVENT_DONE_FITWICK_PLACE, fitwick);
+    });
+
     // this.game.events.on(EVENT_FITWICK_PLACE, () => {
     //   this.socket?.emit(EVENT_FITWICK_PLACE, )
     // });
     // this.game.events.on(EVENT_FITWICK_DELETE, this.onDeleteFitwick.bind(this));
     // this.game.events.on(EVENT_FITWICK_MOVE, this.onMoveFitwick.bind(this));
 
+    this.game.events.on(EVENT_WORLD_EXIT, () => {
+      this.socket?.emit(EVENT_WORLD_EXIT);
+    });
     this.game.events.on(EVENT_NAVIGATE_HOME, () => {
       this.destroy();
       this.exitWorld();

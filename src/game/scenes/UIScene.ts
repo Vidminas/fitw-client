@@ -1,12 +1,13 @@
 import {
   EVENT_FITWICK_DELETE,
-  EVENT_FITWICK_MOVE,
-  EVENT_FITWICK_PLACE,
-  EVENT_FITWICK_NEW,
+  EVENT_FITWICK_PICK_UP,
+  EVENT_DO_FITWICK_PLACE,
+  EVENT_DO_FITWICK_NEW,
   EVENT_MUSIC_CHANGE,
   EVENT_MUSIC_PLAY,
   EVENT_MUSIC_PAUSE,
   EVENT_VOLUME_CHANGE,
+  EVENT_WORLD_CHANGE_BACKGROUND,
 } from "../../api/events";
 import AddDialog from "../components/AddDialog";
 import BackgroundDialog from "../components/BackgroundDialog";
@@ -71,9 +72,12 @@ class UIScene extends RexScene {
     this.musicTrack.play();
     this.isMusicPlaying = true;
 
-    this.game.events.on(EVENT_FITWICK_PLACE, this.onConfirmFitwick.bind(this));
+    this.game.events.on(
+      EVENT_DO_FITWICK_PLACE,
+      this.onConfirmFitwick.bind(this)
+    );
     this.game.events.on(EVENT_FITWICK_DELETE, this.onDeleteFitwick.bind(this));
-    this.game.events.on(EVENT_FITWICK_MOVE, this.onMoveFitwick.bind(this));
+    this.game.events.on(EVENT_FITWICK_PICK_UP, this.onMoveFitwick.bind(this));
     // this.events.on(EVENT_FITWICK_TAP, this.onTapFitwick.bind(this));
     this.game.events.on(EVENT_MUSIC_CHANGE, () => {
       this.musicTrackIndex++;
@@ -151,7 +155,7 @@ class UIScene extends RexScene {
       FRAME_BUTTON_CONFIRM_REST,
       FRAME_BUTTON_CONFIRM_HOVER,
       FRAME_BUTTON_CONFIRM_CLICK,
-      () => this.game.events.emit(EVENT_FITWICK_PLACE)
+      () => this.game.events.emit(EVENT_DO_FITWICK_PLACE)
     );
     this.confirmFitwickButton.setVisible(false);
     this.deleteFitwickButton = new Button(
@@ -184,7 +188,10 @@ class UIScene extends RexScene {
       this,
       (newBackgroundTexture?: string) => {
         if (newBackgroundTexture) {
-          this.registry.set("bgTexture", newBackgroundTexture);
+          this.game.events.emit(
+            EVENT_WORLD_CHANGE_BACKGROUND,
+            newBackgroundTexture
+          );
         }
         this.isDialogOpen = false;
         this.backgroundDialog!.hide();
@@ -261,7 +268,7 @@ class UIScene extends RexScene {
       (text: string) => {
         if (Fitwick.exists(text)) {
           // let the main scene handle the addition of a new Fitwick
-          this.game.events.emit(EVENT_FITWICK_NEW, text);
+          this.game.events.emit(EVENT_DO_FITWICK_NEW, text);
           this.isDialogOpen = false;
           this.addDialog!.hide();
           this.addDialog = undefined;

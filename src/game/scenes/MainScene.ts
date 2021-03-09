@@ -2,13 +2,17 @@ import Phaser from "phaser";
 import * as dat from "dat.gui";
 import IWorld from "../../api/world";
 import {
-  EVENT_FITWICK_NEW,
-  EVENT_FITWICK_PLACE,
+  EVENT_DO_FITWICK_NEW,
+  EVENT_DO_FITWICK_PLACE,
   EVENT_FITWICK_DELETE,
-  EVENT_FITWICK_MOVE,
+  EVENT_FITWICK_PICK_UP,
   EVENT_FITWICK_TAP,
-  EVENT_EXIT_WORLD,
+  EVENT_WORLD_EXIT,
   EVENT_NAVIGATE_HOME,
+  EVENT_DONE_FITWICK_NEW,
+  EVENT_DONE_FITWICK_PLACE,
+  EVENT_FITWICK_MOVE,
+  EVENT_WORLD_CHANGE_BACKGROUND,
 } from "../../api/events";
 import { RexScene } from "./RexScene";
 import {
@@ -38,17 +42,6 @@ class MainScene extends RexScene {
     this.world = world;
   }
 
-  setBackground(backgroundTexture: string) {
-    this.backgroundTexture = backgroundTexture;
-    this.background?.setTexture(backgroundTexture);
-  }
-
-  updateData(_parent: Phaser.Game, key: string, data: any) {
-    if (key === "bgTexture") {
-      this.setBackground(data);
-    }
-  }
-
   create() {
     this.backgroundTexture = TEXTURE_BACKGROUND_EMPTY;
     this.background = this.add
@@ -56,18 +49,20 @@ class MainScene extends RexScene {
       .setOrigin(0);
     this.background.setScrollFactor(0);
 
-    this.registry.set("bgTexture", TEXTURE_BACKGROUND_EMPTY);
-    this.registry.events.on("changedata", this.updateData, this);
+    this.game.events.on(
+      EVENT_WORLD_CHANGE_BACKGROUND,
+      (newBackgroundTexture: string) => {
+        this.backgroundTexture = newBackgroundTexture;
+        this.background.setTexture(newBackgroundTexture);
+      }
+    );
 
     const cam = this.cameras.main;
 
-    this.game.events.on(EVENT_FITWICK_NEW, (fitwickName: string) => {
-      this.activeFitwick = new Fitwick(
-        this,
-        cam.scrollX + GAME_WIDTH / 2,
-        cam.scrollY + GAME_HEIGHT / 2,
-        fitwickName
-      );
+    this.game.events.on(EVENT_DO_FITWICK_NEW, (fitwickName: string) => {
+      const x = cam.scrollX + GAME_WIDTH / 2;
+      const y = cam.scrollY + GAME_HEIGHT / 2;
+      this.activeFitwick = new Fitwick(this, x, y, fitwickName);
       this.input.setDraggable(this.activeFitwick);
       this.activeFitwick.on(
         "drag",
@@ -82,11 +77,16 @@ class MainScene extends RexScene {
         }
       );
       cam.startFollow(this.activeFitwick, true, 0.5);
+      this.game.events.emit(EVENT_DONE_FITWICK_NEW, this.activeFitwick);
     });
-    this.game.events.on(EVENT_FITWICK_PLACE, () => {
-      this.activeFitwick!.removeListener("drag");
-      this.activeFitwick!.placeDown();
+    this.game.events.on(EVENT_DO_FITWICK_PLACE, () => {
+      if (!this.activeFitwick) {
+        return;
+      }
+      this.activeFitwick.removeListener("drag");
+      this.activeFitwick.placeDown();
       cam.stopFollow();
+      this.game.events.emit(EVENT_DONE_FITWICK_PLACE, this.activeFitwick);
       // TODO: there is probably a memory leak when this is not cleaned up on delete
       this.rexGestures.add
         .press(this.activeFitwick)
@@ -98,7 +98,7 @@ class MainScene extends RexScene {
             _lastPointer: Phaser.Input.Pointer
           ) => {
             if (!this.activeFitwick && gameObject?.state === "rest") {
-              this.game.events.emit(EVENT_FITWICK_MOVE, gameObject);
+              this.game.events.emit(EVENT_FITWICK_PICK_UP, gameObject);
             }
           }
         );
@@ -150,7 +150,7 @@ class MainScene extends RexScene {
       cam.stopFollow();
       this.activeFitwick = undefined;
     });
-    this.game.events.on(EVENT_FITWICK_MOVE, (fitwick: Fitwick) => {
+    this.game.events.on(EVENT_FITWICK_PICK_UP, (fitwick: Fitwick) => {
       if (this.activeSpeechBubble) {
         this.activeSpeechBubble.destroy();
         this.activeSpeechBubble = undefined;
@@ -169,10 +169,23 @@ class MainScene extends RexScene {
           this.y = dragY;
         }
       );
+      this.activeFitwick.on(
+        "dragend",
+        (_pointer: Phaser.Input.Pointer, dragX: number, dragY: number) => {
+          this.game.events.emit(
+            EVENT_FITWICK_MOVE,
+            this.activeFitwick?.name,
+            this.activeFitwick?.input.dragStartX,
+            this.activeFitwick?.input.dragStartY,
+            dragX,
+            dragY
+          );
+        }
+      );
       cam.startFollow(this.activeFitwick, true, 0.05);
       this.activeFitwick.pickUp();
     });
-    this.game.events.on(EVENT_EXIT_WORLD, () => {
+    this.game.events.on(EVENT_WORLD_EXIT, () => {
       // save world state ...
       this.game.events.emit(EVENT_NAVIGATE_HOME);
     });

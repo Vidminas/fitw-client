@@ -1,6 +1,6 @@
 import { ScrollablePanel } from "phaser3-rex-plugins/templates/ui/ui-components.js";
 import {
-  EVENT_EXIT_WORLD,
+  EVENT_WORLD_EXIT,
   EVENT_MUSIC_CHANGE,
   EVENT_MUSIC_PAUSE,
   EVENT_MUSIC_PLAY,
@@ -144,7 +144,7 @@ const createSettingsGrid = (scene: RexScene, currentVolume: number) => {
       FRAME_BUTTON_EXIT_REST,
       FRAME_BUTTON_EXIT_HOVER,
       FRAME_BUTTON_EXIT_CLICK,
-      () => scene.game.events.emit(EVENT_EXIT_WORLD)
+      () => scene.game.events.emit(EVENT_WORLD_EXIT)
     ),
     text: scene.add.text(0, 0, "Exit World", { fontSize: UI_FONT_SIZE }),
   });
