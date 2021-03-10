@@ -6,7 +6,7 @@ import {
   fetchUserWithToken,
   requestUserAuthEmail,
 } from "../auth/remoteUser";
-import { fetchWorld } from "../world/remoteWorld";
+import { fetchWorld, fetchWorlds } from "../world/remoteWorld";
 import * as Actions from "./actionTypes";
 
 function* loadUserLocalStorage() {
@@ -72,6 +72,23 @@ function* fetchUserFromServer() {
   });
 }
 
+function* fetchAllUserWorldsFromServer() {
+  yield takeLatest(Actions.WORLD_FETCH_ALL, function* (action: AnyAction) {
+    try {
+      const response = yield call(fetchWorlds, action.payload);
+      yield put({
+        type: Actions.WORLD_FETCH_ALL_SUCCESS,
+        payload: response.data,
+      });
+    } catch (error) {
+      yield put({
+        type: Actions.WORLD_FETCH_ALL_ERROR,
+        payload: error.response?.data?.error?.message || error,
+      });
+    }
+  });
+}
+
 function* fetchWorldFromServer() {
   yield takeLatest(Actions.WORLD_FETCH, function* (action: AnyAction) {
     try {
@@ -92,6 +109,7 @@ export default function* rootSaga() {
     authLocalUser(),
     requestAuthFromServer(),
     fetchUserFromServer(),
+    fetchAllUserWorldsFromServer(),
     fetchWorldFromServer(),
   ]);
 }

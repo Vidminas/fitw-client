@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   USER_CREATE_WORLD,
   USER_ENTER_WORLD,
-  WORLD_FETCH,
+  WORLD_FETCH_ALL,
 } from "../redux/actionTypes";
 import { AppState } from "../redux/store";
 import IWorld from "../api/world";
@@ -27,9 +27,7 @@ const Book: React.FC<{}> = () => {
   const numPages = user.worlds.length + 3;
 
   React.useEffect(() => {
-    for (const worldId of user.worlds) {
-      dispatch({ type: WORLD_FETCH, payload: worldId });
-    }
+    dispatch({ type: WORLD_FETCH_ALL, payload: user.worlds });
   }, [user.worlds, dispatch]);
 
   const openNextPage = (fromPage: number) => {
@@ -92,7 +90,7 @@ const Book: React.FC<{}> = () => {
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
             <defs>
               <pattern
-                id="worldBackground"
+                id={`worldBackground/${i}`}
                 patternUnits="userSpaceOnUse"
                 width="512"
                 height="512"
@@ -109,7 +107,7 @@ const Book: React.FC<{}> = () => {
               </pattern>
             </defs>
             <ellipse
-              fill="url(#worldBackground)"
+              fill={`url(#worldBackground/${i})`}
               opacity="1"
               fillOpacity="1"
               stroke="#0000ff"

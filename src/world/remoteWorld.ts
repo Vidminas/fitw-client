@@ -1,6 +1,11 @@
 import axios from "axios";
 import { SERVER_WORLDS_ENDPOINT } from "../api/endpoints";
+import IUser from "../api/user";
 
-export const fetchWorld = async (worldId: any) => {
-  return await axios.get(`${SERVER_WORLDS_ENDPOINT}/${worldId}`);
+export const fetchWorld = async (worldID: IUser["worlds"]) => {
+  return await axios.get(`${SERVER_WORLDS_ENDPOINT}/${worldID}`);
+};
+
+export const fetchWorlds = async (worldIDs: IUser["worlds"][]) => {
+  return await axios.get(`${SERVER_WORLDS_ENDPOINT}?id=${worldIDs.join(",")}`);
 };
