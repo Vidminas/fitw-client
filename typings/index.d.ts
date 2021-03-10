@@ -13,6 +13,20 @@ declare module "phaser3-rex-plugins/plugins/gestures-plugin.js" {
   export default RexGesturesPlugin;
 }
 
+declare module "phaser3-rex-plugins/plugins/cursoratbound.js" {
+  class CursorAtBound extends Phaser.Plugins.ScenePlugin {
+    constructor(
+      scene: Phaser.Scene,
+      config: {
+        bounds?: Phaser.Geom.Rectangle | undefined;
+        sensitiveDistance?: number;
+      }
+    );
+    createCursorKeys();
+  }
+  export default CursorAtBound;
+}
+
 declare module "phaser3-rex-plugins/plugins/inputtext.js" {
   class InputText extends Phaser.GameObjects.DOMElement {
     constructor(
