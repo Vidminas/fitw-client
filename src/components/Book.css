@@ -122,3 +122,10 @@
   text-align: center;
   font-size: large;
 }
+.worldLink {
+  display: block;
+  margin: 0 auto;
+}
+.worldEllipse {
+  cursor: pointer;
+}

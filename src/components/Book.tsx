@@ -1,10 +1,9 @@
 import React, { ReactElement } from "react";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import IUser from "../api/user";
 import "./Book.css";
 import BookPage, { PageFlip } from "./BookPage";
 import Banner from "./FITW banner.svg";
-import NewWorld from "./new world.svg";
 import { useDispatch, useSelector } from "react-redux";
 import {
   USER_CREATE_WORLD,
@@ -13,8 +12,10 @@ import {
 } from "../redux/actionTypes";
 import { AppState } from "../redux/store";
 import IWorld from "../api/world";
+import WorldEllipse from "./WorldEllipse";
 
 const Book: React.FC<{}> = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const user = useSelector<AppState, IUser>((state) => state.user.user!);
   const worlds = useSelector<AppState, IWorld[]>(
@@ -70,9 +71,14 @@ const Book: React.FC<{}> = () => {
   addPage(
     <>
       <p className="worldName">New World</p>
-      <Link to="/game" onClick={() => dispatch({ type: USER_CREATE_WORLD })}>
-        <img src={NewWorld} alt="Click to create a new world" />
-      </Link>
+      <WorldEllipse
+        index={-1}
+        background={"assets/backgrounds/new world.svg"}
+        onClickHandler={() => {
+          dispatch({ type: USER_CREATE_WORLD });
+          history.push("/game");
+        }}
+      />
     </>
   );
 
@@ -81,46 +87,16 @@ const Book: React.FC<{}> = () => {
     const makeWorldDiv = (index: number) => (
       <>
         <p className="worldName">{worlds[index].name}</p>
-        <Link
-          to="/game"
-          onClick={() =>
-            dispatch({ type: USER_ENTER_WORLD, payload: worlds[index] })
-          }
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-            <defs>
-              <pattern
-                id={`worldBackground/${i}`}
-                patternUnits="userSpaceOnUse"
-                width="512"
-                height="512"
-              >
-                <image
-                  href={`assets/backgrounds/${
-                    worlds[index].background || "backgroundEmpty.png"
-                  }`}
-                  x="0"
-                  y="0"
-                  width="512"
-                  height="512"
-                />
-              </pattern>
-            </defs>
-            <ellipse
-              fill={`url(#worldBackground/${i})`}
-              opacity="1"
-              fillOpacity="1"
-              stroke="#0000ff"
-              strokeWidth="0.8"
-              strokeOpacity="1"
-              strokeMiterlimit="4"
-              cx="256"
-              cy="256"
-              rx="256"
-              ry="200"
-            />
-          </svg>
-        </Link>
+        <WorldEllipse
+          index={i}
+          background={`assets/backgrounds/${
+            worlds[index].background || "backgroundEmpty.png"
+          }`}
+          onClickHandler={() => {
+            dispatch({ type: USER_ENTER_WORLD, payload: worlds[index] });
+            history.push("/game");
+          }}
+        />
       </>
     );
 
