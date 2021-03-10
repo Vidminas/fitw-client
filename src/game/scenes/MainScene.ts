@@ -4,7 +4,7 @@ import IWorld from "../../api/world";
 import {
   EVENT_DO_FITWICK_NEW,
   EVENT_DO_FITWICK_PLACE,
-  EVENT_FITWICK_DELETE,
+  EVENT_DO_FITWICK_DELETE,
   EVENT_FITWICK_PICK_UP,
   EVENT_FITWICK_TAP,
   EVENT_WORLD_EXIT,
@@ -13,6 +13,7 @@ import {
   EVENT_DONE_FITWICK_PLACE,
   EVENT_FITWICK_MOVE,
   EVENT_WORLD_CHANGE_BACKGROUND,
+  EVENT_DONE_FITWICK_DELETE,
 } from "../../api/events";
 import {
   GAME_HEIGHT,
@@ -23,6 +24,7 @@ import {
   TEXTURE_BACKGROUND_EMPTY,
   SPEECH_BUBBLE_HEIGHT,
   SPEECH_BUBBLE_MIN_WIDTH,
+  UI_BUTTON_SIZE,
 } from "../constants";
 import Fitwick from "../components/Fitwick";
 import SpeechBubble from "../components/SpeechBubble";
@@ -151,7 +153,8 @@ class MainScene extends RexScene {
           this.y = dragY;
         }
       );
-      cam.startFollow(this.activeFitwick, true, 0.5);
+
+      // cam.startFollow(this.activeFitwick, true, 0.5);
       this.game.events.emit(EVENT_DONE_FITWICK_NEW, this.activeFitwick);
     });
     this.game.events.on(EVENT_DO_FITWICK_PLACE, () => {
@@ -165,10 +168,11 @@ class MainScene extends RexScene {
       this.registerFitwickEvents(this.activeFitwick);
       this.activeFitwick = undefined;
     });
-    this.game.events.on(EVENT_FITWICK_DELETE, () => {
+    this.game.events.on(EVENT_DO_FITWICK_DELETE, () => {
       this.activeFitwick?.removeListener("drag");
-      this.activeFitwick?.destroy();
       cam.stopFollow();
+      this.game.events.emit(EVENT_DONE_FITWICK_DELETE, this.activeFitwick);
+      this.activeFitwick?.destroy();
       this.activeFitwick = undefined;
     });
     this.game.events.on(EVENT_FITWICK_PICK_UP, (fitwick: Fitwick) => {
@@ -192,6 +196,10 @@ class MainScene extends RexScene {
         }
       );
       cam.startFollow(this.activeFitwick, true, 0.05);
+      cam.setDeadzone(
+        Math.max(GAME_WIDTH - 4 * UI_BUTTON_SIZE, GAME_WIDTH / 2),
+        Math.max(GAME_HEIGHT - 4 * UI_BUTTON_SIZE, GAME_HEIGHT / 2)
+      );
       this.activeFitwick.pickUp();
     });
     this.game.events.on(EVENT_WORLD_EXIT, () => {

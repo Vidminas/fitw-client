@@ -49,6 +49,10 @@ class Fitwick extends Phaser.GameObjects.Sprite implements IFitwick {
     this.setInteractive({
       useHandCursor: true,
     });
+    // this.scene.add
+    //   .graphics()
+    //   .strokeRectShape(this.getBounds())
+    //   .lineStyle(4, 0xff00ff);
   }
 
   pickUp() {
@@ -59,10 +63,6 @@ class Fitwick extends Phaser.GameObjects.Sprite implements IFitwick {
   placeDown() {
     this.state = "rest";
     this.clearTint();
-    // this.scene.add
-    //   .graphics()
-    //   .strokeRectShape(this.getBounds())
-    //   .lineStyle(4, 0xff00ff);
   }
 }
 

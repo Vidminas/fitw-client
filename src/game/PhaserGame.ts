@@ -6,7 +6,6 @@ import IWorld from "../api/world";
 import IFitwick from "../api/fitwick";
 import {
   EVENT_CONNECT,
-  EVENT_FITWICK_DELETE,
   EVENT_FITWICK_PICK_UP,
   EVENT_NAVIGATE_HOME,
   EVENT_DONE_FITWICK_NEW,
@@ -15,6 +14,7 @@ import {
   EVENT_WORLD_CHANGE_BACKGROUND,
   EVENT_WORLD_EXIT,
   EVENT_WORLD_ENTER,
+  EVENT_DONE_FITWICK_DELETE,
 } from "../api/events";
 import { GAME_HEIGHT, GAME_WIDTH } from "./constants";
 import MainScene from "./scenes/MainScene";
@@ -127,8 +127,11 @@ class PhaserGame {
         removeExtraFitwickProps(fitwick)
       );
     });
-    this.game.events.on(EVENT_FITWICK_DELETE, (fitwick: Fitwick) => {
-      this.socket?.emit(EVENT_FITWICK_DELETE, removeExtraFitwickProps(fitwick));
+    this.game.events.on(EVENT_DONE_FITWICK_DELETE, (fitwick: Fitwick) => {
+      this.socket?.emit(
+        EVENT_DONE_FITWICK_DELETE,
+        removeExtraFitwickProps(fitwick)
+      );
     });
     // No need to inform server about EVENT_FITWICK_TAP
     // this is for local client only

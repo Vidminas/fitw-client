@@ -1,5 +1,5 @@
 import {
-  EVENT_FITWICK_DELETE,
+  EVENT_DO_FITWICK_DELETE,
   EVENT_FITWICK_PICK_UP,
   EVENT_DO_FITWICK_PLACE,
   EVENT_DO_FITWICK_NEW,
@@ -76,7 +76,10 @@ class UIScene extends RexScene {
       EVENT_DO_FITWICK_PLACE,
       this.onConfirmFitwick.bind(this)
     );
-    this.game.events.on(EVENT_FITWICK_DELETE, this.onDeleteFitwick.bind(this));
+    this.game.events.on(
+      EVENT_DO_FITWICK_DELETE,
+      this.onDeleteFitwick.bind(this)
+    );
     this.game.events.on(EVENT_FITWICK_PICK_UP, this.onMoveFitwick.bind(this));
     // this.events.on(EVENT_FITWICK_TAP, this.onTapFitwick.bind(this));
     this.game.events.on(EVENT_MUSIC_CHANGE, () => {
@@ -166,7 +169,7 @@ class UIScene extends RexScene {
       FRAME_BUTTON_DELETE_REST,
       FRAME_BUTTON_DELETE_HOVER,
       FRAME_BUTTON_DELETE_CLICK,
-      () => this.game.events.emit(EVENT_FITWICK_DELETE)
+      () => this.game.events.emit(EVENT_DO_FITWICK_DELETE)
     );
     this.deleteFitwickButton.setVisible(false);
   }
