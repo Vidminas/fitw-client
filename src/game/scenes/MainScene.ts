@@ -99,6 +99,28 @@ class MainScene extends RexScene {
       );
   }
 
+  private registerFitwickDrag(fitwick: Fitwick) {
+    fitwick.on(
+      "drag",
+      function (
+        this: Fitwick,
+        _pointer: Phaser.Input.Pointer,
+        dragX: number,
+        dragY: number
+      ) {
+        this.x = dragX;
+        this.y = dragY;
+        this.scene.game.events.emit(EVENT_FITWICK_MOVE, this);
+      }
+    );
+    const cam = this.cameras.main;
+    cam.startFollow(fitwick, true, 0.05);
+    cam.setDeadzone(
+      Math.min(8 * UI_BUTTON_SIZE, GAME_WIDTH / 2),
+      Math.min(4 * UI_BUTTON_SIZE, GAME_HEIGHT / 2)
+    );
+  }
+
   create() {
     this.background = this.add
       .tileSprite(
@@ -139,23 +161,10 @@ class MainScene extends RexScene {
       const x = cam.scrollX + GAME_WIDTH / 2;
       const y = cam.scrollY + GAME_HEIGHT / 2;
       this.activeFitwick = new Fitwick(this, fitwickName, x, y);
-      this.activeFitwick.pickUp();
       this.input.setDraggable(this.activeFitwick);
-      this.activeFitwick.on(
-        "drag",
-        function (
-          this: Fitwick,
-          _pointer: Phaser.Input.Pointer,
-          dragX: number,
-          dragY: number
-        ) {
-          this.x = dragX;
-          this.y = dragY;
-        }
-      );
-
-      // cam.startFollow(this.activeFitwick, true, 0.5);
       this.game.events.emit(EVENT_DONE_FITWICK_NEW, this.activeFitwick);
+      this.activeFitwick.pickUp();
+      this.registerFitwickDrag(this.activeFitwick);
     });
     this.game.events.on(EVENT_DO_FITWICK_PLACE, () => {
       if (!this.activeFitwick) {
@@ -180,27 +189,9 @@ class MainScene extends RexScene {
         this.activeSpeechBubble.destroy();
         this.activeSpeechBubble = undefined;
       }
-
       this.activeFitwick = fitwick;
-      this.activeFitwick.on(
-        "drag",
-        function (
-          this: Fitwick,
-          _pointer: Phaser.Input.Pointer,
-          dragX: number,
-          dragY: number
-        ) {
-          this.x = dragX;
-          this.y = dragY;
-          this.scene.game.events.emit(EVENT_FITWICK_MOVE, this);
-        }
-      );
-      cam.startFollow(this.activeFitwick, true, 0.05);
-      cam.setDeadzone(
-        Math.max(GAME_WIDTH - 4 * UI_BUTTON_SIZE, GAME_WIDTH / 2),
-        Math.max(GAME_HEIGHT - 4 * UI_BUTTON_SIZE, GAME_HEIGHT / 2)
-      );
       this.activeFitwick.pickUp();
+      this.registerFitwickDrag(this.activeFitwick);
     });
     this.game.events.on(EVENT_WORLD_EXIT, () => {
       // save world state ...
@@ -216,10 +207,13 @@ class MainScene extends RexScene {
       (
         pan: any,
         gameObject: Phaser.GameObjects.GameObject,
-        _lastPointer: Phaser.Input.Pointer
+        lastPointer: Phaser.Input.Pointer
       ) => {
         // the active fitwick has its own input drag behaviour
-        if (!gameObject || gameObject !== this.activeFitwick) {
+        if (
+          this.input.getDragState(lastPointer) === 0 &&
+          (!gameObject || gameObject !== this.activeFitwick)
+        ) {
           cam.setScroll(cam.scrollX - pan.dx, cam.scrollY - pan.dy);
         }
       }
