@@ -6,16 +6,18 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import IUser from "../api/user";
 import IWorld from "../api/world";
 import PhaserGame from "../game/PhaserGame";
 import "./Clock.css";
 import { useHistory } from "react-router";
 import { AppState } from "../redux/store";
+import { WORLD_FETCH } from "../redux/actionTypes";
 
 const Game: React.FC<{}> = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
   const user = useSelector<AppState, IUser | null>((state) => state.user.user);
   const currentWorld = useSelector<AppState, IWorld | null>(
     (state) => state.user.currentWorld
@@ -25,6 +27,12 @@ const Game: React.FC<{}> = () => {
   React.useEffect(() => {
     if (!user || !currentWorld) {
       return;
+    }
+    // new worlds don't have an ID
+    if (currentWorld.id) {
+      // this updates the worlds state, but it does not change the user current world
+      // TODO: figure out a way to update the current state world
+      dispatch({ type: WORLD_FETCH, payload: currentWorld.id });
     }
     const newGame = new PhaserGame(() => {
       // navigating back home should work, but game does not get cleaned up properly
@@ -41,7 +49,7 @@ const Game: React.FC<{}> = () => {
       // e.g. by clicking back in the browser
       newGame.destroy();
     };
-  }, [user, currentWorld, history]);
+  }, [dispatch, user, currentWorld, history]);
 
   React.useEffect(() => {
     const getTimeString = (date: Date) => {
