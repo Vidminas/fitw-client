@@ -1,46 +1,64 @@
-import React, { ReactElement } from "react";
-import { useHistory } from "react-router-dom";
-import IUser from "../api/user";
+import React, { ReactElement, useEffect, useState } from "react";
 import "./Book.css";
-import BookPage, { PageFlip } from "./BookPage";
+import BookPage from "./BookPage";
 import Banner from "./FITW banner.svg";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  USER_CREATE_WORLD,
-  USER_ENTER_WORLD,
-  WORLD_FETCH_ALL,
-} from "../redux/actionTypes";
-import { AppState } from "../redux/store";
-import IWorld from "../api/world";
+import { WORLD_FETCH_ALL } from "../redux/actionTypes";
+import { AppState, UserState, WorldsState } from "../redux/store";
 import WorldEllipse from "./WorldEllipse";
+import WorldDialog from "./WorldDialog";
+import { IonLoading } from "@ionic/react";
+
+type BookClass = "book-open" | "book-closed-front" | "book-closed-back";
 
 const Book: React.FC<{}> = () => {
-  const history = useHistory();
   const dispatch = useDispatch();
-  const user = useSelector<AppState, IUser>((state) => state.user.user!);
-  const worlds = useSelector<AppState, IWorld[]>(
-    (state) => state.worlds.worlds
+  const userState = useSelector<AppState, UserState>((state) => state.user);
+  const worldsState = useSelector<AppState, WorldsState>(
+    (state) => state.worlds
   );
-  const [currentPage, setCurrentPage] = React.useState(-1);
-  const [lastFlip, setLastFlip] = React.useState<PageFlip>({});
+  const [showWorldDialog, setShowWorldDialog] = useState(false);
+  const [bookClass, setBookClass] = useState<BookClass>("book-closed-front");
+  const [pageInFront, setPageInFront] = useState(0);
+  const [pageInMiddle, setPageInMiddle] = useState(1);
+  const [pageInBack, setPageInBack] = useState(2);
+  const [pageIsAnimating, setPageIsAnimating] = useState(false);
   const pages: ReactElement[] = [];
   // number of existing worlds + 2 cover pages + 1 new world option
-  const numPages = user.worlds.length + 3;
+  const numPages = userState.user?.worlds
+    ? userState.user.worlds.length + 3
+    : 3;
 
-  React.useEffect(() => {
-    dispatch({ type: WORLD_FETCH_ALL, payload: user.worlds });
-  }, [user.worlds, dispatch]);
+  useEffect(() => {
+    if (userState.currentStatus === "loggedIn" && userState.user) {
+      dispatch({ type: WORLD_FETCH_ALL, payload: userState.user.worlds });
+    }
+  }, [userState, dispatch]);
 
   const openNextPage = (fromPage: number) => {
-    if (currentPage < numPages - 1) {
-      setCurrentPage(currentPage + 1);
-      setLastFlip({ direction: 1, fromPage });
+    if (fromPage < numPages) {
+      setPageInFront(fromPage);
+      setPageInMiddle(fromPage + 1);
+      setPageInBack(fromPage - 1);
+
+      if (fromPage === 0) {
+        setBookClass("book-open");
+      } else if (fromPage + 1 === numPages) {
+        setBookClass("book-closed-back");
+      }
     }
   };
   const openPreviousPage = (fromPage: number) => {
-    if (currentPage >= 0) {
-      setCurrentPage(currentPage - 1);
-      setLastFlip({ direction: -1, fromPage });
+    if (fromPage >= 0) {
+      setPageInFront(fromPage);
+      setPageInMiddle(fromPage - 1);
+      setPageInBack(fromPage + 1);
+
+      if (fromPage === numPages - 1) {
+        setBookClass("book-open");
+      } else if (fromPage === 1) {
+        setBookClass("book-closed-front");
+      }
     }
   };
 
@@ -48,12 +66,22 @@ const Book: React.FC<{}> = () => {
     leftChildren?: React.ReactNode,
     rightChildren?: React.ReactNode
   ) => {
+    const pageNum = pages.length;
     pages.push(
       <BookPage
-        key={pages.length}
-        pageNum={pages.length}
-        numPages={numPages}
-        lastFlip={lastFlip}
+        key={pageNum}
+        pageNum={pageNum}
+        pageClass={
+          pageNum === pageInFront
+            ? "page-in-front"
+            : pageNum === pageInMiddle
+            ? "page-in-middle"
+            : pageNum === pageInBack
+            ? "page-in-back"
+            : undefined
+        }
+        pageIsAnimating={pageIsAnimating}
+        setPageIsAnimating={setPageIsAnimating}
         openNextPage={openNextPage}
         openPreviousPage={openPreviousPage}
         leftChildren={leftChildren}
@@ -62,27 +90,21 @@ const Book: React.FC<{}> = () => {
     );
   };
 
-  // A side effect of not setting z-index on all pages initially
-  // is that they will get displayed in reverse order
-
-  // add back cover
-  addPage();
-  // add new world page
+  // add front cover
   addPage(
     <>
-      <p className="worldName">New World</p>
-      <WorldEllipse
-        index={-1}
-        background={"assets/backgrounds/new world.svg"}
-        onClickHandler={() => {
-          dispatch({ type: USER_CREATE_WORLD });
-          history.push("/game");
-        }}
-      />
+      <p>Fill In The World</p>
+      <img src={Banner} alt="Game banner" />
+      <p>-&gt;</p>
+    </>,
+    <>
+      <p>The worlds of</p>
+      <p>{userState.user?.username || "Unknown user"}</p>
     </>
   );
 
   // add existing worlds
+  const worlds = worldsState.worlds;
   for (let i = 0; i < worlds.length; i++) {
     const makeWorldDiv = (index: number) => (
       <>
@@ -93,8 +115,8 @@ const Book: React.FC<{}> = () => {
             worlds[index].background || "backgroundEmpty.png"
           }`}
           onClickHandler={() => {
-            dispatch({ type: USER_ENTER_WORLD, payload: worlds[index] });
-            history.push("/game");
+            // dispatch({ type: USER_ENTER_WORLD, payload: worlds[index] });
+            // history.push("/game");
           }}
         />
       </>
@@ -104,30 +126,46 @@ const Book: React.FC<{}> = () => {
     const world2 = ++i < worlds.length && makeWorldDiv(i);
     addPage(world1, world2);
   }
-  // add front cover
+
+  // add new world page
   addPage(
     <>
-      <p>Fill In The World</p>
-      <img src={Banner} alt="Game banner" />
-      <p>-&gt;</p>
-    </>,
-    <>
-      <p>The worlds of</p>
-      <p>{user.username}</p>
+      <p className="worldName">New World</p>
+      <WorldEllipse
+        index={-1}
+        background={"assets/backgrounds/new world.svg"}
+        onClickHandler={(event) => {
+          setShowWorldDialog(true);
+          // prevent the book page from flipping on click
+          event.stopPropagation();
+          // dispatch({ type: USER_CREATE_WORLD });
+          // history.push("/game");
+        }}
+      />
     </>
   );
 
-  let className = "open";
-  if (currentPage === -1) {
-    className = "closedFront";
-  } else if (currentPage === numPages - 1) {
-    className = "closedBack";
-  }
+  // add back cover
+  addPage();
 
   return (
-    <div id="book" className={className}>
-      {pages}
-    </div>
+    <>
+      <IonLoading
+        isOpen={
+          userState.currentStatus === "loading" ||
+          worldsState.currentStatus === "loading"
+        }
+        message="Loading worlds from server..."
+      ></IonLoading>
+      <WorldDialog
+        isOpen={showWorldDialog}
+        onClick={() => setShowWorldDialog(false)}
+        onDismiss={() => setShowWorldDialog(false)}
+      ></WorldDialog>
+      <div id="book" className={bookClass}>
+        {pages}
+      </div>
+    </>
   );
 };
 

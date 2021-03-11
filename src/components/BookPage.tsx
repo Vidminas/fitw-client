@@ -1,3 +1,4 @@
+import { CreateAnimation } from "@ionic/react";
 import React from "react";
 
 export interface PageFlip {
@@ -5,10 +6,13 @@ export interface PageFlip {
   fromPage?: number;
 }
 
+type PageClass = "page-in-front" | "page-in-middle" | "page-in-back";
+
 interface BookPageProps {
   pageNum: number;
-  numPages: number;
-  lastFlip: PageFlip;
+  pageClass?: PageClass;
+  pageIsAnimating: boolean;
+  setPageIsAnimating: React.Dispatch<React.SetStateAction<boolean>>;
   openNextPage: (i: number) => void;
   openPreviousPage: (i: number) => void;
   leftChildren?: React.ReactNode;
@@ -17,67 +21,55 @@ interface BookPageProps {
 
 const BookPage: React.FC<BookPageProps> = ({
   pageNum,
-  numPages,
-  lastFlip,
+  pageClass,
+  pageIsAnimating,
+  setPageIsAnimating,
   openNextPage,
   openPreviousPage,
   leftChildren,
   rightChildren,
 }) => {
   const [isOpen, setIsOpen] = React.useState(true);
-  const [isFlipLTR, setIsFlipLTR] = React.useState(false);
-  const [isFlipRTL, setIsFlipRTL] = React.useState(false);
+  const animationRef = React.useRef<CreateAnimation>(null);
 
-  const handleClick = () => {
-    isFlipLTR && setIsFlipLTR(false);
-    isFlipRTL && setIsFlipRTL(false);
+  const handleClick: React.MouseEventHandler<HTMLDivElement> = () => {
+    if (pageIsAnimating || !pageClass) {
+      return;
+    }
     if (isOpen) {
-      setIsFlipRTL(true);
-      setIsOpen(false);
+      animationRef.current?.animation.direction("normal").play();
       openNextPage(pageNum);
     } else {
-      setIsFlipLTR(true);
-      setIsOpen(true);
+      animationRef.current?.animation.direction("reverse").play();
       openPreviousPage(pageNum);
     }
+    setIsOpen(!isOpen);
+    setPageIsAnimating(true);
   };
 
   const classNames = [
     "page",
     isOpen ? "page-open" : "page-turned",
-    isFlipLTR ? "flip-left-to-right" : null,
-    isFlipRTL ? "flip-right-to-left" : null,
-  ].filter((c) => c !== null);
-
-  if (pageNum === lastFlip.fromPage) {
-    classNames.push("inFront");
-  } else {
-    const toPage =
-      lastFlip.direction && lastFlip.fromPage! + lastFlip.direction;
-
-    // flip forward when on last page
-    if (toPage === numPages && pageNum === numPages - 1) {
-      classNames.push("inMiddle");
-    }
-    // flip backward when on first page
-    else if (toPage === -1 && pageNum === 0) {
-      classNames.push("inMiddle");
-    }
-    // any other flip
-    else {
-      if (pageNum === toPage) {
-        classNames.push("inBack");
-      } else if (pageNum + 2 === toPage || pageNum - 2 === toPage) {
-        classNames.push("inMiddle");
-      }
-    }
-  }
+    pageClass,
+  ].filter((c) => c !== undefined);
 
   return (
-    <div className={classNames.join(" ")} onClick={handleClick}>
-      <div className="page-side-left">{leftChildren}</div>
-      <div className="page-side-right">{rightChildren}</div>
-    </div>
+    <CreateAnimation
+      ref={animationRef}
+      duration={1000}
+      easing={"cubic-bezier(0.455, 0.03, 0.515, 0.955)"}
+      fromTo={{
+        property: "transform",
+        fromValue: "rotateY(0deg)",
+        toValue: "rotateY(-180deg)",
+      }}
+      onFinish={{ callback: () => setPageIsAnimating(false) }}
+    >
+      <div className={classNames.join(" ")} onClick={handleClick}>
+        <div className="page-side-left">{leftChildren}</div>
+        <div className="page-side-right">{rightChildren}</div>
+      </div>
+    </CreateAnimation>
   );
 };
 
