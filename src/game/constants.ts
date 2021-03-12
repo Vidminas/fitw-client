@@ -27,6 +27,10 @@ export const MUSIC_TRACKS = [
   MUSIC_TREASURE,
 ];
 
+export const AUDIO_FITWICK_BAOBAB = "baobab.wav";
+export const AUDIO_FITWICK_FIRE_PIT = "fire pit.wav";
+export const AUDIO_FITWICK_BUSH = "bush.wav";
+
 export const TEXTURE_BUTTONS = "buttons";
 export const TEXTURE_KENNEY_ASSETS = "kenney_assets";
 export const TEXTURE_UNDERWATER_SPRITES = "underwater_sprites";

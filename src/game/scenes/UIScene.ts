@@ -57,17 +57,22 @@ class UIScene extends RexScene {
 
   private musicTrack!: Phaser.Sound.BaseSound;
   private musicTrackIndex!: number;
+  private musicVolume: number;
   private isMusicPlaying!: boolean;
 
   constructor() {
     super({ key: "UIScene", active: false });
     this.isDialogOpen = false;
+    this.musicVolume = 0.1;
   }
 
   create() {
     this.input.setTopOnly(false);
     this.createButtons();
-    this.musicTrack = this.sound.add(MUSIC_TRACKS[0], { loop: true });
+    this.musicTrack = this.sound.add(MUSIC_TRACKS[0], {
+      loop: true,
+      volume: this.musicVolume,
+    });
     this.musicTrackIndex = 0;
     this.musicTrack.play();
     this.isMusicPlaying = true;
@@ -88,6 +93,7 @@ class UIScene extends RexScene {
       this.musicTrack.destroy();
       this.musicTrack = this.sound.add(MUSIC_TRACKS[this.musicTrackIndex], {
         loop: true,
+        volume: this.musicVolume,
       });
       this.isMusicPlaying = true;
       this.musicTrack.play();

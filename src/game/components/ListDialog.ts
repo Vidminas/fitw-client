@@ -6,7 +6,7 @@ import {
   UI_BUTTON_SIZE,
   UI_FONT_SIZE,
 } from "../constants";
-import FITWICKS from "../fitwicks";
+import { FITWICKS } from "../fitwicks";
 import RexScene from "../scenes/RexScene";
 
 const createFitwickList = (scene: RexScene, width: number, height: number) => {

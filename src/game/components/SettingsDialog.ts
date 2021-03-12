@@ -111,7 +111,9 @@ const createSettingsGrid = (scene: RexScene, currentVolume: number) => {
 
   const musicVolume = scene.rexUI.add.sizer();
   musicVolume.add(
-    scene.add.text(0, 0, "Change Music Volume", { fontSize: UI_FONT_SIZE })
+    scene.add.text(0, 0, "Change Music/Sounds Volume", {
+      fontSize: UI_FONT_SIZE,
+    })
   );
   musicVolume.add(
     scene.rexUI.add

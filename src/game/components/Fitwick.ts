@@ -1,7 +1,7 @@
 import IFitwick from "../../api/fitwick";
 import { TINT_GREEN } from "../colors";
 import { SCALE_RATIO } from "../constants";
-import FITWICKS from "../fitwicks";
+import { FITWICKS, FITWICKS_AUDIO } from "../fitwicks";
 
 class Fitwick extends Phaser.GameObjects.Sprite implements IFitwick {
   static exists(name: string) {
@@ -13,6 +13,8 @@ class Fitwick extends Phaser.GameObjects.Sprite implements IFitwick {
   public name: string;
   public atlasTexture: string;
   public atlasFrame: string;
+
+  private audio?: Phaser.Sound.BaseSound;
 
   constructor(
     scene: Phaser.Scene,
@@ -49,6 +51,9 @@ class Fitwick extends Phaser.GameObjects.Sprite implements IFitwick {
     this.setInteractive({
       useHandCursor: true,
     });
+    if (FITWICKS_AUDIO.has(this.name)) {
+      this.audio = scene.sound.add(FITWICKS_AUDIO.get(this.name)!);
+    }
     // this.scene.add
     //   .graphics()
     //   .strokeRectShape(this.getBounds())
@@ -63,6 +68,10 @@ class Fitwick extends Phaser.GameObjects.Sprite implements IFitwick {
   placeDown() {
     this.state = "rest";
     this.clearTint();
+  }
+
+  playAudio() {
+    this.audio?.play();
   }
 }
 

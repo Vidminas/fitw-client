@@ -4,10 +4,19 @@ import {
   TEXTURE_UNDERWATER_SPRITES,
   TEXTURE_DESERT_SPRITES,
   TEXTURE_WINTER_SPRITES,
+  AUDIO_FITWICK_BAOBAB,
+  AUDIO_FITWICK_FIRE_PIT,
+  AUDIO_FITWICK_BUSH,
 } from "./constants";
 
+// a map of [fitwick name, fitwick audio track key] pairs
+export const FITWICKS_AUDIO = new Map<string, string>();
+FITWICKS_AUDIO.set("baobab", AUDIO_FITWICK_BAOBAB);
+FITWICKS_AUDIO.set("fire pit", AUDIO_FITWICK_FIRE_PIT);
+FITWICKS_AUDIO.set("bush", AUDIO_FITWICK_BUSH);
+
 // a map of [fitwick name, array of possible fitwick [texture, frame]] pairs
-const FITWICKS = new Map<string, [string, string][]>();
+export const FITWICKS = new Map<string, [string, string][]>();
 FITWICKS.set("bush", [
   [TEXTURE_KENNEY_ASSETS, "bush1.png"],
   [TEXTURE_KENNEY_ASSETS, "bush2.png"],
@@ -186,7 +195,7 @@ FITWICKS.set("stone", [
   [TEXTURE_DESERT_SPRITES, "stones_12.png"],
   [TEXTURE_WINTER_SPRITES, "Stone.png"],
 ]);
-// TODO: this is incorrect
+// TODO: some of these sprites are incorrectly set
 FITWICKS.set("tropical building", [
   [TEXTURE_MEDIEVAL_TROPICAL_SPRITES, "building_1.png"],
   [TEXTURE_MEDIEVAL_TROPICAL_SPRITES, "building_2.png"],
@@ -284,5 +293,3 @@ FITWICKS.set("crystal", [[TEXTURE_WINTER_SPRITES, "Crystal.png"]]);
 FITWICKS.set("block of ice", [[TEXTURE_WINTER_SPRITES, "IceBox.png"]]);
 FITWICKS.set("igloo", [[TEXTURE_WINTER_SPRITES, "Igloo.png"]]);
 FITWICKS.set("snowman", [[TEXTURE_WINTER_SPRITES, "SnowMan.png"]]);
-
-export default FITWICKS;

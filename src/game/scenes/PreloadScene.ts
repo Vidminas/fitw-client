@@ -8,6 +8,7 @@ import {
   TEXTURE_UNDERWATER_SPRITES,
   TEXTURE_WINTER_SPRITES,
 } from "../constants";
+import { FITWICKS_AUDIO } from "../fitwicks";
 
 class PreloadScene extends Phaser.Scene {
   constructor() {
@@ -25,9 +26,11 @@ class PreloadScene extends Phaser.Scene {
       progress.destroy();
     });
 
-    MUSIC_TRACKS.forEach((track) => {
-      this.load.audio(track, `music/${track}`);
-    });
+    MUSIC_TRACKS.forEach((track) => this.load.audio(track, `music/${track}`));
+
+    FITWICKS_AUDIO.forEach((track) =>
+      this.load.audio(track, `fitwicks/${track}`)
+    );
 
     this.load.multiatlas(TEXTURE_BUTTONS, "ui/buttons.json", "ui/");
     this.load.atlasXML(

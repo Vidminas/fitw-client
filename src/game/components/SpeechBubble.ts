@@ -102,7 +102,10 @@ class SpeechBubble extends ContainerLite {
       TEXTURE_BUTTONS,
       FRAME_BUTTON_SPEAKER_REST,
       FRAME_BUTTON_SPEAKER_HOVER,
-      FRAME_BUTTON_SPEAKER_CLICK
+      FRAME_BUTTON_SPEAKER_CLICK,
+      () => {
+        parent.playAudio();
+      }
     );
 
     this.setOrigin(0);
