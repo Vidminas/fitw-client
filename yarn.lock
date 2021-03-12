@@ -1551,6 +1551,11 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
+"@stencil/core@^2.4.0":
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/@stencil/core/-/core-2.4.0.tgz#17b45629c8986e35dcbce3f7dab7d64beede83f2"
+  integrity sha512-gU6+Yyd6O0KrCSS/O6j8KKqmRo+/Dcs2fI0+APCpbAWK+nqhwDISpdnSEfGDCLMoAC08XOZCycBRk2K1VGnEcg==
+
 "@surma/rollup-plugin-off-main-thread@^1.1.1":
   version "1.4.2"
   resolved "https://registry.yarnpkg.com/@surma/rollup-plugin-off-main-thread/-/rollup-plugin-off-main-thread-1.4.2.tgz#e6786b6af5799f82f7ab3a82e53f6182d2b91a58"
@@ -6092,6 +6097,13 @@ ionicons@^5.1.2:
   resolved "https://registry.yarnpkg.com/ionicons/-/ionicons-5.3.0.tgz#06aeae29a1cedf4e0e17714104d51aef9675a7d8"
   integrity sha512-HU8g9fnuoBF3GUBXq4GcWYoOZ6mjMRUL2X1s/QyPsbZjGRrwBcsK+I20kxdho+YDPBqa+BQM0h+gzh4H4c9P2A==
 
+ionicons@^5.5.0:
+  version "5.5.0"
+  resolved "https://registry.yarnpkg.com/ionicons/-/ionicons-5.5.0.tgz#74ab783be11bee60e4351153c80b6d0682e5125a"
+  integrity sha512-0DUHTeoIrGSY+KNyNDaQW7v5+mDstjSkjx8dzT925kXKYBDrN3sGs8kUcSSQbTK132U4CbgDEZkn7FDUa9x8Qw==
+  dependencies:
+    "@stencil/core" "^2.4.0"
+
 ip-regex@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/ip-regex/-/ip-regex-2.1.0.tgz#fa78bf5d2e6913c911ce9f819ee5146bb6d844e9"
@@ -9440,6 +9452,11 @@ react-error-overlay@^6.0.8:
   version "6.0.8"
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-6.0.8.tgz#474ed11d04fc6bda3af643447d85e9127ed6b5de"
   integrity sha512-HvPuUQnLp5H7TouGq3kzBeioJmXms1wHy9EGjz2OURWBp4qZO6AfGEcnxts1D/CbwPLRAgTMPCEgYhA3sEM4vw==
+
+react-hook-form@^6.15.4:
+  version "6.15.4"
+  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-6.15.4.tgz#328003e1ccc096cd158899ffe7e3b33735a9b024"
+  integrity sha512-K+Sw33DtTMengs8OdqFJI3glzNl1wBzSefD/ksQw/hJf9CnOHQAU6qy82eOrh0IRNt2G53sjr7qnnw1JDjvx1w==
 
 react-is@^16.13.1, react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1:
   version "16.13.1"

@@ -1,4 +1,5 @@
 import { MouseEventHandler } from "react";
+import "./WorldEllipse.css";
 
 interface WorldEllipseProps {
   index: number;
@@ -12,7 +13,7 @@ const WorldEllipse: React.FC<WorldEllipseProps> = ({
   onClickHandler,
 }) => (
   <svg
-    className="worldLink"
+    className="world-link"
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 512 512"
   >
@@ -27,7 +28,7 @@ const WorldEllipse: React.FC<WorldEllipseProps> = ({
       </pattern>
     </defs>
     <ellipse
-      className="worldEllipse"
+      className="world-ellipse"
       fill={`url(#worldBackground/${index})`}
       opacity="1"
       fillOpacity="1"

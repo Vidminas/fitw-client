@@ -1,0 +1,8 @@
+.world-dialog {
+  --width: 30rem;
+  --height: 20rem;
+}
+
+.world-dialog .world-name {
+  --padding-start: 0;
+}

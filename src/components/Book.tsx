@@ -7,7 +7,8 @@ import { WORLD_FETCH_ALL } from "../redux/actionTypes";
 import { AppState, UserState, WorldsState } from "../redux/store";
 import WorldEllipse from "./WorldEllipse";
 import WorldDialog from "./WorldDialog";
-import { IonLoading } from "@ionic/react";
+import { IonLoading, IonToast } from "@ionic/react";
+import IWorld from "../api/world";
 
 type BookClass = "book-open" | "book-closed-front" | "book-closed-back";
 
@@ -18,6 +19,9 @@ const Book: React.FC<{}> = () => {
     (state) => state.worlds
   );
   const [showWorldDialog, setShowWorldDialog] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [toastDeletedWorldName, setToastDeletedWorldName] = useState("");
+  const [selectedWorld, setSelectedWorld] = useState<IWorld | null>(null);
   const [bookClass, setBookClass] = useState<BookClass>("book-closed-front");
   const [pageInFront, setPageInFront] = useState(0);
   const [pageInMiddle, setPageInMiddle] = useState(1);
@@ -54,9 +58,9 @@ const Book: React.FC<{}> = () => {
       setPageInMiddle(fromPage - 1);
       setPageInBack(fromPage + 1);
 
-      if (fromPage === numPages - 1) {
+      if (fromPage + 1 === numPages) {
         setBookClass("book-open");
-      } else if (fromPage === 1) {
+      } else if (fromPage === 0) {
         setBookClass("book-closed-front");
       }
     }
@@ -108,15 +112,17 @@ const Book: React.FC<{}> = () => {
   for (let i = 0; i < worlds.length; i++) {
     const makeWorldDiv = (index: number) => (
       <>
-        <p className="worldName">{worlds[index].name}</p>
+        <p className="world-name">{worlds[index].name}</p>
         <WorldEllipse
           index={i}
           background={`assets/backgrounds/${
             worlds[index].background || "backgroundEmpty.png"
           }`}
-          onClickHandler={() => {
-            // dispatch({ type: USER_ENTER_WORLD, payload: worlds[index] });
-            // history.push("/game");
+          onClickHandler={(event) => {
+            setSelectedWorld(worlds[index]);
+            setShowWorldDialog(true);
+            // prevent the book page from flipping on click
+            event.stopPropagation();
           }}
         />
       </>
@@ -130,16 +136,15 @@ const Book: React.FC<{}> = () => {
   // add new world page
   addPage(
     <>
-      <p className="worldName">New World</p>
+      <p className="world-name">New World</p>
       <WorldEllipse
         index={-1}
         background={"assets/backgrounds/new world.svg"}
         onClickHandler={(event) => {
+          setSelectedWorld(null);
           setShowWorldDialog(true);
           // prevent the book page from flipping on click
           event.stopPropagation();
-          // dispatch({ type: USER_CREATE_WORLD });
-          // history.push("/game");
         }}
       />
     </>
@@ -159,9 +164,21 @@ const Book: React.FC<{}> = () => {
       ></IonLoading>
       <WorldDialog
         isOpen={showWorldDialog}
-        onClick={() => setShowWorldDialog(false)}
-        onDismiss={() => setShowWorldDialog(false)}
+        onDismiss={(deletedWorldName) => {
+          setShowWorldDialog(false);
+          if (deletedWorldName) {
+            setToastDeletedWorldName(deletedWorldName);
+            setShowToast(true);
+          }
+        }}
+        world={selectedWorld}
       ></WorldDialog>
+      <IonToast
+        isOpen={showToast}
+        onDidDismiss={() => setShowToast(false)}
+        message={`World "${toastDeletedWorldName}" deleted`}
+        duration={5000}
+      />
       <div id="book" className={bookClass}>
         {pages}
       </div>

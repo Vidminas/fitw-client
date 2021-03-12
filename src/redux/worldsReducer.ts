@@ -1,5 +1,6 @@
 import { Reducer } from "redux";
 import {
+  WORLD_DELETE,
   WORLD_FETCH,
   WORLD_FETCH_ALL,
   WORLD_FETCH_ALL_ERROR,
@@ -48,6 +49,13 @@ const worldsReducer: Reducer<WorldsState> = (
       return {
         ...state,
         currentStatus: "error",
+      };
+    case WORLD_DELETE:
+      return {
+        ...state,
+        worlds: [
+          ...state.worlds.filter((world) => world.id !== action.payload.id),
+        ],
       };
     default:
       return state;
