@@ -20,7 +20,7 @@ const Book: React.FC<{}> = () => {
   );
   const [showWorldDialog, setShowWorldDialog] = useState(false);
   const [showToast, setShowToast] = useState(false);
-  const [toastDeletedWorldName, setToastDeletedWorldName] = useState("");
+  const [toastMessage, setToastMessage] = useState("");
   const [selectedWorld, setSelectedWorld] = useState<IWorld | null>(null);
   const [bookClass, setBookClass] = useState<BookClass>("book-closed-front");
   const [pageInFront, setPageInFront] = useState(0);
@@ -38,6 +38,16 @@ const Book: React.FC<{}> = () => {
       dispatch({ type: WORLD_FETCH_ALL, payload: userState.user.worlds });
     }
   }, [userState, dispatch]);
+
+  useEffect(() => {
+    if (worldsState.currentStatus === "error" && worldsState.error) {
+      setToastMessage(worldsState.error);
+      setShowToast(true);
+    } else if (worldsState.currentStatus === "deleted" && worldsState.data) {
+      setToastMessage(`World "${worldsState.data.name}" deleted`);
+      setShowToast(true);
+    }
+  }, [worldsState]);
 
   const openNextPage = (fromPage: number) => {
     if (fromPage < numPages) {
@@ -164,19 +174,15 @@ const Book: React.FC<{}> = () => {
       ></IonLoading>
       <WorldDialog
         isOpen={showWorldDialog}
-        onDismiss={(deletedWorldName) => {
+        onDismiss={() => {
           setShowWorldDialog(false);
-          if (deletedWorldName) {
-            setToastDeletedWorldName(deletedWorldName);
-            setShowToast(true);
-          }
         }}
         world={selectedWorld}
       ></WorldDialog>
       <IonToast
         isOpen={showToast}
         onDidDismiss={() => setShowToast(false)}
-        message={`World "${toastDeletedWorldName}" deleted`}
+        message={toastMessage}
         duration={5000}
       />
       <div id="book" className={bookClass}>

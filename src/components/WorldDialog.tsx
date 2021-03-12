@@ -28,7 +28,7 @@ import { USER_ENTER_WORLD, WORLD_DELETE } from "../redux/actionTypes";
 
 interface WorldDialogProps {
   isOpen: boolean;
-  onDismiss: (deletedWorldName?: string) => void;
+  onDismiss: () => void;
   world: IWorld | null;
 }
 
@@ -183,7 +183,7 @@ const WorldDialog: React.FC<WorldDialogProps> = ({
                     onClick={() => {
                       dispatch({ type: WORLD_DELETE, payload: world });
                       setShowPopover({ showPopover: false, event: undefined });
-                      onDismiss(getValues("worldName"));
+                      onDismiss();
                     }}
                     color="danger"
                   >

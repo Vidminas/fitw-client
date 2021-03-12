@@ -9,3 +9,7 @@ export const fetchWorld = async (worldID: IUser["worlds"]) => {
 export const fetchWorlds = async (worldIDs: IUser["worlds"][]) => {
   return await axios.get(`${SERVER_WORLDS_ENDPOINT}?id=${worldIDs.join(",")}`);
 };
+
+export const deleteWorld = async (worldID: IUser["worlds"]) => {
+  return await axios.delete(`${SERVER_WORLDS_ENDPOINT}/${worldID}`);
+};

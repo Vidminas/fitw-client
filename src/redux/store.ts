@@ -25,11 +25,18 @@ export type UserState = {
   response?: any;
 };
 
-export type WorldsStateStatus = "initial" | "error" | "loading" | "loaded";
+export type WorldsStateStatus =
+  | "initial"
+  | "error"
+  | "loading"
+  | "loaded"
+  | "deleted";
 
 export type WorldsState = {
   currentStatus: WorldsStateStatus;
   worlds: IWorld[];
+  error?: string;
+  data?: any;
 };
 
 export type GroupsState = {

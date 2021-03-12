@@ -1,6 +1,8 @@
 import { Reducer } from "redux";
 import {
   WORLD_DELETE,
+  WORLD_DELETE_ERROR,
+  WORLD_DELETE_SUCCESS,
   WORLD_FETCH,
   WORLD_FETCH_ALL,
   WORLD_FETCH_ALL_ERROR,
@@ -44,18 +46,27 @@ const worldsReducer: Reducer<WorldsState> = (
           ...action.payload,
         ],
       };
-    case WORLD_FETCH_ERROR:
-    case WORLD_FETCH_ALL_ERROR:
-      return {
-        ...state,
-        currentStatus: "error",
-      };
     case WORLD_DELETE:
       return {
         ...state,
+        currentStatus: "loading",
+      };
+    case WORLD_DELETE_SUCCESS:
+      return {
+        ...state,
+        currentStatus: "deleted",
         worlds: [
           ...state.worlds.filter((world) => world.id !== action.payload.id),
         ],
+        data: action.payload,
+      };
+    case WORLD_FETCH_ERROR:
+    case WORLD_FETCH_ALL_ERROR:
+    case WORLD_DELETE_ERROR:
+      return {
+        ...state,
+        currentStatus: "error",
+        error: action.payload,
       };
     default:
       return state;

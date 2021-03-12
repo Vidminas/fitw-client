@@ -6,7 +6,7 @@ import {
   fetchUserWithToken,
   requestUserAuthEmail,
 } from "../auth/remoteUser";
-import { fetchWorld, fetchWorlds } from "../world/remoteWorld";
+import { deleteWorld, fetchWorld, fetchWorlds } from "../world/remoteWorld";
 import * as Actions from "./actionTypes";
 
 function* loadUserLocalStorage() {
@@ -103,6 +103,20 @@ function* fetchWorldFromServer() {
   });
 }
 
+function* deleteWorldFromServer() {
+  yield takeLatest(Actions.WORLD_DELETE, function* (action: AnyAction) {
+    try {
+      const response = yield call(deleteWorld, action.payload);
+      yield put({ type: Actions.WORLD_DELETE_SUCCESS, payload: response.data });
+    } catch (error) {
+      yield put({
+        type: Actions.WORLD_DELETE_ERROR,
+        payload: error.response?.data?.error?.message || error,
+      });
+    }
+  });
+}
+
 export default function* rootSaga() {
   yield all([
     loadUserLocalStorage(),
@@ -111,5 +125,6 @@ export default function* rootSaga() {
     fetchUserFromServer(),
     fetchAllUserWorldsFromServer(),
     fetchWorldFromServer(),
+    deleteWorldFromServer(),
   ]);
 }

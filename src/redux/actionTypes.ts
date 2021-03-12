@@ -18,7 +18,11 @@ export const USER_ENTER_WORLD = "user/enter-world";
 export const WORLD_FETCH_ALL = "world/fetch-all-from-server";
 export const WORLD_FETCH_ALL_SUCCESS = "world/fetch-all-from-server-success";
 export const WORLD_FETCH_ALL_ERROR = "world/fetch-all-from-server-error";
+
 export const WORLD_FETCH = "world/fetch-from-server";
 export const WORLD_FETCH_SUCCESS = "world/fetch-from-server-success";
 export const WORLD_FETCH_ERROR = "world/fetch-from-server-error";
+
 export const WORLD_DELETE = "world/delete";
+export const WORLD_DELETE_SUCCESS = "word/delete-success";
+export const WORLD_DELETE_ERROR = "world/delete-error";
