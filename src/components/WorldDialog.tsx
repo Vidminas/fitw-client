@@ -181,7 +181,9 @@ const WorldDialog: React.FC<WorldDialogProps> = ({
                 <IonRow>
                   <IonButton
                     onClick={() => {
-                      dispatch({ type: WORLD_DELETE, payload: world });
+                      if (world?.id) {
+                        dispatch({ type: WORLD_DELETE, payload: world.id });
+                      }
                       setShowPopover({ showPopover: false, event: undefined });
                       onDismiss();
                     }}
