@@ -18,7 +18,7 @@ import {
   IonPopover,
   IonRow,
 } from "@ionic/react";
-import { enterOutline, trashOutline, warningOutline } from "ionicons/icons";
+import { playOutline, trashOutline, warningOutline } from "ionicons/icons";
 import "./WorldDialog.css";
 import IWorld from "../api/world";
 import { useDispatch } from "react-redux";
@@ -138,7 +138,7 @@ const WorldDialog: React.FC<WorldDialogProps> = ({
                         type="submit"
                         onClick={handleSubmit(onSubmit)}
                       >
-                        <IonIcon icon={enterOutline}></IonIcon>
+                        <IonIcon icon={playOutline}></IonIcon>
                       </IonFabButton>
                     </IonCol>
                     <IonCol size="4">

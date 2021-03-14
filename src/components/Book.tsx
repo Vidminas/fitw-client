@@ -29,9 +29,7 @@ const Book: React.FC<{}> = () => {
   const [pageIsAnimating, setPageIsAnimating] = useState(false);
   const pages: ReactElement[] = [];
   // number of existing worlds + 2 cover pages + 1 new world option
-  const numPages = userState.user?.worlds
-    ? userState.user.worlds.length + 3
-    : 3;
+  const numPages = worldsState.worlds ? worldsState.worlds.length + 3 : 3;
 
   useEffect(() => {
     if (userState.currentStatus === "loggedIn" && userState.user) {

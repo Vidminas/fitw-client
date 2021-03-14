@@ -54,6 +54,7 @@
   font-family: var(--cover-font);
   font-size: var(--cover-font-size);
   color: var(--light-text);
+  text-align: center;
 }
 .page:first-of-type .page-side-left,
 .page:first-of-type .page-side-right,
