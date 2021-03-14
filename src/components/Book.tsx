@@ -9,6 +9,7 @@ import WorldEllipse from "./WorldEllipse";
 import WorldDialog from "./WorldDialog";
 import { IonLoading, IonToast } from "@ionic/react";
 import IWorld from "../api/world";
+import BadgeSection from "./BadgeSection";
 
 type BookClass = "book-open" | "book-closed-front" | "book-closed-back";
 
@@ -112,6 +113,9 @@ const Book: React.FC<{}> = () => {
     <>
       <p>The worlds of</p>
       <p>{userState.user?.username || "Unknown user"}</p>
+      <br />
+      <br />
+      <BadgeSection />
     </>
   );
 

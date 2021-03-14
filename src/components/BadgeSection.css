@@ -1,0 +1,39 @@
+.badgeContainer {
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  row-gap: 5px;
+  column-gap: 5px;
+  margin: 20px auto;
+}
+
+.badge {
+  order: 1;
+  width: 96px;
+  height: 96px;
+  opacity: 0.4;
+  background-color: grey;
+  border-radius: 10px;
+}
+.badge:hover {
+  opacity: 0.7;
+}
+
+.badge.obtained {
+  opacity: 0.7;
+  background-color: gold;
+}
+.badge.obtained:hover {
+  opacity: 1;
+}
+
+.badge-details {
+  order: 2;
+  display: none;
+  font-size: 16px;
+}
+
+.badge:hover + .badge-details {
+  display: block;
+}

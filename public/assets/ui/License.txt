@@ -1,0 +1,25 @@
+buttons.json, buttons-0.png, buttons-1.png (packed using TexturePacker) are from:
+https://pzuh.itch.io/free-game-gui
+Creative Commons Zero (CC0) public domain license
+
+snowman.png is from:
+https://opengameart.org/content/snowman-2
+Creative Commons Zero (CC0) public domain license
+
+hat-tip-snowman.svg is from:
+https://openclipart.org/detail/102541/hat-tip-snowman
+
+toolbox_01.svg is from:
+https://openclipart.org/detail/95239
+
+stoveovenpot-cdcpd.svg is from:
+https://openclipart.org/detail/327751/stove-with-a-pot
+
+fortran-minimalist-monitor-and-computer.svg is from:
+https://openclipart.org/detail/1953/minimalist-monitor-and-computer
+
+step-pyramid.svg is from:
+https://openclipart.org/detail/316666/step-pyramid-2
+
+Trace-Tree.svg is from:
+https://openclipart.org/detail/190682/trace-tree
