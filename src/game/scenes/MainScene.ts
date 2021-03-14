@@ -114,11 +114,17 @@ class MainScene extends RexScene {
       }
     );
     const cam = this.cameras.main;
-    cam.startFollow(fitwick, true, 0.05);
     cam.setDeadzone(
       Math.min(8 * UI_BUTTON_SIZE, GAME_WIDTH / 2),
       Math.min(4 * UI_BUTTON_SIZE, GAME_HEIGHT / 2)
     );
+    const scrollX = cam.scrollX;
+    const scrollY = cam.scrollY;
+    cam.startFollow(fitwick, true, 0.05);
+    // prevent camera from jumping to center fitwick
+    // (which is part of the startFollow method)
+    // it will still scroll to fit fitwick on screen if needed
+    cam.setScroll(scrollX, scrollY);
   }
 
   create() {
