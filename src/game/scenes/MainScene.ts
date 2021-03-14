@@ -1,5 +1,4 @@
 import Phaser from "phaser";
-import * as dat from "dat.gui";
 import IWorld from "../../api/world";
 import {
   EVENT_DO_FITWICK_NEW,
@@ -93,18 +92,42 @@ class MainScene extends RexScene {
                 SPEECH_BUBBLE_HEIGHT,
                 fitwick.name
               );
-              this.activeSpeechBubble.setScale(1 / this.cameras.main.zoom);
-              this.activeSpeechBubble.setPosition(
-                this.activeSpeechBubble.parent.x -
-                  this.activeSpeechBubble.displayWidth / 2,
-                this.activeSpeechBubble.parent.y -
-                  this.activeSpeechBubble.parent.displayHeight / 2 -
-                  this.activeSpeechBubble.displayHeight
-              );
+              this.repositionSpeechBubble();
             }
           }
         }
       );
+  }
+
+  private repositionSpeechBubble() {
+    if (this.activeSpeechBubble) {
+      this.activeSpeechBubble.setScale(1 / this.cameras.main.zoom);
+      this.activeSpeechBubble.setPosition(
+        this.activeSpeechBubble.parent.x -
+          this.activeSpeechBubble.displayWidth / 2,
+        this.activeSpeechBubble.parent.y -
+          this.activeSpeechBubble.parent.displayHeight / 2 -
+          this.activeSpeechBubble.displayHeight
+      );
+    }
+  }
+
+  private setCameraZoom(zoom: number) {
+    const cam = this.cameras.main;
+
+    if (zoom > MAX_ZOOM_FACTOR) {
+      zoom = MAX_ZOOM_FACTOR;
+    } else {
+      if (zoom < cam.height / GAME_HEIGHT) {
+        zoom = cam.height / GAME_HEIGHT;
+      }
+      if (zoom < cam.width / GAME_WIDTH) {
+        zoom = cam.width / GAME_WIDTH;
+      }
+    }
+
+    cam.setZoom(zoom);
+    this.repositionSpeechBubble();
   }
 
   private registerFitwickDrag(fitwick: Fitwick) {
@@ -147,10 +170,10 @@ class MainScene extends RexScene {
         this.world.background || TEXTURE_BACKGROUND_EMPTY
       )
       .setOrigin(0);
+    // the background scrolls its tile position instead
     this.background.setScrollFactor(0);
 
     for (const fitwickData of this.world.fitwicks) {
-      console.log(fitwickData);
       const fitwick = new Fitwick(
         this,
         fitwickData.name,
@@ -175,15 +198,16 @@ class MainScene extends RexScene {
       const x = cam.scrollX + GAME_WIDTH / 2;
       const y = cam.scrollY + GAME_HEIGHT / 2;
       this.activeFitwick = new Fitwick(this, fitwickName, x, y);
-      this.input.setDraggable(this.activeFitwick);
       this.game.events.emit(EVENT_DONE_FITWICK_NEW, this.activeFitwick);
       this.activeFitwick.pickUp();
+      this.input.setDraggable(this.activeFitwick);
       this.registerFitwickDrag(this.activeFitwick);
     });
     this.game.events.on(EVENT_DO_FITWICK_PLACE, () => {
       if (!this.activeFitwick) {
         return;
       }
+
       this.activeFitwick.removeListener("drag");
       this.activeFitwick.placeDown();
       cam.stopFollow();
@@ -191,13 +215,17 @@ class MainScene extends RexScene {
       this.registerFitwickEvents(this.activeFitwick);
       this.activeFitwick = undefined;
     });
+
     this.game.events.on(EVENT_DO_FITWICK_DELETE, () => {
-      this.activeFitwick?.removeListener("drag");
       cam.stopFollow();
-      this.game.events.emit(EVENT_DONE_FITWICK_DELETE, this.activeFitwick);
-      this.activeFitwick?.destroy();
-      this.activeFitwick = undefined;
+      if (this.activeFitwick) {
+        this.game.events.emit(EVENT_DONE_FITWICK_DELETE, this.activeFitwick);
+        this.activeFitwick.shutdown();
+        this.activeFitwick.destroy();
+        this.activeFitwick = undefined;
+      }
     });
+
     this.game.events.on(EVENT_FITWICK_PICK_UP, (fitwick: Fitwick) => {
       if (this.activeSpeechBubble) {
         this.activeSpeechBubble.destroy();
@@ -235,28 +263,7 @@ class MainScene extends RexScene {
 
     const pinch = this.rexGestures.add.pinch();
     pinch.on("pinch", (pinch: any) => {
-      let zoom = cam.zoom * pinch.scaleFactor;
-      if (zoom > MAX_ZOOM_FACTOR) {
-        zoom = MAX_ZOOM_FACTOR;
-      } else {
-        if (zoom < cam.height / GAME_HEIGHT) {
-          zoom = cam.height / GAME_HEIGHT;
-        }
-        if (zoom < cam.width / GAME_WIDTH) {
-          zoom = cam.width / GAME_WIDTH;
-        }
-      }
-      cam.setZoom(zoom);
-      if (this.activeSpeechBubble) {
-        this.activeSpeechBubble.setScale(1 / zoom);
-        this.activeSpeechBubble.setPosition(
-          this.activeSpeechBubble.parent.x -
-            this.activeSpeechBubble.displayWidth / 2,
-          this.activeSpeechBubble.parent.y -
-            this.activeSpeechBubble.parent.displayHeight / 2 -
-            this.activeSpeechBubble.displayHeight
-        );
-      }
+      this.setCameraZoom(cam.zoom * pinch.scaleFactor);
     });
 
     this.input.on(
@@ -288,48 +295,12 @@ class MainScene extends RexScene {
       ) => {
         // for touchpads, event control key indicates zoom gestures
         if (pointer.event.ctrlKey) {
-          let zoom = cam.zoom - deltaY * 0.01;
-          if (zoom > MAX_ZOOM_FACTOR) {
-            zoom = MAX_ZOOM_FACTOR;
-          } else {
-            if (zoom < cam.height / GAME_HEIGHT) {
-              zoom = cam.height / GAME_HEIGHT;
-            }
-            if (zoom < cam.width / GAME_WIDTH) {
-              zoom = cam.width / GAME_WIDTH;
-            }
-          }
-          cam.setZoom(zoom);
-          if (this.activeSpeechBubble) {
-            this.activeSpeechBubble.setScale(1 / zoom);
-            this.activeSpeechBubble.setPosition(
-              this.activeSpeechBubble.parent.x -
-                this.activeSpeechBubble.displayWidth / 2,
-              this.activeSpeechBubble.parent.y -
-                this.activeSpeechBubble.parent.displayHeight / 2 -
-                this.activeSpeechBubble.displayHeight
-            );
-          }
+          this.setCameraZoom(cam.zoom - deltaY * 0.01);
         } else {
           cam.setScroll(cam.scrollX + deltaX, cam.scrollY + deltaY);
         }
       }
     );
-
-    const gui = new dat.GUI();
-
-    const help = {
-      line1: "Cursors to move",
-    };
-
-    const f1 = gui.addFolder("Camera");
-    f1.add(cam, "x").listen();
-    f1.add(cam, "y").listen();
-    f1.add(cam, "scrollX").listen();
-    f1.add(cam, "scrollY").listen();
-    f1.add(cam, "zoom").min(0).step(0.01).listen();
-    f1.add(help, "line1");
-    f1.open();
   }
 
   update(time: any, delta: number) {
