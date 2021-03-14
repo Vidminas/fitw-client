@@ -43,7 +43,6 @@ const WorldDialog: React.FC<WorldDialogProps> = ({
 }) => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const [worldName] = useState(world?.name || "");
   const [popoverState, setShowPopover] = useState({
     showPopover: false,
     event: undefined,
@@ -52,9 +51,10 @@ const WorldDialog: React.FC<WorldDialogProps> = ({
     control,
     handleSubmit,
     getValues,
+    setValue,
     formState: { errors },
   } = useForm<FormValues>({
-    defaultValues: { worldName },
+    defaultValues: { worldName: "" },
   });
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
@@ -73,6 +73,12 @@ const WorldDialog: React.FC<WorldDialogProps> = ({
     onDismiss();
     history.push("/game");
   };
+
+  React.useEffect(() => {
+    if (isOpen) {
+      setValue("worldName", world?.name || "");
+    }
+  }, [isOpen, setValue, world]);
 
   return (
     <IonModal
