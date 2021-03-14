@@ -87,11 +87,19 @@ class MainScene extends RexScene {
               this.activeSpeechBubble = new SpeechBubble(
                 this,
                 fitwick,
-                fitwick.x - speechBubbleWidth / 2,
-                fitwick.y - fitwick.displayHeight / 2 - SPEECH_BUBBLE_HEIGHT,
+                0,
+                0,
                 speechBubbleWidth,
                 SPEECH_BUBBLE_HEIGHT,
                 fitwick.name
+              );
+              this.activeSpeechBubble.setScale(1 / this.cameras.main.zoom);
+              this.activeSpeechBubble.setPosition(
+                this.activeSpeechBubble.parent.x -
+                  this.activeSpeechBubble.displayWidth / 2,
+                this.activeSpeechBubble.parent.y -
+                  this.activeSpeechBubble.parent.displayHeight / 2 -
+                  this.activeSpeechBubble.displayHeight
               );
             }
           }
@@ -128,6 +136,8 @@ class MainScene extends RexScene {
   }
 
   create() {
+    const cam = this.cameras.main;
+
     this.background = this.add
       .tileSprite(
         0,
@@ -160,8 +170,6 @@ class MainScene extends RexScene {
         this.background.setTexture(newBackgroundTexture);
       }
     );
-
-    const cam = this.cameras.main;
 
     this.game.events.on(EVENT_DO_FITWICK_NEW, (fitwickName: string) => {
       const x = cam.scrollX + GAME_WIDTH / 2;
@@ -239,6 +247,16 @@ class MainScene extends RexScene {
         }
       }
       cam.setZoom(zoom);
+      if (this.activeSpeechBubble) {
+        this.activeSpeechBubble.setScale(1 / zoom);
+        this.activeSpeechBubble.setPosition(
+          this.activeSpeechBubble.parent.x -
+            this.activeSpeechBubble.displayWidth / 2,
+          this.activeSpeechBubble.parent.y -
+            this.activeSpeechBubble.parent.displayHeight / 2 -
+            this.activeSpeechBubble.displayHeight
+        );
+      }
     });
 
     this.input.on(
@@ -282,6 +300,16 @@ class MainScene extends RexScene {
             }
           }
           cam.setZoom(zoom);
+          if (this.activeSpeechBubble) {
+            this.activeSpeechBubble.setScale(1 / zoom);
+            this.activeSpeechBubble.setPosition(
+              this.activeSpeechBubble.parent.x -
+                this.activeSpeechBubble.displayWidth / 2,
+              this.activeSpeechBubble.parent.y -
+                this.activeSpeechBubble.parent.displayHeight / 2 -
+                this.activeSpeechBubble.displayHeight
+            );
+          }
         } else {
           cam.setScroll(cam.scrollX + deltaX, cam.scrollY + deltaY);
         }
@@ -311,7 +339,6 @@ class MainScene extends RexScene {
       cam.clampX(cam.scrollX),
       cam.clampY(cam.scrollY)
     );
-    // this.background.setTileScale(cam.zoom);
   }
 }
 
