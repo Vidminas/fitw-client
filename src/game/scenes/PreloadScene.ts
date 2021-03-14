@@ -6,6 +6,7 @@ import {
   TEXTURE_BUTTONS,
   TEXTURE_DESERT_SPRITES,
   TEXTURE_KENNEY_ASSETS,
+  TEXTURE_KENNEY_ITEMS,
   TEXTURE_MEDIEVAL_TROPICAL_SPRITES,
   TEXTURE_UNDERWATER_SPRITES,
   TEXTURE_WINTER_SPRITES,
@@ -87,6 +88,11 @@ class PreloadScene extends Phaser.Scene {
       TEXTURE_WINTER_SPRITES,
       "fitwicks/winter_sprites.png",
       "fitwicks/winter_sprites.xml"
+    );
+    this.load.atlasXML(
+      TEXTURE_KENNEY_ITEMS,
+      "fitwicks/genericItems_spritesheet_colored.png",
+      "fitwicks/genericItems_spritesheet_colored.xml"
     );
 
     BACKGROUND_TEXTURES.forEach((texture: string) => {

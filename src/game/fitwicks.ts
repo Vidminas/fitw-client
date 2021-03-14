@@ -7,6 +7,7 @@ import {
   AUDIO_FITWICK_BAOBAB,
   AUDIO_FITWICK_FIRE_PIT,
   AUDIO_FITWICK_BUSH,
+  TEXTURE_KENNEY_ITEMS,
 } from "./constants";
 
 // a map of [fitwick name, fitwick audio track key] pairs
@@ -220,7 +221,10 @@ FITWICKS.set("sign", [
   [TEXTURE_WINTER_SPRITES, "Sign_1.png"],
   [TEXTURE_WINTER_SPRITES, "Sign_2.png"],
 ]);
-FITWICKS.set("bowl", [[TEXTURE_MEDIEVAL_TROPICAL_SPRITES, "decor_5.png"]]);
+FITWICKS.set("bowl", [
+  [TEXTURE_MEDIEVAL_TROPICAL_SPRITES, "decor_5.png"],
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_128.png"],
+]);
 FITWICKS.set("fire pit", [
   [TEXTURE_MEDIEVAL_TROPICAL_SPRITES, "decor_6.png"],
   [TEXTURE_DESERT_SPRITES, "decor_7.png"],
@@ -293,3 +297,243 @@ FITWICKS.set("crystal", [[TEXTURE_WINTER_SPRITES, "Crystal.png"]]);
 FITWICKS.set("block of ice", [[TEXTURE_WINTER_SPRITES, "IceBox.png"]]);
 FITWICKS.set("igloo", [[TEXTURE_WINTER_SPRITES, "Igloo.png"]]);
 FITWICKS.set("snowman", [[TEXTURE_WINTER_SPRITES, "SnowMan.png"]]);
+FITWICKS.set("drill", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_001.png"]]);
+FITWICKS.set("sander", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_002.png"]]);
+FITWICKS.set("cup", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_003.png"]]);
+FITWICKS.set("wrench", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_004.png"],
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_007.png"],
+]);
+FITWICKS.set("spanner", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_004.png"],
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_007.png"],
+]);
+FITWICKS.set("screwdriver", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_005.png"],
+]);
+// TODO: figure out what the "scoop" at _006.png is actually called
+FITWICKS.set("monkey wrench", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_008.png"],
+]);
+FITWICKS.set("pliers", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_009.png"]]);
+FITWICKS.set("hammer", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_010.png"]]);
+FITWICKS.set("brush", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_011.png"]]);
+FITWICKS.set("tape measure", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_012.png"],
+]);
+FITWICKS.set("knife", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_013.png"]]);
+FITWICKS.set("paint roller", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_014.png"],
+]);
+FITWICKS.set("chisel", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_015.png"]]);
+FITWICKS.set("saw", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_016.png"],
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_017.png"],
+]);
+FITWICKS.set("screw", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_018.png"]]);
+FITWICKS.set("nail", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_019.png"]]);
+FITWICKS.set("axe", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_020.png"]]);
+FITWICKS.set("pickaxe", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_021.png"]]);
+FITWICKS.set("shovel", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_022.png"]]);
+FITWICKS.set("mallet", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_023.png"]]);
+FITWICKS.set("pencil", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_024.png"],
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_026.png"],
+]);
+FITWICKS.set("pen", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_025.png"]]);
+FITWICKS.set("paintbrush", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_027.png"],
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_028.png"],
+]);
+FITWICKS.set("quill", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_029.png"]]);
+FITWICKS.set("ink", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_030.png"]]);
+FITWICKS.set("palette", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_031.png"]]);
+FITWICKS.set("book", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_032.png"],
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_033.png"],
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_034.png"],
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_035.png"],
+]);
+// skipping item 036 because it's not very clear it's a folder
+FITWICKS.set("notepad", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_037.png"],
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_038.png"],
+]);
+// skipping cameras 039-047 because they aren't clear
+FITWICKS.set("monitor", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_051.png"],
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_052.png"],
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_053.png"],
+]);
+FITWICKS.set("computer", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_054.png"],
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_055.png"],
+]);
+FITWICKS.set("keyboard", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_056.png"],
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_057.png"],
+]);
+FITWICKS.set("mouse", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_058.png"],
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_059.png"],
+]);
+FITWICKS.set("tablet", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_060.png"]]);
+// no clue what 061 is
+FITWICKS.set("remote", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_062.png"]]);
+FITWICKS.set("mobile phone", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_063.png"],
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_064.png"],
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_065.png"],
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_067.png"],
+]);
+FITWICKS.set("music player", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_066.png"],
+]);
+// 068 is a casette, kids don't really need this
+// 069-072 are unclear
+FITWICKS.set("USB", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_073.png"]]);
+FITWICKS.set("calculator", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_074.png"],
+]);
+FITWICKS.set("motherboard", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_075.png"],
+]);
+FITWICKS.set("RAM", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_076.png"]]);
+FITWICKS.set("graphics card", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_077.png"],
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_078.png"],
+]);
+FITWICKS.set("joystick", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_079.png"],
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_080.png"],
+]);
+FITWICKS.set("controller", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_081.png"],
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_082.png"],
+]);
+FITWICKS.set("microphone", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_083.png"],
+]);
+FITWICKS.set("headphones", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_084.png"],
+]);
+FITWICKS.set("CD", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_085.png"],
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_088.png"],
+]);
+FITWICKS.set("cursor", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_086.png"]]);
+// 087 is unclear
+FITWICKS.set("pill", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_089.png"],
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_090.png"],
+]);
+// don't know what 091 is
+// 092 is unclear
+FITWICKS.set("syringe", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_093.png"]]);
+FITWICKS.set("thermometer", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_094.png"],
+]);
+FITWICKS.set("toothbrush", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_095.png"],
+]);
+// don't know what 096 and 097 are
+// 098 and 099 are pills, too unclear
+FITWICKS.set("plaster", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_100.png"]]);
+FITWICKS.set("bone", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_101.png"]]);
+FITWICKS.set("first aid kit", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_102.png"],
+]);
+// 103-104 are unclear
+FITWICKS.set("vial", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_105.png"],
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_108.png"],
+]);
+FITWICKS.set("test tube", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_106.png"],
+]);
+FITWICKS.set("beaker", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_107.png"]]);
+FITWICKS.set("test tubes", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_109.png"],
+]);
+FITWICKS.set("stethoscope", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_110.png"],
+]);
+FITWICKS.set("microscope", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_111.png"],
+]);
+// 112 is unclear
+FITWICKS.set("crutch", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_113.png"]]);
+FITWICKS.set("pot", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_114.png"]]);
+// 115 is unclear
+FITWICKS.set("pan", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_116.png"]]);
+// 117 is unclear
+FITWICKS.set("glass of water", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_118.png"],
+]);
+FITWICKS.set("glass of lemonade", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_119.png"],
+]);
+FITWICKS.set("glass of wine", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_120.png"],
+]);
+FITWICKS.set("mug", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_121.png"]]);
+FITWICKS.set("salt", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_122.png"]]);
+FITWICKS.set("pepper", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_123.png"]]);
+FITWICKS.set("kettle", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_124.png"],
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_125.png"],
+]);
+FITWICKS.set("thermal flask", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_126.png"],
+]);
+FITWICKS.set("fork", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_129.png"]]);
+FITWICKS.set("spoon", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_130.png"]]);
+FITWICKS.set("knife", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_131.png"],
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_134.png"],
+]);
+FITWICKS.set("glove", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_132.png"]]);
+FITWICKS.set("cutting board", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_133.png"],
+]);
+FITWICKS.set("spatula", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_135.png"]]);
+FITWICKS.set("tongs", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_136.png"]]);
+FITWICKS.set("blender", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_137.png"]]);
+FITWICKS.set("toaster", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_138.png"]]);
+FITWICKS.set("coffee machine", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_139.png"],
+]);
+FITWICKS.set("rolling pin", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_140.png"],
+]);
+FITWICKS.set("suitcase", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_141.png"],
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_143.png"],
+]);
+FITWICKS.set("luggage", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_142.png"]]);
+FITWICKS.set("purse", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_143.png"],
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_144.png"],
+]);
+FITWICKS.set("school bag", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_146.png"],
+]);
+FITWICKS.set("steering wheel", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_147.png"],
+]);
+FITWICKS.set("passport", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_148.png"]]);
+FITWICKS.set("ID card", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_149.png"]]);
+// 150 is unclear
+FITWICKS.set("ID badge", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_151.png"]]);
+// 152 is unclear
+// don't know what 153 is called
+FITWICKS.set("key", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_154.png"],
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_155.png"],
+]);
+// don't know what 156 is
+FITWICKS.set("wallet", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_157.png"]]);
+FITWICKS.set("money", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_158.png"]]);
+// 159-161 are coins, too unclear
+FITWICKS.set("compass", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_162.png"]]);
+// don't know what 163 is

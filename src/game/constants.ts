@@ -37,6 +37,7 @@ export const TEXTURE_UNDERWATER_SPRITES = "underwater_sprites";
 export const TEXTURE_DESERT_SPRITES = "desert_sprites";
 export const TEXTURE_MEDIEVAL_TROPICAL_SPRITES = "medieval_tropical_sprites";
 export const TEXTURE_WINTER_SPRITES = "winter_sprites";
+export const TEXTURE_KENNEY_ITEMS = "genericItems_spritesheet_colored";
 
 export const TEXTURE_BACKGROUND_EMPTY = "backgroundEmpty.png";
 const TEXTURE_BACKGROUND_FALL = "backgroundColorFall.png";
