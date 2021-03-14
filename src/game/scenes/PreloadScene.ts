@@ -66,7 +66,8 @@ class PreloadScene extends Phaser.Scene {
 
   create() {
     this.scene.launch("MainScene");
-    this.scene.launch("UIScene");
+    this.scene.launch("GUIScene");
+    this.scene.launch("ModalScene");
   }
 }
 

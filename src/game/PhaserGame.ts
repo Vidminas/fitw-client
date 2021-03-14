@@ -18,9 +18,10 @@ import {
 } from "../api/events";
 import { GAME_HEIGHT, GAME_WIDTH } from "./constants";
 import MainScene from "./scenes/MainScene";
-import UIScene from "./scenes/UIScene";
+import GUIScene from "./scenes/GUIScene";
 import PreloadScene from "./scenes/PreloadScene";
 import Fitwick from "./components/Fitwick";
+import ModalScene from "./scenes/ModalScene";
 
 // logic borrowed from:
 // https://stackoverflow.com/questions/31829951/how-to-reduce-javascript-object-to-only-contain-properties-from-interface
@@ -71,7 +72,8 @@ class PhaserGame {
     });
 
     const preloadScene = new PreloadScene();
-    const uiScene = new UIScene();
+    const modalScene = new ModalScene();
+    const guiScene = new GUIScene();
     const mainScene = new MainScene(world);
 
     this.game = new Phaser.Game({
@@ -79,7 +81,8 @@ class PhaserGame {
       type: Phaser.AUTO,
       width: GAME_WIDTH,
       height: GAME_HEIGHT,
-      scene: [preloadScene, mainScene, uiScene],
+      autoFocus: true,
+      scene: [preloadScene, mainScene, guiScene, modalScene],
       dom: {
         createContainer: true,
       },

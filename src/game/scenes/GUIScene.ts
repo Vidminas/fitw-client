@@ -7,14 +7,8 @@ import {
   EVENT_MUSIC_PLAY,
   EVENT_MUSIC_PAUSE,
   EVENT_VOLUME_CHANGE,
-  EVENT_WORLD_CHANGE_BACKGROUND,
 } from "../../api/events";
-import AddDialog from "../components/AddDialog";
-import BackgroundDialog from "../components/BackgroundDialog";
 import Button from "../components/Button";
-import Fitwick from "../components/Fitwick";
-import ListDialog from "../components/ListDialog";
-import SettingsDialog from "../components/SettingsDialog";
 import {
   GAME_WIDTH,
   UI_BUTTON_SIZE,
@@ -40,14 +34,15 @@ import {
   FRAME_BUTTON_SETTINGS_CLICK,
   MUSIC_TRACKS,
 } from "../constants";
+import {
+  LOCAL_EVENT_OPEN_ADD_FITWICK_DIALOG,
+  LOCAL_EVENT_OPEN_BACKGROUND_DIALOG,
+  LOCAL_EVENT_OPEN_FITWICK_LIST,
+  LOCAL_EVENT_OPEN_SETTINGS_DIALOG,
+} from "../localEvents";
 import RexScene from "./RexScene";
 
-class UIScene extends RexScene {
-  private backgroundDialog?: BackgroundDialog;
-  private settingsDialog?: SettingsDialog;
-  private listDialog?: ListDialog;
-  private addDialog?: AddDialog;
-  private isDialogOpen: boolean;
+class GUIScene extends RexScene {
   private changeBackgroundButton!: Button;
   private settingsButton!: Button;
   private listButton!: Button;
@@ -61,13 +56,11 @@ class UIScene extends RexScene {
   private isMusicPlaying!: boolean;
 
   constructor() {
-    super({ key: "UIScene", active: false });
-    this.isDialogOpen = false;
+    super({ key: "GUIScene", active: false });
     this.musicVolume = 0.1;
   }
 
   create() {
-    this.input.setTopOnly(false);
     this.createButtons();
     this.musicTrack = this.sound.add(MUSIC_TRACKS[0], {
       loop: true,
@@ -77,6 +70,7 @@ class UIScene extends RexScene {
     this.musicTrack.play();
     this.isMusicPlaying = true;
 
+    this.game.events.on(EVENT_DO_FITWICK_NEW, this.onMoveFitwick.bind(this));
     this.game.events.on(
       EVENT_DO_FITWICK_PLACE,
       this.onConfirmFitwick.bind(this)
@@ -116,6 +110,8 @@ class UIScene extends RexScene {
   }
 
   private createButtons() {
+    const modalScene = this.scene.get("ModalScene");
+
     this.changeBackgroundButton = new Button(
       this,
       GAME_WIDTH - 3 * UI_BUTTON_SIZE,
@@ -124,7 +120,7 @@ class UIScene extends RexScene {
       FRAME_BUTTON_SWITCH_REST,
       FRAME_BUTTON_SWITCH_HOVER,
       FRAME_BUTTON_SWITCH_CLICK,
-      this.onChangeBackground.bind(this)
+      () => modalScene.events.emit(LOCAL_EVENT_OPEN_BACKGROUND_DIALOG)
     );
     this.settingsButton = new Button(
       this,
@@ -134,7 +130,11 @@ class UIScene extends RexScene {
       FRAME_BUTTON_SETTINGS_REST,
       FRAME_BUTTON_SETTINGS_HOVER,
       FRAME_BUTTON_SETTINGS_CLICK,
-      this.onOpenSettings.bind(this)
+      () =>
+        modalScene.events.emit(
+          LOCAL_EVENT_OPEN_SETTINGS_DIALOG,
+          this.sound.volume
+        )
     );
     this.listButton = new Button(
       this,
@@ -144,7 +144,7 @@ class UIScene extends RexScene {
       FRAME_BUTTON_LIST_REST,
       FRAME_BUTTON_LIST_HOVER,
       FRAME_BUTTON_LIST_CLICK,
-      this.onListFitwicks.bind(this)
+      () => modalScene.events.emit(LOCAL_EVENT_OPEN_FITWICK_LIST)
     );
     this.addFitwickButton = new Button(
       this,
@@ -154,7 +154,7 @@ class UIScene extends RexScene {
       FRAME_BUTTON_ADD_REST,
       FRAME_BUTTON_ADD_HOVER,
       FRAME_BUTTON_ADD_CLICK,
-      this.onAddFitwick.bind(this)
+      () => modalScene.events.emit(LOCAL_EVENT_OPEN_ADD_FITWICK_DIALOG)
     );
     this.confirmFitwickButton = new Button(
       this,
@@ -180,120 +180,6 @@ class UIScene extends RexScene {
     this.deleteFitwickButton.setVisible(false);
   }
 
-  private onChangeBackground() {
-    if (this.backgroundDialog) {
-      this.isDialogOpen = false;
-      this.backgroundDialog.hide();
-      this.backgroundDialog = undefined;
-      return;
-    }
-
-    if (this.isDialogOpen) {
-      return;
-    }
-
-    this.isDialogOpen = true;
-    this.backgroundDialog = new BackgroundDialog(
-      this,
-      (newBackgroundTexture?: string) => {
-        if (newBackgroundTexture) {
-          this.game.events.emit(
-            EVENT_WORLD_CHANGE_BACKGROUND,
-            newBackgroundTexture
-          );
-        }
-        this.isDialogOpen = false;
-        this.backgroundDialog!.hide();
-        this.backgroundDialog = undefined;
-      },
-      () => {
-        this.isDialogOpen = false;
-        this.backgroundDialog!.hide();
-        this.backgroundDialog = undefined;
-      }
-    );
-  }
-
-  private onOpenSettings() {
-    if (this.settingsDialog) {
-      this.isDialogOpen = false;
-      this.settingsDialog.hide();
-      this.settingsDialog = undefined;
-      return;
-    }
-
-    if (this.isDialogOpen) {
-      return;
-    }
-
-    this.isDialogOpen = true;
-    this.settingsDialog = new SettingsDialog(
-      this,
-      this.sound.volume,
-      () => {
-        this.settingsDialog!.hide();
-        this.isDialogOpen = false;
-        this.settingsDialog = undefined;
-      },
-      () => {
-        this.settingsDialog!.hide();
-        this.isDialogOpen = false;
-        this.settingsDialog = undefined;
-      }
-    );
-  }
-
-  private onListFitwicks() {
-    if (this.listDialog) {
-      this.isDialogOpen = false;
-      this.listDialog.hide();
-      this.listDialog = undefined;
-      return;
-    }
-
-    if (this.isDialogOpen) {
-      return;
-    }
-
-    this.isDialogOpen = true;
-    this.listDialog = new ListDialog(this);
-  }
-
-  private onAddFitwick() {
-    if (this.addDialog) {
-      this.isDialogOpen = false;
-      this.addDialog.hide();
-      this.addDialog = undefined;
-      return;
-    }
-
-    if (this.isDialogOpen) {
-      return;
-    }
-
-    this.isDialogOpen = true;
-    this.addDialog = new AddDialog(
-      this,
-      (text: string) => {
-        if (Fitwick.exists(text)) {
-          // let the main scene handle the addition of a new Fitwick
-          this.game.events.emit(EVENT_DO_FITWICK_NEW, text);
-          this.isDialogOpen = false;
-          this.addDialog!.hide();
-          this.addDialog = undefined;
-          this.onMoveFitwick();
-        } else {
-          this.addDialog!.showError(text);
-        }
-      },
-      () => {
-        this.isDialogOpen = false;
-        this.addDialog!.hide();
-        this.addDialog = undefined;
-      }
-    );
-  }
-
   private onConfirmFitwick() {
     this.confirmFitwickButton.setVisible(false);
     this.deleteFitwickButton.setVisible(false);
@@ -313,4 +199,4 @@ class UIScene extends RexScene {
   }
 }
 
-export default UIScene;
+export default GUIScene;

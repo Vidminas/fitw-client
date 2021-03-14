@@ -12,10 +12,9 @@ import {
 } from "../constants";
 import RexScene from "../scenes/RexScene";
 import Button from "./Button";
+import ModalDialog from "./ModalDialog";
 
-class AddDialog {
-  private rexDialog: any;
-
+class AddDialog extends ModalDialog {
   constructor(scene: RexScene, onConfirm: Function, onCancel: Function) {
     const background = scene.rexUI.add.roundRectangle(
       0,
@@ -79,7 +78,7 @@ class AddDialog {
       }
     );
 
-    this.rexDialog = scene.rexUI.add
+    const dialog = scene.rexUI.add
       .dialog({
         x: 0,
         y: 0,
@@ -106,7 +105,7 @@ class AddDialog {
       .pushIntoBounds()
       .popUp(500);
 
-    this.rexDialog.on(
+    dialog.on(
       "button.click",
       (button: Button, groupName: string, index: number) => {
         if (button === confirmButton) {
@@ -116,10 +115,8 @@ class AddDialog {
         }
       }
     );
-  }
 
-  public hide() {
-    this.rexDialog.scaleDownDestroy(100);
+    super(scene, dialog);
   }
 
   public showError(fitwickText: string) {

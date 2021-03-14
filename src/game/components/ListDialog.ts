@@ -8,6 +8,7 @@ import {
 } from "../constants";
 import { FITWICKS } from "../fitwicks";
 import RexScene from "../scenes/RexScene";
+import ModalDialog from "./ModalDialog";
 
 const createFitwickList = (scene: RexScene, width: number, height: number) => {
   const columns = Math.floor(width / (UI_BUTTON_SIZE * 3));
@@ -70,7 +71,7 @@ const createTitle = (scene: RexScene) =>
     },
   });
 
-class ListDialog extends ScrollablePanel {
+class ListDialog extends ModalDialog {
   constructor(scene: RexScene) {
     // this first takes the width of the whole game and leaves space of two buttons on either side
     // then it divdes the panel width into how many fitwicks fit on one row
@@ -83,7 +84,7 @@ class ListDialog extends ScrollablePanel {
         (UI_BUTTON_SIZE * 3) +
       20;
     const height = GAME_HEIGHT - UI_BUTTON_SIZE * 4;
-    super(scene, {
+    const scrollablePanel = new ScrollablePanel(scene, {
       x: 0,
       y: 0,
       anchor: {
@@ -116,11 +117,10 @@ class ListDialog extends ScrollablePanel {
         panel: 10,
       },
     });
-    this.layout();
-    this.popUp(500);
-    scene.add.existing(this);
-    this.setInteractive();
-    this.on(
+    scrollablePanel.layout();
+    scrollablePanel.popUp(500);
+    scrollablePanel.setInteractive();
+    scrollablePanel.on(
       "wheel",
       (
         _pointer: Phaser.Input.Pointer,
@@ -128,19 +128,20 @@ class ListDialog extends ScrollablePanel {
         deltaY: number,
         _deltaZ: number
       ) => {
-        let newScrollValue = this.childOY - deltaY;
-        if (newScrollValue < this.bottomChildOY) {
-          newScrollValue = this.bottomChildOY;
-        } else if (newScrollValue > this.topChildOY) {
-          newScrollValue = this.topChildOY;
+        console.log("scroll");
+        let newScrollValue = scrollablePanel.childOY - deltaY;
+        if (newScrollValue < scrollablePanel.bottomChildOY) {
+          newScrollValue = scrollablePanel.bottomChildOY;
+        } else if (newScrollValue > scrollablePanel.topChildOY) {
+          newScrollValue = scrollablePanel.topChildOY;
         }
-        this.setChildOY(newScrollValue);
+        scrollablePanel.setChildOY(newScrollValue);
       }
     );
-  }
+    console.log(scrollablePanel.input);
+    scene.add.existing(scrollablePanel);
 
-  public hide() {
-    this.scaleDownDestroy(100);
+    super(scene, scrollablePanel);
   }
 }
 

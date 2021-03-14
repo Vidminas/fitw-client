@@ -16,6 +16,7 @@ import {
 import RexScene from "../scenes/RexScene";
 import BackgroundGallery from "./BackgroundGallery";
 import Button from "./Button";
+import ModalDialog from "./ModalDialog";
 
 const createTitle = (scene: RexScene) =>
   scene.rexUI.add.label({
@@ -38,14 +39,12 @@ const createTitle = (scene: RexScene) =>
     },
   });
 
-class BackgroundDialog extends Dialog {
-  private confirmButton!: Button;
-  private cancelButton!: Button;
-
+class BackgroundDialog extends ModalDialog {
   constructor(scene: RexScene, onConfirm: Function, onCancel: Function) {
     const minWidth = GAME_WIDTH - 4 * UI_BUTTON_SIZE;
     const minHeight = GAME_HEIGHT - 4 * UI_BUTTON_SIZE;
-    super(scene, {
+
+    const dialog = new Dialog(scene, {
       x: 0,
       y: 0,
       anchor: {
@@ -71,48 +70,40 @@ class BackgroundDialog extends Dialog {
       },
     });
 
-    this.createButtons(scene, onConfirm, onCancel);
-    this.addAction(this.confirmButton);
-    this.addAction(this.cancelButton);
-
-    this.layout();
-    this.pushIntoBounds();
-    this.popUp(500);
-    scene.add.existing(this);
-  }
-
-  public hide() {
-    this.scaleDownDestroy(100);
-  }
-
-  private createButtons(
-    scene: RexScene,
-    onConfirm: Function,
-    onCancel: Function
-  ) {
-    this.confirmButton = new Button(
-      scene,
-      0,
-      0,
-      TEXTURE_BUTTONS,
-      FRAME_BUTTON_CONFIRM_REST,
-      FRAME_BUTTON_CONFIRM_HOVER,
-      FRAME_BUTTON_CONFIRM_CLICK,
-      () =>
-        onConfirm(
-          (this.getElement("content") as BackgroundGallery).newBackgroundTexture
-        )
+    dialog.addAction(
+      new Button(
+        scene,
+        0,
+        0,
+        TEXTURE_BUTTONS,
+        FRAME_BUTTON_CONFIRM_REST,
+        FRAME_BUTTON_CONFIRM_HOVER,
+        FRAME_BUTTON_CONFIRM_CLICK,
+        () =>
+          onConfirm(
+            (dialog.getElement("content") as BackgroundGallery)
+              .newBackgroundTexture
+          )
+      )
     );
-    this.cancelButton = new Button(
-      scene,
-      0,
-      0,
-      TEXTURE_BUTTONS,
-      FRAME_BUTTON_CANCEL_REST,
-      FRAME_BUTTON_CANCEL_HOVER,
-      FRAME_BUTTON_CANCEL_CLICK,
-      () => onCancel()
+    dialog.addAction(
+      new Button(
+        scene,
+        0,
+        0,
+        TEXTURE_BUTTONS,
+        FRAME_BUTTON_CANCEL_REST,
+        FRAME_BUTTON_CANCEL_HOVER,
+        FRAME_BUTTON_CANCEL_CLICK,
+        () => onCancel()
+      )
     );
+
+    dialog.layout();
+    dialog.pushIntoBounds();
+    dialog.popUp(500);
+    scene.add.existing(dialog);
+    super(scene, dialog);
   }
 }
 

@@ -71,10 +71,12 @@ declare module "phaser3-rex-plugins/templates/ui/ui-components.js" {
       padding: any,
       expand: boolean
     );
+    setDepth(depth: number);
     popUp(duration: number);
     scaleDownDestroy(duration: number);
     drawBounds(graphics: Phaser.GameObjects.Graphics, color?: number);
     setAnchor(config: any);
+    isInTouching(): boolean;
     layout();
     pushIntoBounds();
   }

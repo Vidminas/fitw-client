@@ -1,4 +1,7 @@
-import { ScrollablePanel } from "phaser3-rex-plugins/templates/ui/ui-components.js";
+import {
+  Dialog,
+  ScrollablePanel,
+} from "phaser3-rex-plugins/templates/ui/ui-components.js";
 import {
   EVENT_WORLD_EXIT,
   EVENT_MUSIC_CHANGE,
@@ -38,6 +41,7 @@ import {
 } from "../constants";
 import RexScene from "../scenes/RexScene";
 import Button from "./Button";
+import ModalDialog from "./ModalDialog";
 
 const createTitle = (scene: RexScene) =>
   scene.rexUI.add.label({
@@ -163,7 +167,7 @@ const createPanel = (
   currentVolume: number,
   onConfirm: Function,
   onCancel: Function
-) => {
+): Dialog => {
   const confirmButton = new Button(
     scene,
     0,
@@ -191,14 +195,14 @@ const createPanel = (
   });
 };
 
-class SettingsDialog extends ScrollablePanel {
+class SettingsDialog extends ModalDialog {
   constructor(
     scene: RexScene,
     currentVolume: number,
     onConfirm: Function,
     onCancel: Function
   ) {
-    super(scene, {
+    const scrollablePanel = new ScrollablePanel(scene, {
       x: 0,
       y: 0,
       anchor: {
@@ -229,11 +233,12 @@ class SettingsDialog extends ScrollablePanel {
         panel: 10,
       },
     });
-    this.layout();
-    this.popUp(500);
-    scene.add.existing(this);
-    this.setInteractive();
-    this.on(
+    scrollablePanel.layout();
+    scene.add.existing(scrollablePanel);
+
+    scrollablePanel.popUp(500);
+    scrollablePanel.setInteractive();
+    scrollablePanel.on(
       "wheel",
       (
         _pointer: Phaser.Input.Pointer,
@@ -241,19 +246,17 @@ class SettingsDialog extends ScrollablePanel {
         deltaY: number,
         _deltaZ: number
       ) => {
-        let newScrollValue = this.childOY - deltaY;
-        if (newScrollValue < this.bottomChildOY) {
-          newScrollValue = this.bottomChildOY;
-        } else if (newScrollValue > this.topChildOY) {
-          newScrollValue = this.topChildOY;
+        let newScrollValue = scrollablePanel.childOY - deltaY;
+        if (newScrollValue < scrollablePanel.bottomChildOY) {
+          newScrollValue = scrollablePanel.bottomChildOY;
+        } else if (newScrollValue > scrollablePanel.topChildOY) {
+          newScrollValue = scrollablePanel.topChildOY;
         }
-        this.setChildOY(newScrollValue);
+        scrollablePanel.setChildOY(newScrollValue);
       }
     );
-  }
 
-  public hide() {
-    this.scaleDownDestroy(100);
+    super(scene, scrollablePanel);
   }
 }
 
