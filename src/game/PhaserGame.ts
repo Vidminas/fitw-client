@@ -64,7 +64,7 @@ class PhaserGame {
     this.exitWorldCallback = exitWorldCallback;
   }
 
-  public init(parent: string, user: IUser, world: IWorld) {
+  public init(parent: string, user: IUser | null, world: IWorld) {
     this.socket = io(SERVER_ADDRESS);
     this.socket.on(EVENT_CONNECT, () => {
       this.socket?.emit(EVENT_WORLD_ENTER, user, world);

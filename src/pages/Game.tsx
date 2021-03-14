@@ -25,7 +25,10 @@ const Game: React.FC<{}> = () => {
   const [time, setTime] = React.useState("");
 
   React.useEffect(() => {
-    if (!user || !currentWorld) {
+    if (!currentWorld) {
+      return;
+    }
+    if (!user && !process.env.REACT_APP_DEBUG) {
       return;
     }
     // new worlds don't have an ID
