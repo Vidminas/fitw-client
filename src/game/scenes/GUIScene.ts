@@ -67,8 +67,18 @@ class GUIScene extends RexScene {
       volume: this.musicVolume,
     });
     this.musicTrackIndex = 0;
-    this.musicTrack.play();
-    this.isMusicPlaying = true;
+
+    if (!this.sound.locked) {
+      // already unlocked so play
+      this.musicTrack.play();
+      this.isMusicPlaying = true;
+    } else {
+      // wait for 'unlocked' to fire and then play
+      this.sound.once(Phaser.Sound.Events.UNLOCKED, () => {
+        this.musicTrack.play();
+        this.isMusicPlaying = true;
+      });
+    }
 
     this.game.events.on(EVENT_DO_FITWICK_NEW, this.onMoveFitwick.bind(this));
     this.game.events.on(
