@@ -1,5 +1,7 @@
 import {
   BACKGROUND_TEXTURES,
+  GAME_HEIGHT,
+  GAME_WIDTH,
   MUSIC_TRACKS,
   TEXTURE_BUTTONS,
   TEXTURE_DESERT_SPRITES,
@@ -16,14 +18,42 @@ class PreloadScene extends Phaser.Scene {
   }
 
   preload() {
-    const progress = this.add.graphics();
-    this.load.on("progress", (value: number) => {
-      progress.clear();
-      progress.fillStyle(0xffffff, 1);
-      progress.fillRect(0, 270, 800 * value, 60);
+    const progressBoxWidth = GAME_WIDTH / 2;
+    const progressBoxHeight = 50;
+    const progressBoxPadding = 20;
+
+    const progressBar = this.add.graphics();
+    const progressBox = this.add.graphics();
+    progressBox.fillStyle(0x222222, 0.8);
+    progressBox.fillRect(
+      (GAME_WIDTH - progressBoxWidth) / 2,
+      (GAME_HEIGHT - progressBoxHeight) / 2,
+      progressBoxWidth,
+      progressBoxHeight
+    );
+
+    const percentText = this.add.text(GAME_WIDTH / 2, GAME_HEIGHT / 2, "0%", {
+      font: "18px monospace",
+      color: "#ffffff",
     });
+    percentText.setOrigin(0.5, 0.5);
+
+    this.load.on("progress", (value: number) => {
+      progressBar.clear();
+      progressBar.fillStyle(0xffffff, 1);
+      progressBar.fillRect(
+        (GAME_WIDTH - progressBoxWidth + progressBoxPadding) / 2,
+        (GAME_HEIGHT - progressBoxHeight + progressBoxPadding) / 2,
+        (progressBoxWidth - progressBoxPadding) * value,
+        progressBoxHeight - progressBoxPadding
+      );
+      percentText.setText(Math.round(value * 100) + "%");
+    });
+
     this.load.on("complete", function () {
-      progress.destroy();
+      progressBar.destroy();
+      progressBox.destroy();
+      percentText.destroy();
     });
 
     MUSIC_TRACKS.forEach((track) => this.load.audio(track, `music/${track}`));
