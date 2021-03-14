@@ -1,0 +1,13 @@
+.stats-list {
+  background: none;
+}
+
+.stats-list ion-list-header {
+  font-size: medium;
+}
+
+.stats-list ion-item {
+  --color: black;
+  --background: none;
+  --min-height: 28px;
+}

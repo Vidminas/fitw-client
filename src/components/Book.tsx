@@ -10,6 +10,7 @@ import WorldDialog from "./WorldDialog";
 import { IonLoading, IonToast } from "@ionic/react";
 import IWorld from "../api/world";
 import BadgeSection from "./BadgeSection";
+import StatsSection from "./StatsSection";
 
 type BookClass = "book-open" | "book-closed-front" | "book-closed-back";
 
@@ -159,7 +160,8 @@ const Book: React.FC<{}> = () => {
           event.stopPropagation();
         }}
       />
-    </>
+    </>,
+    <StatsSection />
   );
 
   // add back cover
