@@ -48,11 +48,12 @@ class ModalDialog extends Phaser.GameObjects.Group {
       ) => {
         // prevent any buttons under modal getting clicked
         // except none of them work
-        event.stopPropagation();
-        pointer.event.stopImmediatePropagation();
-        pointer.event.stopPropagation();
-        pointer.event.preventDefault();
-        this.scene.input.stopPropagation();
+        // and they also break background selection
+        // event.stopPropagation();
+        // pointer.event.stopImmediatePropagation();
+        // pointer.event.stopPropagation();
+        // pointer.event.preventDefault();
+        // this.scene.input.stopPropagation();
       }
     );
 
