@@ -112,9 +112,7 @@ const Book: React.FC<{}> = () => {
       <p>-&gt;</p>
     </>,
     <>
-      <p>The worlds of</p>
       <p>{userState.user?.username || "Unknown user"}</p>
-      <br />
       <br />
       <BadgeSection />
     </>

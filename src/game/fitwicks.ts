@@ -90,16 +90,14 @@ FITWICKS.set("moon", [
 FITWICKS.set("full moon", [[TEXTURE_KENNEY_ASSETS, "moonFull.png"]]);
 FITWICKS.set("tree", [
   [TEXTURE_KENNEY_ASSETS, "tree.png"],
-  [TEXTURE_KENNEY_ASSETS, "treeDead.png"],
-  [TEXTURE_KENNEY_ASSETS, "treeFrozen.png"],
   [TEXTURE_KENNEY_ASSETS, "treeOrange.png"],
-  [TEXTURE_KENNEY_ASSETS, "treeSnow.png"],
   [TEXTURE_DESERT_SPRITES, "tree_7.png"],
   [TEXTURE_DESERT_SPRITES, "tree_10.png"],
+]);
+FITWICKS.set("dead tree", [
+  [TEXTURE_KENNEY_ASSETS, "treeDead.png"],
   [TEXTURE_DESERT_SPRITES, "tree_11.png"],
   [TEXTURE_DESERT_SPRITES, "tree_12.png"],
-  [TEXTURE_WINTER_SPRITES, "Tree_1.png"],
-  [TEXTURE_WINTER_SPRITES, "Tree_2.png"],
 ]);
 FITWICKS.set("pine tree", [
   [TEXTURE_KENNEY_ASSETS, "treePine.png"],
@@ -120,6 +118,12 @@ FITWICKS.set("palm tree", [
   [TEXTURE_DESERT_SPRITES, "tree_9.png"],
 ]);
 FITWICKS.set("baobab", [[TEXTURE_DESERT_SPRITES, "tree_8.png"]]);
+FITWICKS.set("snowy tree", [
+  [TEXTURE_KENNEY_ASSETS, "treeSnow.png"],
+  [TEXTURE_KENNEY_ASSETS, "treeFrozen.png"],
+  [TEXTURE_WINTER_SPRITES, "Tree_1.png"],
+  [TEXTURE_WINTER_SPRITES, "Tree_2.png"],
+]);
 FITWICKS.set("pyramid", [[TEXTURE_KENNEY_ASSETS, "pyramid.png"]]);
 FITWICKS.set("Mayan pyramid", [[TEXTURE_KENNEY_ASSETS, "pyramidMayan.png"]]);
 FITWICKS.set("sun", [[TEXTURE_KENNEY_ASSETS, "sun.png"]]);
@@ -321,7 +325,9 @@ FITWICKS.set("brush", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_011.png"]]);
 FITWICKS.set("tape measure", [
   [TEXTURE_KENNEY_ITEMS, "genericItem_color_012.png"],
 ]);
-FITWICKS.set("knife", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_013.png"]]);
+FITWICKS.set("box knife", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_013.png"],
+]);
 FITWICKS.set("paint roller", [
   [TEXTURE_KENNEY_ITEMS, "genericItem_color_014.png"],
 ]);
@@ -477,8 +483,12 @@ FITWICKS.set("glass of wine", [
   [TEXTURE_KENNEY_ITEMS, "genericItem_color_120.png"],
 ]);
 FITWICKS.set("mug", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_121.png"]]);
-FITWICKS.set("salt", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_122.png"]]);
-FITWICKS.set("pepper", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_123.png"]]);
+FITWICKS.set("salt shaker", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_122.png"],
+]);
+FITWICKS.set("pepper shaker", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_123.png"],
+]);
 FITWICKS.set("kettle", [
   [TEXTURE_KENNEY_ITEMS, "genericItem_color_124.png"],
   [TEXTURE_KENNEY_ITEMS, "genericItem_color_125.png"],
@@ -492,7 +502,9 @@ FITWICKS.set("knife", [
   [TEXTURE_KENNEY_ITEMS, "genericItem_color_131.png"],
   [TEXTURE_KENNEY_ITEMS, "genericItem_color_134.png"],
 ]);
-FITWICKS.set("glove", [[TEXTURE_KENNEY_ITEMS, "genericItem_color_132.png"]]);
+FITWICKS.set("oven glove", [
+  [TEXTURE_KENNEY_ITEMS, "genericItem_color_132.png"],
+]);
 FITWICKS.set("cutting board", [
   [TEXTURE_KENNEY_ITEMS, "genericItem_color_133.png"],
 ]);

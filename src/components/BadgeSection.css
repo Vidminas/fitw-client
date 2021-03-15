@@ -12,14 +12,13 @@
   order: 1;
   width: 96px;
   height: 96px;
-  opacity: 0.4;
   background-color: grey;
   border-radius: 10px;
+  opacity: 0.4;
 }
-.badge:hover {
+.badge:not(.disabled):hover {
   opacity: 0.7;
 }
-
 .badge.obtained {
   opacity: 0.7;
   background-color: gold;
