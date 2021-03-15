@@ -18,6 +18,7 @@ import {
   EVENT_DO_FITWICK_NEW,
   EVENT_DO_FITWICK_PLACE,
   EVENT_DO_FITWICK_DELETE,
+  EVENT_MESSAGE,
 } from "../api/events";
 import { GAME_HEIGHT, GAME_WIDTH } from "./constants";
 import MainScene from "./scenes/MainScene";
@@ -72,7 +73,7 @@ class PhaserGame {
     parent: string,
     user: IUser | null,
     world: IWorld,
-    showToastMessage: (message: string) => void
+    showToastMessage: (color: string, message: string) => void
   ) {
     this.socket = io(SERVER_ADDRESS);
     this.socket.on(EVENT_CONNECT, () => {
@@ -102,16 +103,19 @@ class PhaserGame {
         baseURL: "assets",
       },
     });
-    this.registerGameEvents();
+    this.registerGameEvents(showToastMessage);
     this.registerServerEvents(showToastMessage);
     return this.game;
   }
 
-  private registerGameEvents() {
+  private registerGameEvents(
+    showToastMessage: (color: string, message: string) => void
+  ) {
     if (!this.game) {
       return;
     }
 
+    this.game.events.on(EVENT_MESSAGE, showToastMessage);
     this.game.events.on(
       EVENT_WORLD_CHANGE_BACKGROUND,
       (external: boolean, newBackgroundTexture: string) => {
@@ -194,12 +198,14 @@ class PhaserGame {
     });
   }
 
-  private registerServerEvents(showToastMessage: (message: string) => void) {
+  private registerServerEvents(
+    showToastMessage: (color: string, message: string) => void
+  ) {
     if (!this.socket) {
       return;
     }
 
-    this.socket.on("message", showToastMessage);
+    this.socket.on(EVENT_MESSAGE, showToastMessage);
     this.socket.on(
       EVENT_WORLD_CHANGE_BACKGROUND,
       (newBackgroundTexture: string) => {

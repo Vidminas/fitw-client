@@ -4,7 +4,9 @@ export const GAME_HEIGHT = window.innerHeight * window.devicePixelRatio;
 export const SCALE_RATIO = window.devicePixelRatio;
 
 export const UI_BUTTON_SIZE = 64 * SCALE_RATIO;
+export const UI_ICON_SIZE = 32 * SCALE_RATIO;
 export const UI_FONT_SIZE = `${20 * SCALE_RATIO}px`;
+export const UI_BIG_FONT_SIZE = `${30 * SCALE_RATIO}px`;
 
 // the smallest width and height of all images (it's okay to have bigger)
 const GAME_BG_WIDTH = 1024;
@@ -104,3 +106,6 @@ export const FRAME_BUTTON_PAUSE_CLICK = "Button_144.png";
 export const FRAME_BUTTON_EXIT_REST = "Button_086.png";
 export const FRAME_BUTTON_EXIT_HOVER = "Button_087.png";
 export const FRAME_BUTTON_EXIT_CLICK = "Button_088.png";
+export const FRAME_BUTTON_INFO_REST = "Button_066.png";
+export const FRAME_BUTTON_INFO_HOVER = "Button_067.png";
+export const FRAME_BUTTON_INFO_CLICK = "Button_068.png";

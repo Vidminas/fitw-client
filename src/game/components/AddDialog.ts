@@ -1,5 +1,12 @@
+import { findBestMatch } from "string-similarity";
 import InputText from "phaser3-rex-plugins/plugins/inputtext.js";
-import { COLOR_DIALOG_BACKGROUND, COLOR_DIALOG_FOREGROUND } from "../colors";
+import { EVENT_MESSAGE } from "../../api/events";
+import {
+  COLOR_DIALOG_BACKGROUND,
+  COLOR_DIALOG_FOREGROUND,
+  COLOR_STRING_DARK_GREY,
+  COLOR_STRING_WHITE,
+} from "../colors";
 import {
   FRAME_BUTTON_CANCEL_CLICK,
   FRAME_BUTTON_CANCEL_HOVER,
@@ -10,9 +17,12 @@ import {
   TEXTURE_BUTTONS,
   UI_FONT_SIZE,
 } from "../constants";
+import { FITWICKS } from "../fitwicks";
 import RexScene from "../scenes/RexScene";
 import Button from "./Button";
 import ModalDialog from "./ModalDialog";
+
+const FITWICK_NAMES = Array.from(FITWICKS.keys());
 
 class AddDialog extends ModalDialog {
   constructor(scene: RexScene, onConfirm: Function, onCancel: Function) {
@@ -43,11 +53,15 @@ class AddDialog extends ModalDialog {
         bottom: 10,
       },
     });
-    const inputBox = new InputText(scene, 0, 0, 400, 60, {
-      color: "white",
+
+    const inputBoxWidth = 400;
+    const inputBoxHeight = 60;
+
+    const inputBox = new InputText(scene, 0, 0, inputBoxWidth, inputBoxHeight, {
+      color: COLOR_STRING_WHITE,
+      backgroundColor: COLOR_STRING_DARK_GREY,
       fontSize: UI_FONT_SIZE,
       placeholder: "Type in something",
-      backgroundColor: "#333333",
       valign: "center",
     });
     inputBox.setStyle("border-radius", "25px");
@@ -62,7 +76,7 @@ class AddDialog extends ModalDialog {
       FRAME_BUTTON_CONFIRM_HOVER,
       FRAME_BUTTON_CONFIRM_CLICK,
       () => {
-        console.log("confirm");
+        onConfirm(inputBox.text);
       }
     );
     const cancelButton = new Button(
@@ -74,7 +88,7 @@ class AddDialog extends ModalDialog {
       FRAME_BUTTON_CANCEL_HOVER,
       FRAME_BUTTON_CANCEL_CLICK,
       () => {
-        console.log("cancelled");
+        onCancel();
       }
     );
 
@@ -92,12 +106,12 @@ class AddDialog extends ModalDialog {
         actions: [cancelButton, confirmButton],
         actionsAlign: "left",
         space: {
+          top: 10,
           title: 20,
           content: 20,
           action: 5,
           left: 10,
           right: 10,
-          top: 10,
           bottom: 10,
         },
       })
@@ -105,22 +119,28 @@ class AddDialog extends ModalDialog {
       .pushIntoBounds()
       .popUp(500);
 
-    dialog.on(
-      "button.click",
-      (button: Button, groupName: string, index: number) => {
-        if (button === confirmButton) {
-          onConfirm(inputBox.text);
-        } else {
-          onCancel();
-        }
-      }
-    );
-
     super(scene, dialog);
   }
 
-  public showError(fitwickText: string) {
-    console.log(`${fitwickText} unknown!`);
+  public showError(inputName: string) {
+    const bestMatch = findBestMatch(inputName, FITWICK_NAMES).bestMatch;
+    console.log(
+      `"${inputName}" unknown, the closest match is "${bestMatch.target}" with rating ${bestMatch.rating}`
+    );
+
+    if (bestMatch.rating > 0.2) {
+      this.scene.game.events.emit(
+        EVENT_MESSAGE,
+        "warning",
+        `Unknown object "${inputName}". Did you mean "${bestMatch.target}"?`
+      );
+    } else {
+      this.scene.game.events.emit(
+        EVENT_MESSAGE,
+        "warning",
+        `Unknown object "${inputName}". Check the list of all game objects to see if it exists in the game.`
+      );
+    }
   }
 }
 

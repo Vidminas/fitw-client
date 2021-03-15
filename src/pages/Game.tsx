@@ -26,6 +26,7 @@ const Game: React.FC<{}> = () => {
   const [time, setTime] = useState("");
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
+  const [toastColor, setToastColor] = useState("");
 
   useEffect(() => {
     if (!currentWorld) {
@@ -48,10 +49,16 @@ const Game: React.FC<{}> = () => {
       // for now, the workaround is to refresh the page
       history.go(0);
     });
-    newGame.init("game-root", user, currentWorld, (message: string) => {
-      setToastMessage(message);
-      setShowToast(true);
-    });
+    newGame.init(
+      "game-root",
+      user,
+      currentWorld,
+      (color: string, message: string) => {
+        setToastColor(color);
+        setToastMessage(message);
+        setShowToast(true);
+      }
+    );
     return () => {
       // this cleanup gets called if the game is exited without using
       // the in-game "Exit World" button
@@ -101,8 +108,9 @@ const Game: React.FC<{}> = () => {
         <IonToast
           isOpen={showToast}
           onDidDismiss={() => setShowToast(false)}
+          color={toastColor}
           message={toastMessage}
-          duration={1500}
+          duration={2500}
           buttons={[
             {
               text: "Close",

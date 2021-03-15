@@ -1,5 +1,5 @@
-import RexGesturesPlugin from "phaser3-rex-plugins/plugins/gestures-plugin.js";
 import RexUIPlugin from "phaser3-rex-plugins/templates/ui/ui-plugin.js";
+import RexGesturesPlugin from "phaser3-rex-plugins/plugins/gestures-plugin.js";
 
 // Template class with minimal phaser3-rex-plugins
 class RexScene extends Phaser.Scene {
