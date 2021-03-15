@@ -28,6 +28,7 @@ import {
 import Fitwick from "../components/Fitwick";
 import SpeechBubble from "../components/SpeechBubble";
 import RexScene from "./RexScene";
+import IFitwick from "../../api/fitwick";
 
 class MainScene extends RexScene {
   private background!: Phaser.GameObjects.TileSprite;
@@ -53,7 +54,16 @@ class MainScene extends RexScene {
           _lastPointer: Phaser.Input.Pointer
         ) => {
           if (!this.activeFitwick && fitwick.state === "rest") {
-            this.game.events.emit(EVENT_FITWICK_PICK_UP, fitwick);
+            // false -> not external event
+            this.game.events.emit(EVENT_FITWICK_PICK_UP, false, fitwick);
+            if (this.activeSpeechBubble) {
+              this.activeSpeechBubble.destroy();
+              this.activeSpeechBubble = undefined;
+            }
+            this.activeFitwick = fitwick;
+            this.activeFitwick.pickUp(false);
+            this.input.setDraggable(this.activeFitwick);
+            this.registerFitwickDrag(this.activeFitwick);
           }
         }
       );
@@ -141,7 +151,8 @@ class MainScene extends RexScene {
       ) {
         this.x = dragX;
         this.y = dragY;
-        this.scene.game.events.emit(EVENT_FITWICK_MOVE, this);
+        // false -> not external event
+        this.scene.game.events.emit(EVENT_FITWICK_MOVE, false, this);
       }
     );
     const cam = this.cameras.main;
@@ -184,57 +195,146 @@ class MainScene extends RexScene {
         fitwickData.atlasFrame
       );
       this.registerFitwickEvents(fitwick);
-      this.input.setDraggable(fitwick);
     }
 
     this.game.events.on(
       EVENT_WORLD_CHANGE_BACKGROUND,
-      (newBackgroundTexture: string) => {
+      (external: boolean, newBackgroundTexture: string) => {
+        // the same handling regardless of whether it's external or not
         this.background.setTexture(newBackgroundTexture);
       }
     );
 
-    this.game.events.on(EVENT_DO_FITWICK_NEW, (fitwickName: string) => {
-      const x = cam.scrollX + GAME_WIDTH / 2;
-      const y = cam.scrollY + GAME_HEIGHT / 2;
-      this.activeFitwick = new Fitwick(this, fitwickName, x, y);
-      this.game.events.emit(EVENT_DONE_FITWICK_NEW, this.activeFitwick);
-      this.activeFitwick.pickUp();
-      this.input.setDraggable(this.activeFitwick);
-      this.registerFitwickDrag(this.activeFitwick);
-    });
-    this.game.events.on(EVENT_DO_FITWICK_PLACE, () => {
-      if (!this.activeFitwick) {
-        return;
+    this.game.events.on(
+      EVENT_DO_FITWICK_NEW,
+      (external: boolean, fitwick: string | IFitwick) => {
+        if (!external) {
+          const x = cam.scrollX + GAME_WIDTH / 2;
+          const y = cam.scrollY + GAME_HEIGHT / 2;
+          this.activeFitwick = new Fitwick(this, fitwick as string, x, y);
+          this.game.events.emit(
+            EVENT_DONE_FITWICK_NEW,
+            external,
+            this.activeFitwick
+          );
+          this.activeFitwick.pickUp(false);
+          this.input.setDraggable(this.activeFitwick);
+          this.registerFitwickDrag(this.activeFitwick);
+        } else {
+          const fitwickData = fitwick as IFitwick;
+          new Fitwick(
+            this,
+            fitwickData.name,
+            fitwickData.x,
+            fitwickData.y,
+            fitwickData.worldId,
+            fitwickData.atlasTexture,
+            fitwickData.atlasFrame
+          );
+        }
       }
+    );
 
-      this.activeFitwick.removeListener("drag");
-      this.activeFitwick.placeDown();
-      cam.stopFollow();
-      this.game.events.emit(EVENT_DONE_FITWICK_PLACE, this.activeFitwick);
-      this.registerFitwickEvents(this.activeFitwick);
-      this.activeFitwick = undefined;
-    });
-
-    this.game.events.on(EVENT_DO_FITWICK_DELETE, () => {
-      cam.stopFollow();
-      if (this.activeFitwick) {
-        this.game.events.emit(EVENT_DONE_FITWICK_DELETE, this.activeFitwick);
-        this.activeFitwick.shutdown();
-        this.activeFitwick.destroy();
-        this.activeFitwick = undefined;
+    this.game.events.on(
+      EVENT_FITWICK_MOVE,
+      (external: boolean, fitwick: IFitwick) => {
+        if (!external) {
+          // the moving will have already been handled in the drag listener
+          return;
+        }
+        const existingFitwick = this.children.getFirst(
+          "worldId",
+          fitwick.worldId
+        ) as Fitwick;
+        if (!existingFitwick) {
+          return;
+        }
+        existingFitwick.x = fitwick.x;
+        existingFitwick.y = fitwick.y;
       }
-    });
+    );
 
-    this.game.events.on(EVENT_FITWICK_PICK_UP, (fitwick: Fitwick) => {
-      if (this.activeSpeechBubble) {
-        this.activeSpeechBubble.destroy();
-        this.activeSpeechBubble = undefined;
+    this.game.events.on(
+      EVENT_DO_FITWICK_PLACE,
+      (external: boolean, fitwick?: IFitwick) => {
+        if (!external) {
+          if (!this.activeFitwick) {
+            return;
+          }
+          this.activeFitwick.removeListener("drag");
+          this.activeFitwick.placeDown();
+          cam.stopFollow();
+          this.game.events.emit(
+            EVENT_DONE_FITWICK_PLACE,
+            external,
+            this.activeFitwick
+          );
+          this.registerFitwickEvents(this.activeFitwick);
+          this.activeFitwick = undefined;
+        } else {
+          if (!fitwick) {
+            return;
+          }
+          const existingFitwick = this.children.getFirst(
+            "worldId",
+            fitwick.worldId
+          ) as Fitwick;
+          existingFitwick.placeDown();
+          this.registerFitwickEvents(existingFitwick);
+        }
       }
-      this.activeFitwick = fitwick;
-      this.activeFitwick.pickUp();
-      this.registerFitwickDrag(this.activeFitwick);
-    });
+    );
+
+    this.game.events.on(
+      EVENT_DO_FITWICK_DELETE,
+      (external: boolean, fitwick?: IFitwick) => {
+        if (!external) {
+          cam.stopFollow();
+          if (!this.activeFitwick) {
+            return;
+          }
+          this.game.events.emit(
+            EVENT_DONE_FITWICK_DELETE,
+            external,
+            this.activeFitwick
+          );
+          this.activeFitwick.destroy();
+          this.activeFitwick = undefined;
+        } else {
+          if (!fitwick) {
+            return;
+          }
+          const existingFitwick = this.children.getFirst(
+            "worldId",
+            fitwick.worldId
+          ) as Fitwick;
+          existingFitwick.destroy();
+        }
+      }
+    );
+
+    this.game.events.on(
+      EVENT_FITWICK_PICK_UP,
+      (external: boolean, fitwick: IFitwick) => {
+        if (!external) {
+          // the picking up logic is already handled in the onpress event
+          return;
+        }
+        const existingFitwick = this.children.getFirst(
+          "worldId",
+          fitwick.worldId
+        ) as Fitwick;
+        existingFitwick.pickUp(true);
+        if (
+          this.activeSpeechBubble &&
+          this.activeSpeechBubble.parent.worldId === fitwick.worldId
+        ) {
+          this.activeSpeechBubble.destroy();
+          this.activeSpeechBubble = undefined;
+        }
+      }
+    );
+
     this.game.events.on(EVENT_WORLD_EXIT, () => {
       // save world state ...
       this.game.events.emit(EVENT_NAVIGATE_HOME);

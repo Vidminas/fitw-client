@@ -80,7 +80,6 @@ class GUIScene extends RexScene {
       });
     }
 
-    this.game.events.on(EVENT_DO_FITWICK_NEW, this.onMoveFitwick.bind(this));
     this.game.events.on(
       EVENT_DO_FITWICK_PLACE,
       this.onConfirmFitwick.bind(this)
@@ -89,6 +88,7 @@ class GUIScene extends RexScene {
       EVENT_DO_FITWICK_DELETE,
       this.onDeleteFitwick.bind(this)
     );
+    this.game.events.on(EVENT_DO_FITWICK_NEW, this.onMoveFitwick.bind(this));
     this.game.events.on(EVENT_FITWICK_PICK_UP, this.onMoveFitwick.bind(this));
     // this.events.on(EVENT_FITWICK_TAP, this.onTapFitwick.bind(this));
     this.game.events.on(EVENT_MUSIC_CHANGE, () => {
@@ -174,7 +174,8 @@ class GUIScene extends RexScene {
       FRAME_BUTTON_CONFIRM_REST,
       FRAME_BUTTON_CONFIRM_HOVER,
       FRAME_BUTTON_CONFIRM_CLICK,
-      () => this.game.events.emit(EVENT_DO_FITWICK_PLACE)
+      // false -> not external event
+      () => this.game.events.emit(EVENT_DO_FITWICK_PLACE, false)
     );
     this.confirmFitwickButton.setVisible(false);
     this.deleteFitwickButton = new Button(
@@ -185,27 +186,34 @@ class GUIScene extends RexScene {
       FRAME_BUTTON_DELETE_REST,
       FRAME_BUTTON_DELETE_HOVER,
       FRAME_BUTTON_DELETE_CLICK,
-      () => this.game.events.emit(EVENT_DO_FITWICK_DELETE)
+      // false -> not external event
+      () => this.game.events.emit(EVENT_DO_FITWICK_DELETE, false)
     );
     this.deleteFitwickButton.setVisible(false);
   }
 
-  private onConfirmFitwick() {
-    this.confirmFitwickButton.setVisible(false);
-    this.deleteFitwickButton.setVisible(false);
-    this.addFitwickButton.setVisible(true);
+  private onConfirmFitwick(external: boolean) {
+    if (!external) {
+      this.confirmFitwickButton.setVisible(false);
+      this.deleteFitwickButton.setVisible(false);
+      this.addFitwickButton.setVisible(true);
+    }
   }
 
-  private onDeleteFitwick() {
-    this.confirmFitwickButton.setVisible(false);
-    this.deleteFitwickButton.setVisible(false);
-    this.addFitwickButton.setVisible(true);
+  private onDeleteFitwick(external: boolean) {
+    if (!external) {
+      this.confirmFitwickButton.setVisible(false);
+      this.deleteFitwickButton.setVisible(false);
+      this.addFitwickButton.setVisible(true);
+    }
   }
 
-  private onMoveFitwick() {
-    this.confirmFitwickButton.setVisible(true);
-    this.deleteFitwickButton.setVisible(true);
-    this.addFitwickButton.setVisible(false);
+  private onMoveFitwick(external: boolean) {
+    if (!external) {
+      this.confirmFitwickButton.setVisible(true);
+      this.deleteFitwickButton.setVisible(true);
+      this.addFitwickButton.setVisible(false);
+    }
   }
 }
 

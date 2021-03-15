@@ -1,5 +1,5 @@
 import IFitwick from "../../api/fitwick";
-import { TINT_GREEN } from "../colors";
+import { EXTERNAL_TINTS, TINT_GREEN } from "../colors";
 import { SCALE_RATIO } from "../constants";
 import { FITWICKS, FITWICKS_AUDIO } from "../fitwicks";
 
@@ -60,9 +60,13 @@ class Fitwick extends Phaser.GameObjects.Sprite implements IFitwick {
     //   .lineStyle(4, 0xff00ff);
   }
 
-  pickUp() {
+  pickUp(external: boolean) {
     this.state = "move";
-    this.setTintFill(TINT_GREEN);
+    if (!external) {
+      this.setTintFill(TINT_GREEN);
+    } else {
+      this.setTintFill(Phaser.Utils.Array.GetRandom(EXTERNAL_TINTS));
+    }
   }
 
   placeDown() {

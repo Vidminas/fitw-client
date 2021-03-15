@@ -46,8 +46,10 @@ class ModalScene extends RexScene {
       this,
       (newBackgroundTexture?: string) => {
         if (newBackgroundTexture) {
+          // false -> not external event
           this.game.events.emit(
             EVENT_WORLD_CHANGE_BACKGROUND,
+            false,
             newBackgroundTexture
           );
         }
@@ -77,13 +79,13 @@ class ModalScene extends RexScene {
   }
 
   private onOpenAddFitwickDialog() {
-    console.log("add clicked");
     const addDialog = new AddDialog(
       this,
       (text: string) => {
         if (Fitwick.exists(text)) {
           // let the main scene handle the addition of a new Fitwick
-          this.game.events.emit(EVENT_DO_FITWICK_NEW, text);
+          // false -> not external event
+          this.game.events.emit(EVENT_DO_FITWICK_NEW, false, text);
           addDialog.hide();
         } else {
           addDialog.showError(text);

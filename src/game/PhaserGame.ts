@@ -15,6 +15,9 @@ import {
   EVENT_WORLD_EXIT,
   EVENT_WORLD_ENTER,
   EVENT_DONE_FITWICK_DELETE,
+  EVENT_DO_FITWICK_NEW,
+  EVENT_DO_FITWICK_PLACE,
+  EVENT_DO_FITWICK_DELETE,
 } from "../api/events";
 import { GAME_HEIGHT, GAME_WIDTH } from "./constants";
 import MainScene from "./scenes/MainScene";
@@ -111,37 +114,74 @@ class PhaserGame {
 
     this.game.events.on(
       EVENT_WORLD_CHANGE_BACKGROUND,
-      (newBackgroundTexture: string) => {
-        this.socket?.emit(EVENT_WORLD_CHANGE_BACKGROUND, newBackgroundTexture);
+      (external: boolean, newBackgroundTexture: string) => {
+        if (!external) {
+          this.socket?.emit(
+            EVENT_WORLD_CHANGE_BACKGROUND,
+            newBackgroundTexture
+          );
+        }
       }
     );
     // EVENT_DO_FITWICK_NEW is just from UIScene to MainScene
-    this.game.events.on(EVENT_DONE_FITWICK_NEW, (fitwick: Fitwick) => {
-      this.socket?.emit(
-        EVENT_DONE_FITWICK_NEW,
-        removeExtraFitwickProps(fitwick)
-      );
-      console.log(fitwick);
-    });
-    this.game.events.on(EVENT_FITWICK_MOVE, (fitwick: Fitwick) => {
-      this.socket?.emit(EVENT_FITWICK_MOVE, removeExtraFitwickProps(fitwick));
-    });
-    // EVENT_DO_FITWICK_PLACE is just from UIScene to MainScene
-    this.game.events.on(EVENT_DONE_FITWICK_PLACE, (fitwick: Fitwick) => {
-      this.socket?.emit(EVENT_DONE_FITWICK_PLACE, fitwick);
-    });
-    this.game.events.on(EVENT_FITWICK_PICK_UP, (fitwick: Fitwick) => {
-      this.socket?.emit(
-        EVENT_FITWICK_PICK_UP,
-        removeExtraFitwickProps(fitwick)
-      );
-    });
-    this.game.events.on(EVENT_DONE_FITWICK_DELETE, (fitwick: Fitwick) => {
-      this.socket?.emit(
-        EVENT_DONE_FITWICK_DELETE,
-        removeExtraFitwickProps(fitwick)
-      );
-    });
+    this.game.events.on(
+      EVENT_DONE_FITWICK_NEW,
+      (external: boolean, fitwick: Fitwick) => {
+        if (!external) {
+          this.socket?.emit(
+            EVENT_DONE_FITWICK_NEW,
+            removeExtraFitwickProps(fitwick)
+          );
+        }
+      }
+    );
+    this.game.events.on(
+      EVENT_FITWICK_MOVE,
+      (external: boolean, fitwick: Fitwick) => {
+        if (!external) {
+          this.socket?.emit(
+            EVENT_FITWICK_MOVE,
+            removeExtraFitwickProps(fitwick)
+          );
+        }
+      }
+    );
+    // EVENT_DO_FITWICK_PLACE is just from GUIScene to MainScene
+    this.game.events.on(
+      EVENT_DONE_FITWICK_PLACE,
+      (external: boolean, fitwick: Fitwick) => {
+        // the DONE_PLACE event is not actually fired when the DO_PLACE event was external
+        // but since the parameters need to match, I'm keeping the check just in case
+        if (!external) {
+          this.socket?.emit(
+            EVENT_DONE_FITWICK_PLACE,
+            removeExtraFitwickProps(fitwick)
+          );
+        }
+      }
+    );
+    this.game.events.on(
+      EVENT_FITWICK_PICK_UP,
+      (external: boolean, fitwick: Fitwick) => {
+        if (!external) {
+          this.socket?.emit(
+            EVENT_FITWICK_PICK_UP,
+            removeExtraFitwickProps(fitwick)
+          );
+        }
+      }
+    );
+    this.game.events.on(
+      EVENT_DONE_FITWICK_DELETE,
+      (external: boolean, fitwick: Fitwick) => {
+        if (!external) {
+          this.socket?.emit(
+            EVENT_DONE_FITWICK_DELETE,
+            removeExtraFitwickProps(fitwick)
+          );
+        }
+      }
+    );
     // No need to inform server about EVENT_FITWICK_TAP
     // this is for local client only
     this.game.events.on(EVENT_WORLD_EXIT, () => {
@@ -155,7 +195,42 @@ class PhaserGame {
   }
 
   private registerServerEvents(showToastMessage: (message: string) => void) {
-    this.socket?.on("message", showToastMessage);
+    if (!this.socket) {
+      return;
+    }
+
+    this.socket.on("message", showToastMessage);
+    this.socket.on(
+      EVENT_WORLD_CHANGE_BACKGROUND,
+      (newBackgroundTexture: string) => {
+        // true -> external event
+        this.game?.events.emit(
+          EVENT_WORLD_CHANGE_BACKGROUND,
+          true,
+          newBackgroundTexture
+        );
+      }
+    );
+    this.socket.on(EVENT_DONE_FITWICK_NEW, (fitwick: IFitwick) => {
+      // true -> external event
+      this.game?.events.emit(EVENT_DO_FITWICK_NEW, true, fitwick);
+    });
+    this.socket.on(EVENT_FITWICK_MOVE, (fitwick: IFitwick) => {
+      // true -> external event
+      this.game?.events.emit(EVENT_FITWICK_MOVE, true, fitwick);
+    });
+    this.socket.on(EVENT_DONE_FITWICK_PLACE, (fitwick: IFitwick) => {
+      // true -> external event
+      this.game?.events.emit(EVENT_DO_FITWICK_PLACE, true, fitwick);
+    });
+    this.socket.on(EVENT_FITWICK_PICK_UP, (fitwick: IFitwick) => {
+      // true -> external event
+      this.game?.events.emit(EVENT_FITWICK_PICK_UP, true, fitwick);
+    });
+    this.socket.on(EVENT_DONE_FITWICK_DELETE, (fitwick: IFitwick) => {
+      // true -> external event
+      this.game?.events.emit(EVENT_DO_FITWICK_DELETE, true, fitwick);
+    });
   }
 
   public destroy() {

@@ -20,33 +20,34 @@ FITWICKS_AUDIO.set("bush", AUDIO_FITWICK_BUSH);
 export const FITWICKS = new Map<string, [string, string][]>();
 FITWICKS.set("bush", [
   [TEXTURE_KENNEY_ASSETS, "bush1.png"],
-  [TEXTURE_KENNEY_ASSETS, "bush2.png"],
-  [TEXTURE_KENNEY_ASSETS, "bush3.png"],
-  [TEXTURE_KENNEY_ASSETS, "bush4.png"],
+  // these look too much like grass
+  // [TEXTURE_KENNEY_ASSETS, "bush2.png"],
+  // [TEXTURE_KENNEY_ASSETS, "bush3.png"],
+  // [TEXTURE_KENNEY_ASSETS, "bush4.png"],
   [TEXTURE_KENNEY_ASSETS, "bushAlt1.png"],
-  [TEXTURE_KENNEY_ASSETS, "bushAlt2.png"],
-  [TEXTURE_KENNEY_ASSETS, "bushAlt3.png"],
-  [TEXTURE_KENNEY_ASSETS, "bushAlt4.png"],
+  // [TEXTURE_KENNEY_ASSETS, "bushAlt2.png"],
+  // [TEXTURE_KENNEY_ASSETS, "bushAlt3.png"],
+  // [TEXTURE_KENNEY_ASSETS, "bushAlt4.png"],
   [TEXTURE_KENNEY_ASSETS, "bushOrange1.png"],
-  [TEXTURE_KENNEY_ASSETS, "bushOrange2.png"],
-  [TEXTURE_KENNEY_ASSETS, "bushOrange3.png"],
-  [TEXTURE_KENNEY_ASSETS, "bushOrange4.png"],
+  // [TEXTURE_KENNEY_ASSETS, "bushOrange2.png"],
+  // [TEXTURE_KENNEY_ASSETS, "bushOrange3.png"],
+  // [TEXTURE_KENNEY_ASSETS, "bushOrange4.png"],
 ]);
 FITWICKS.set("green bush", [
   [TEXTURE_KENNEY_ASSETS, "bush1.png"],
-  [TEXTURE_KENNEY_ASSETS, "bush2.png"],
-  [TEXTURE_KENNEY_ASSETS, "bush3.png"],
-  [TEXTURE_KENNEY_ASSETS, "bush4.png"],
+  // [TEXTURE_KENNEY_ASSETS, "bush2.png"],
+  // [TEXTURE_KENNEY_ASSETS, "bush3.png"],
+  // [TEXTURE_KENNEY_ASSETS, "bush4.png"],
   [TEXTURE_KENNEY_ASSETS, "bushAlt1.png"],
-  [TEXTURE_KENNEY_ASSETS, "bushAlt2.png"],
-  [TEXTURE_KENNEY_ASSETS, "bushAlt3.png"],
-  [TEXTURE_KENNEY_ASSETS, "bushAlt4.png"],
+  // [TEXTURE_KENNEY_ASSETS, "bushAlt2.png"],
+  // [TEXTURE_KENNEY_ASSETS, "bushAlt3.png"],
+  // [TEXTURE_KENNEY_ASSETS, "bushAlt4.png"],
 ]);
 FITWICKS.set("orange bush", [
   [TEXTURE_KENNEY_ASSETS, "bushOrange1.png"],
-  [TEXTURE_KENNEY_ASSETS, "bushOrange2.png"],
-  [TEXTURE_KENNEY_ASSETS, "bushOrange3.png"],
-  [TEXTURE_KENNEY_ASSETS, "bushOrange4.png"],
+  // [TEXTURE_KENNEY_ASSETS, "bushOrange2.png"],
+  // [TEXTURE_KENNEY_ASSETS, "bushOrange3.png"],
+  // [TEXTURE_KENNEY_ASSETS, "bushOrange4.png"],
 ]);
 FITWICKS.set("house", [
   [TEXTURE_KENNEY_ASSETS, "house1.png"],
