@@ -65,7 +65,12 @@ class PhaserGame {
     this.exitWorldCallback = exitWorldCallback;
   }
 
-  public init(parent: string, user: IUser | null, world: IWorld) {
+  public init(
+    parent: string,
+    user: IUser | null,
+    world: IWorld,
+    showToastMessage: (message: string) => void
+  ) {
     this.socket = io(SERVER_ADDRESS);
     this.socket.on(EVENT_CONNECT, () => {
       this.socket?.emit(EVENT_WORLD_ENTER, user, world);
@@ -95,6 +100,7 @@ class PhaserGame {
       },
     });
     this.registerGameEvents();
+    this.registerServerEvents(showToastMessage);
     return this.game;
   }
 
@@ -148,6 +154,10 @@ class PhaserGame {
     });
   }
 
+  private registerServerEvents(showToastMessage: (message: string) => void) {
+    this.socket?.on("message", showToastMessage);
+  }
+
   public destroy() {
     if (this.game) {
       this.game.destroy(true);
@@ -157,14 +167,6 @@ class PhaserGame {
       this.socket.disconnect();
       this.socket = undefined;
     }
-  }
-
-  public socketEmit(message: string) {
-    this.socket?.emit("message", message);
-  }
-
-  public socketHandler(event: string, listener: Function) {
-    this.socket?.on(event, listener);
   }
 }
 

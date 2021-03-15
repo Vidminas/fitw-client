@@ -3,9 +3,10 @@ import {
   IonHeader,
   IonPage,
   IonTitle,
+  IonToast,
   IonToolbar,
 } from "@ionic/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import IUser from "../api/user";
 import IWorld from "../api/world";
@@ -22,9 +23,11 @@ const Game: React.FC<{}> = () => {
   const currentWorld = useSelector<AppState, IWorld | null>(
     (state) => state.user.currentWorld
   );
-  const [time, setTime] = React.useState("");
+  const [time, setTime] = useState("");
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!currentWorld) {
       return;
     }
@@ -45,7 +48,10 @@ const Game: React.FC<{}> = () => {
       // for now, the workaround is to refresh the page
       history.go(0);
     });
-    newGame.init("game-root", user, currentWorld);
+    newGame.init("game-root", user, currentWorld, (message: string) => {
+      setToastMessage(message);
+      setShowToast(true);
+    });
     return () => {
       // this cleanup gets called if the game is exited without using
       // the in-game "Exit World" button
@@ -54,7 +60,7 @@ const Game: React.FC<{}> = () => {
     };
   }, [dispatch, user, currentWorld, history]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const getTimeString = (date: Date) => {
       let h = date.getHours();
       const m = date.getMinutes();
@@ -92,6 +98,19 @@ const Game: React.FC<{}> = () => {
       </IonHeader>
       <IonContent fullscreen>
         <div id="game-root"></div>
+        <IonToast
+          isOpen={showToast}
+          onDidDismiss={() => setShowToast(false)}
+          message={toastMessage}
+          duration={1500}
+          buttons={[
+            {
+              text: "Close",
+              role: "cancel",
+              side: "end",
+            },
+          ]}
+        />
       </IonContent>
     </IonPage>
   );
