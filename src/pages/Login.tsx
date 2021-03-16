@@ -86,17 +86,19 @@ const Login: React.FC<RouteComponentProps> = ({ history, location }) => {
               <IonButton type="submit" disabled={status === "loading"}>
                 Submit
               </IonButton>
-              <IonLoading
-                isOpen={status === "loading"}
-                message={"Please wait..."}
-              />
+              {status === "loading" && (
+                <IonLoading
+                  isOpen={status === "loading"}
+                  message={"Please wait..."}
+                />
+              )}
             </form>
             {status === "error" && (
               <IonItem>
                 <IonLabel position="stacked">
                   There was an error, you can try submitting again
                 </IonLabel>
-                <IonText color="danger">{error}</IonText>
+                <IonText color="danger">{error?.toString()}</IonText>
               </IonItem>
             )}
           </>
