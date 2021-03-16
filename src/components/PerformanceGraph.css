@@ -3,4 +3,8 @@
     width: 100%;
     overflow-x: auto;
     overflow-y: hidden;
+    /* This works around a Firefox bug that makes the chart show */
+    /* on both sides of the page */
+    /* https://bugzilla.mozilla.org/show_bug.cgi?id=1201471 */
+    transform: rotateY(0deg);
 }

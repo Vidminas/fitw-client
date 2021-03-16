@@ -1,5 +1,9 @@
+.clock-toolbar {
+  --min-height: calc(4px + 8vh);
+}
+
 #clock {
   color: #3dc2ff;
-  font-size: 20px;
+  font-size: calc(4px + 3vh);
   letter-spacing: 3px;
 }

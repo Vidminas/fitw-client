@@ -1,13 +1,15 @@
 .stats-list {
   background: none;
+  height: 100%;
+  overflow-y: auto;
 }
 
 .stats-list ion-list-header {
-  font-size: medium;
+  font-size: calc(4px + 1vw);
 }
 
 .stats-list ion-item {
-  font-size: 14px;
+  font-size: calc(1px + 1vw);
   --background: none;
-  --min-height: 28px;
+  --min-height: 0.5vh;
 }

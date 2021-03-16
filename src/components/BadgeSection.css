@@ -10,8 +10,8 @@
 
 .badge {
   order: 1;
-  width: 76px;
-  height: 76px;
+  width: calc(4px + 5vw);
+  height: calc(4px + 5vw);
   background-color: grey;
   border-radius: 10px;
   opacity: 0.4;
@@ -30,7 +30,7 @@
 .badge-details {
   order: 2;
   display: none;
-  font-size: 16px;
+  font-size: calc(4px + 1vw);
 }
 
 .badge:hover + .badge-details {

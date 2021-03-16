@@ -111,6 +111,7 @@ const Book: React.FC<{}> = () => {
     <>
       <p>Fill In The World</p>
       <img src={Banner} alt="Game banner" />
+      <br />
       <IonIcon slot="end" icon={arrowForwardOutline} />
     </>,
     <>

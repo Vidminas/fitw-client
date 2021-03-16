@@ -19,53 +19,53 @@ const StatsSection: React.FC<{}> = () => {
       {displayStats && (
         <>
           <IonItem>
-            <IonLabel>
+            <IonLabel className="ion-text-wrap">
               Total worlds created: {userState.user!.stats.createdWorlds}
             </IonLabel>
           </IonItem>
           <IonItem>
-            <IonLabel>
+            <IonLabel className="ion-text-wrap">
               Total objects added: {userState.user!.stats.createdTotalObjects}
             </IonLabel>
           </IonItem>
           <IonItem>
-            <IonLabel>
+            <IonLabel className="ion-text-wrap">
               Total unique objects added:{" "}
               {userState.user!.stats.createdUniqueObjects}
             </IonLabel>
           </IonItem>
           <IonItem>
-            <IonLabel>
+            <IonLabel className="ion-text-wrap">
               Unique winter-themed objects added:{" "}
               {userState.user!.stats.createdUniqueWinterObjects}
             </IonLabel>
           </IonItem>
           <IonItem>
-            <IonLabel>
+            <IonLabel className="ion-text-wrap">
               Unique tool-themed objects added:{" "}
               {userState.user!.stats.createdUniqueToolObjects}
             </IonLabel>
           </IonItem>
           <IonItem>
-            <IonLabel>
+            <IonLabel className="ion-text-wrap">
               Unique cooking-themed objects added:{" "}
               {userState.user!.stats.createdUniqueCookingObjects}
             </IonLabel>
           </IonItem>
           <IonItem>
-            <IonLabel>
+            <IonLabel className="ion-text-wrap">
               Unique electronics-themed objects added:{" "}
               {userState.user!.stats.createdUniqueElectronicsObjects}
             </IonLabel>
           </IonItem>
           <IonItem>
-            <IonLabel>
+            <IonLabel className="ion-text-wrap">
               Unique desert-themed objects added:{" "}
               {userState.user!.stats.createdUniqueDesertObjects}
             </IonLabel>
           </IonItem>
           <IonItem>
-            <IonLabel>
+            <IonLabel className="ion-text-wrap">
               Unique tree objects added:{" "}
               {userState.user!.stats.createdUniqueTreeObjects}
             </IonLabel>

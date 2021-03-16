@@ -98,7 +98,7 @@ const Game: React.FC<{}> = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
+        <IonToolbar className="clock-toolbar">
           <IonTitle>
             <div id="clock">Time now: {time}</div>
           </IonTitle>

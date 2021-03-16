@@ -181,7 +181,7 @@ class MainScene extends RexScene {
     // the background scrolls its tile position instead
     this.background.setScrollFactor(0);
 
-    if (world) {
+    if (world?.fitwicks) {
       for (const fitwickData of world.fitwicks) {
         const fitwick = new Fitwick(
           this,

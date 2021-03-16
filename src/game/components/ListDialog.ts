@@ -128,7 +128,6 @@ class ListDialog extends ModalDialog {
         deltaY: number,
         _deltaZ: number
       ) => {
-        console.log("scroll");
         let newScrollValue = scrollablePanel.childOY - deltaY;
         if (newScrollValue < scrollablePanel.bottomChildOY) {
           newScrollValue = scrollablePanel.bottomChildOY;

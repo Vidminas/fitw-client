@@ -57,13 +57,7 @@ export const initialState: AppState = {
   },
   worlds: {
     currentStatus: "initial",
-    worlds: [
-      {
-        name: "Default World",
-        background: "",
-        fitwicks: [],
-      },
-    ],
+    worlds: [],
   },
   groups: {
     groups: [],

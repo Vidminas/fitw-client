@@ -52,7 +52,9 @@ const Login: React.FC<RouteComponentProps> = ({ history, location }) => {
   }, [status, history]);
 
   // Request an auth email if an email is submitted
-  const handleSubmit = () => {
+  const handleSubmit: React.FormEventHandler = (event) => {
+    // do not change URL with form fields in GET request format
+    event.preventDefault();
     dispatch({ type: Actions.USER_AUTH_EMAIL, payload: email });
   };
 
@@ -94,7 +96,7 @@ const Login: React.FC<RouteComponentProps> = ({ history, location }) => {
                 <IonLabel position="stacked">
                   There was an error, you can try submitting again
                 </IonLabel>
-                <IonText color="danger">{error?.toString()}</IonText>
+                <IonText color="danger">{error}</IonText>
               </IonItem>
             )}
           </>
