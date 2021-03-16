@@ -120,7 +120,15 @@ class PreloadScene extends Phaser.Scene {
   }
 
   create() {
-    if (!this.worldData) {
+    if (process.env.REACT_APP_DEBUG) {
+      this.scene.launch("MainScene", undefined);
+      this.scene.launch("GUIScene");
+      this.scene.launch("ModalScene");
+    } else if (this.worldData) {
+      this.scene.launch("MainScene", this.worldData);
+      this.scene.launch("GUIScene");
+      this.scene.launch("ModalScene");
+    } else {
       this.game.events.off(EVENT_WORLD_DATA);
       this.game.events.once(EVENT_WORLD_DATA, (world: IWorld) => {
         this.worldData = world;
@@ -137,11 +145,11 @@ class PreloadScene extends Phaser.Scene {
         this.scene.launch("MainScene", this.worldData);
         this.scene.launch("GUIScene");
         this.scene.launch("ModalScene");
+
+        this.progressBar.destroy();
+        this.progressBox.destroy();
+        this.percentText.destroy();
       });
-    } else {
-      this.scene.launch("MainScene", this.worldData);
-      this.scene.launch("GUIScene");
-      this.scene.launch("ModalScene");
     }
   }
 }

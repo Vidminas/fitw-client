@@ -166,7 +166,7 @@ class MainScene extends RexScene {
     cam.setScroll(scrollX, scrollY);
   }
 
-  create(world: IWorld) {
+  create(world?: IWorld) {
     const cam = this.cameras.main;
 
     this.background = this.add
@@ -175,23 +175,25 @@ class MainScene extends RexScene {
         0,
         GAME_WIDTH,
         GAME_HEIGHT,
-        world.background || TEXTURE_BACKGROUND_EMPTY
+        world?.background || TEXTURE_BACKGROUND_EMPTY
       )
       .setOrigin(0);
     // the background scrolls its tile position instead
     this.background.setScrollFactor(0);
 
-    for (const fitwickData of world.fitwicks) {
-      const fitwick = new Fitwick(
-        this,
-        fitwickData.name,
-        fitwickData.x,
-        fitwickData.y,
-        fitwickData.worldId,
-        fitwickData.atlasTexture,
-        fitwickData.atlasFrame
-      );
-      this.registerFitwickEvents(fitwick);
+    if (world) {
+      for (const fitwickData of world.fitwicks) {
+        const fitwick = new Fitwick(
+          this,
+          fitwickData.name,
+          fitwickData.x,
+          fitwickData.y,
+          fitwickData.worldId,
+          fitwickData.atlasTexture,
+          fitwickData.atlasFrame
+        );
+        this.registerFitwickEvents(fitwick);
+      }
     }
 
     this.game.events.on(
