@@ -1,11 +1,14 @@
-import IWorld from "./world";
-
 interface IUser {
   id?: any;
   emailHash: string;
   username: string;
   groups: any[];
-  worlds: IWorld[];
+  worlds: any[];
+  createdFitwicks?: Map<string, number>;
+  datesPoints: {
+    date: Date;
+    points: number;
+  }[];
   stats: {
     createdWorlds: number;
     createdTotalObjects: number;

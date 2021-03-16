@@ -11,7 +11,7 @@
   --cover-font: "Merienda", cursive;
   --cover-font-size: 24px;
   --page-font: "Cormorant Garamond", serif;
-  --page-font-size: 16px;
+  --page-font-size: 24px;
 
   /* sizing */
   --book-height: 25rem;
@@ -120,5 +120,4 @@
 
 .page .world-name {
   text-align: center;
-  font-size: var(--cover-font-size);
 }

@@ -11,6 +11,7 @@ import { IonLoading, IonToast } from "@ionic/react";
 import IWorld from "../api/world";
 import BadgeSection from "./BadgeSection";
 import StatsSection from "./StatsSection";
+import PerformanceGraph from "./PerformanceGraph";
 
 type BookClass = "book-open" | "book-closed-front" | "book-closed-back";
 
@@ -118,6 +119,28 @@ const Book: React.FC<{}> = () => {
     </>
   );
 
+  // add new world page
+  addPage(
+    <>
+      <p>Points earned:</p>
+      <br />
+      <PerformanceGraph />
+    </>,
+    <>
+      <p className="world-name">New World</p>
+      <WorldEllipse
+        index={-1}
+        background={"assets/backgrounds/new world.svg"}
+        onClickHandler={(event) => {
+          setSelectedWorld(null);
+          setShowWorldDialog(true);
+          // prevent the book page from flipping on click
+          event.stopPropagation();
+        }}
+      />
+    </>
+  );
+
   // add existing worlds
   const worlds = worldsState.worlds;
   for (let i = 0; i < worlds.length; i++) {
@@ -144,26 +167,8 @@ const Book: React.FC<{}> = () => {
     addPage(world1, world2);
   }
 
-  // add new world page
-  addPage(
-    <>
-      <p className="world-name">New World</p>
-      <WorldEllipse
-        index={-1}
-        background={"assets/backgrounds/new world.svg"}
-        onClickHandler={(event) => {
-          setSelectedWorld(null);
-          setShowWorldDialog(true);
-          // prevent the book page from flipping on click
-          event.stopPropagation();
-        }}
-      />
-    </>,
-    <StatsSection />
-  );
-
   // add back cover
-  addPage();
+  addPage(<StatsSection />);
 
   return (
     <>

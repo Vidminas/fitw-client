@@ -7,7 +7,6 @@
 }
 
 .stats-list ion-item {
-  --color: black;
   --background: none;
   --min-height: 28px;
 }
