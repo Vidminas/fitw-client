@@ -51,8 +51,9 @@ const Game: React.FC<{}> = () => {
     });
     newGame.init(
       "game-root",
-      user,
-      currentWorld,
+      user?.id,
+      currentWorld.id,
+      currentWorld.name,
       (color: string, message: string) => {
         setToastColor(color);
         setToastMessage(message);

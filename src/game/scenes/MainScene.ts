@@ -34,12 +34,9 @@ class MainScene extends RexScene {
   private background!: Phaser.GameObjects.TileSprite;
   private activeFitwick?: Fitwick;
   private activeSpeechBubble?: SpeechBubble;
-  private world: IWorld;
 
-  constructor(world: IWorld) {
+  constructor() {
     super({ key: "MainScene", active: false });
-    // create scene using world fitwicks
-    this.world = world;
   }
 
   private registerFitwickEvents(fitwick: Fitwick) {
@@ -169,7 +166,7 @@ class MainScene extends RexScene {
     cam.setScroll(scrollX, scrollY);
   }
 
-  create() {
+  create(world: IWorld) {
     const cam = this.cameras.main;
 
     this.background = this.add
@@ -178,13 +175,13 @@ class MainScene extends RexScene {
         0,
         GAME_WIDTH,
         GAME_HEIGHT,
-        this.world.background || TEXTURE_BACKGROUND_EMPTY
+        world.background || TEXTURE_BACKGROUND_EMPTY
       )
       .setOrigin(0);
     // the background scrolls its tile position instead
     this.background.setScrollFactor(0);
 
-    for (const fitwickData of this.world.fitwicks) {
+    for (const fitwickData of world.fitwicks) {
       const fitwick = new Fitwick(
         this,
         fitwickData.name,

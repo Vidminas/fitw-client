@@ -19,6 +19,7 @@ import {
   EVENT_DO_FITWICK_PLACE,
   EVENT_DO_FITWICK_DELETE,
   EVENT_MESSAGE,
+  EVENT_WORLD_DATA,
 } from "../api/events";
 import { GAME_HEIGHT, GAME_WIDTH } from "./constants";
 import MainScene from "./scenes/MainScene";
@@ -71,19 +72,15 @@ class PhaserGame {
 
   public init(
     parent: string,
-    user: IUser | null,
-    world: IWorld,
+    userId: IUser["id"],
+    worldId: IWorld["id"] | null,
+    worldName: string,
     showToastMessage: (color: string, message: string) => void
   ) {
     this.socket = io(SERVER_ADDRESS);
     this.socket.on(EVENT_CONNECT, () => {
-      this.socket?.emit(EVENT_WORLD_ENTER, user, world);
+      this.socket?.emit(EVENT_WORLD_ENTER, userId, worldId, worldName);
     });
-
-    const preloadScene = new PreloadScene();
-    const modalScene = new ModalScene();
-    const guiScene = new GUIScene();
-    const mainScene = new MainScene(world);
 
     this.game = new Phaser.Game({
       parent,
@@ -91,7 +88,7 @@ class PhaserGame {
       width: GAME_WIDTH,
       height: GAME_HEIGHT,
       autoFocus: true,
-      scene: [preloadScene, mainScene, guiScene, modalScene],
+      scene: [PreloadScene, MainScene, GUIScene, ModalScene],
       dom: {
         createContainer: true,
       },
@@ -116,6 +113,7 @@ class PhaserGame {
     }
 
     this.game.events.on(EVENT_MESSAGE, showToastMessage);
+
     this.game.events.on(
       EVENT_WORLD_CHANGE_BACKGROUND,
       (external: boolean, newBackgroundTexture: string) => {
@@ -206,6 +204,11 @@ class PhaserGame {
     }
 
     this.socket.on(EVENT_MESSAGE, showToastMessage);
+
+    this.socket.on(EVENT_WORLD_DATA, (world: IWorld) => {
+      this.game?.events.emit(EVENT_WORLD_DATA, world);
+    });
+
     this.socket.on(
       EVENT_WORLD_CHANGE_BACKGROUND,
       (newBackgroundTexture: string) => {

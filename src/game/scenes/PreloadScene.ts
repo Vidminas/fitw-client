@@ -1,3 +1,5 @@
+import { EVENT_WORLD_DATA } from "../../api/events";
+import IWorld from "../../api/world";
 import {
   BACKGROUND_TEXTURES,
   GAME_HEIGHT,
@@ -13,48 +15,65 @@ import {
 } from "../constants";
 import { FITWICKS_AUDIO } from "../fitwicks";
 
+const progressBoxWidth = GAME_WIDTH / 2;
+const progressBoxHeight = 50;
+const progressBoxPadding = 20;
+
 class PreloadScene extends Phaser.Scene {
+  private progressBar!: Phaser.GameObjects.Graphics;
+  private progressBox!: Phaser.GameObjects.Graphics;
+  private percentText!: Phaser.GameObjects.Text;
+  private worldData?: IWorld;
+
   constructor() {
     super({ key: "PreloadScene", active: true });
   }
 
   preload() {
-    const progressBoxWidth = GAME_WIDTH / 2;
-    const progressBoxHeight = 50;
-    const progressBoxPadding = 20;
+    this.game.events.once(EVENT_WORLD_DATA, (world: IWorld) => {
+      this.worldData = world;
+    });
 
-    const progressBar = this.add.graphics();
-    const progressBox = this.add.graphics();
-    progressBox.fillStyle(0x222222, 0.8);
-    progressBox.fillRect(
+    this.progressBar = this.add.graphics();
+    this.progressBox = this.add.graphics();
+    this.progressBox.fillStyle(0x222222, 0.8);
+    this.progressBox.fillRect(
       (GAME_WIDTH - progressBoxWidth) / 2,
       (GAME_HEIGHT - progressBoxHeight) / 2,
       progressBoxWidth,
       progressBoxHeight
     );
 
-    const percentText = this.add.text(GAME_WIDTH / 2, GAME_HEIGHT / 2, "0%", {
+    this.percentText = this.add.text(GAME_WIDTH / 2, GAME_HEIGHT / 2, "0%", {
       font: "18px monospace",
       color: "#ffffff",
     });
-    percentText.setOrigin(0.5, 0.5);
+    this.percentText.setOrigin(0.5, 0.5);
 
     this.load.on("progress", (value: number) => {
-      progressBar.clear();
-      progressBar.fillStyle(0xffffff, 1);
-      progressBar.fillRect(
+      this.progressBar.clear();
+      this.progressBar.fillStyle(0xffffff, 1);
+      this.progressBar.fillRect(
         (GAME_WIDTH - progressBoxWidth + progressBoxPadding) / 2,
         (GAME_HEIGHT - progressBoxHeight + progressBoxPadding) / 2,
-        (progressBoxWidth - progressBoxPadding) * value,
+        (progressBoxWidth * (0.8 + (this.worldData ? 0.2 : 0)) -
+          progressBoxPadding) *
+          value,
         progressBoxHeight - progressBoxPadding
       );
-      percentText.setText(Math.round(value * 100) + "%");
+      // 0-80% for loading local assets
+      // 80-100% for getting world data from server
+      this.percentText.setText(
+        Math.round(value * (80 + (this.worldData ? 20 : 0))) + "%"
+      );
     });
 
-    this.load.on("complete", function () {
-      progressBar.destroy();
-      progressBox.destroy();
-      percentText.destroy();
+    this.load.on("complete", () => {
+      if (this.worldData) {
+        this.progressBar.destroy();
+        this.progressBox.destroy();
+        this.percentText.destroy();
+      }
     });
 
     MUSIC_TRACKS.forEach((track) => this.load.audio(track, `music/${track}`));
@@ -101,9 +120,29 @@ class PreloadScene extends Phaser.Scene {
   }
 
   create() {
-    this.scene.launch("MainScene");
-    this.scene.launch("GUIScene");
-    this.scene.launch("ModalScene");
+    if (!this.worldData) {
+      this.game.events.off(EVENT_WORLD_DATA);
+      this.game.events.once(EVENT_WORLD_DATA, (world: IWorld) => {
+        this.worldData = world;
+        this.progressBar.clear();
+        this.progressBar.fillStyle(0xffffff, 1);
+        this.progressBar.fillRect(
+          (GAME_WIDTH - progressBoxWidth + progressBoxPadding) / 2,
+          (GAME_HEIGHT - progressBoxHeight + progressBoxPadding) / 2,
+          progressBoxWidth - progressBoxPadding,
+          progressBoxHeight - progressBoxPadding
+        );
+        this.percentText.setText("100%");
+
+        this.scene.launch("MainScene", this.worldData);
+        this.scene.launch("GUIScene");
+        this.scene.launch("ModalScene");
+      });
+    } else {
+      this.scene.launch("MainScene", this.worldData);
+      this.scene.launch("GUIScene");
+      this.scene.launch("ModalScene");
+    }
   }
 }
 
