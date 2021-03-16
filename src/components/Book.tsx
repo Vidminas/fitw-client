@@ -7,11 +7,12 @@ import { WORLD_FETCH_ALL } from "../redux/actionTypes";
 import { AppState, UserState, WorldsState } from "../redux/store";
 import WorldEllipse from "./WorldEllipse";
 import WorldDialog from "./WorldDialog";
-import { IonLoading, IonToast } from "@ionic/react";
+import { IonIcon, IonLoading, IonToast } from "@ionic/react";
 import IWorld from "../api/world";
 import BadgeSection from "./BadgeSection";
 import StatsSection from "./StatsSection";
 import PerformanceGraph from "./PerformanceGraph";
+import { arrowForwardOutline } from "ionicons/icons";
 
 type BookClass = "book-open" | "book-closed-front" | "book-closed-back";
 
@@ -110,7 +111,7 @@ const Book: React.FC<{}> = () => {
     <>
       <p>Fill In The World</p>
       <img src={Banner} alt="Game banner" />
-      <p>-&gt;</p>
+      <IonIcon slot="end" icon={arrowForwardOutline} />
     </>,
     <>
       <p>{userState.user?.username || "Unknown user"}</p>
