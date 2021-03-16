@@ -7,6 +7,7 @@ import "./PerformanceGraph.css";
 
 const PerformanceGraph: React.FC<{}> = () => {
   const chartRef = useRef<Line>(null);
+  const [chartTitle, setChartTitle] = useState("");
   const [chartData, setChartData] = useState<{ t: Date; y: number }[]>(
     [
       1,
@@ -39,12 +40,17 @@ const PerformanceGraph: React.FC<{}> = () => {
 
   useEffect(() => {
     if (userState.user?.datesPoints) {
+      let totalPoints = 0;
       setChartData(
-        userState.user.datesPoints.map((dp) => ({
-          t: dp.date,
-          y: dp.points,
-        }))
+        userState.user.datesPoints.map((dp) => {
+          totalPoints += dp.points;
+          return {
+            t: dp.date,
+            y: dp.points,
+          };
+        })
       );
+      setChartTitle(`Total points: ${totalPoints}`);
     }
   }, [userState.user]);
 
@@ -80,6 +86,11 @@ const PerformanceGraph: React.FC<{}> = () => {
           maintainAspectRatio: true,
           legend: {
             display: false,
+          },
+          title: {
+            display: !!chartTitle,
+            fontSize: 16,
+            text: chartTitle,
           },
           scales: {
             xAxes: [
