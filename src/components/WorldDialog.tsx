@@ -88,7 +88,7 @@ const WorldDialog: React.FC<WorldDialogProps> = ({
       onDidDismiss={() => onDismiss()}
     >
       <IonCard>
-        <form>
+        <form onSubmit={(e) => e.preventDefault()}>
           <IonCardHeader>
             <IonItem className="world-name">
               <IonLabel position="floating" color="primary">
@@ -135,7 +135,7 @@ const WorldDialog: React.FC<WorldDialogProps> = ({
                       {/* using onClick as a workaround because type="submit" for some reason
                   is not enough to trigger the form onSubmit handler */}
                       <IonFabButton
-                        type="submit"
+                        type="button"
                         onClick={handleSubmit(onSubmit)}
                       >
                         <IonIcon icon={playOutline}></IonIcon>
