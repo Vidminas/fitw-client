@@ -77,10 +77,12 @@ class PhaserGame {
     worldName: string,
     showToastMessage: (color: string, message: string) => void
   ) {
-    this.socket = io(SERVER_ADDRESS);
-    this.socket.on(EVENT_CONNECT, () => {
-      this.socket?.emit(EVENT_WORLD_ENTER, userId, worldId, worldName);
-    });
+    if (userId) {
+      this.socket = io(SERVER_ADDRESS);
+      this.socket.on(EVENT_CONNECT, () => {
+        this.socket?.emit(EVENT_WORLD_ENTER, userId, worldId, worldName);
+      });
+    }
 
     this.game = new Phaser.Game({
       parent,
@@ -95,6 +97,7 @@ class PhaserGame {
       scale: {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH,
+        expandParent: true,
       },
       loader: {
         baseURL: "assets",

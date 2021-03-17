@@ -19,7 +19,7 @@ const PrivateRoute: React.FC<RouteProps> = ({
     <Route
       {...rest}
       render={(props) =>
-        isAuthenticated ? (
+        process.env.REACT_APP_DEBUG || isAuthenticated ? (
           <Component {...props} />
         ) : (
           <Redirect
