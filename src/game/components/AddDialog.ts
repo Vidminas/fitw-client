@@ -14,7 +14,6 @@ import {
   FRAME_BUTTON_CONFIRM_CLICK,
   FRAME_BUTTON_CONFIRM_HOVER,
   FRAME_BUTTON_CONFIRM_REST,
-  GAME_HEIGHT,
   TEXTURE_BUTTONS,
   UI_BUTTON_SIZE,
   UI_FONT_SIZE,
@@ -28,8 +27,11 @@ const FITWICK_NAMES = Array.from(FITWICKS.keys());
 
 class AddDialog extends ModalDialog {
   constructor(scene: RexScene, onConfirm: Function, onCancel: Function) {
-    const width = 4 * UI_BUTTON_SIZE;
-    const height = Math.min(2.5 * UI_BUTTON_SIZE, GAME_HEIGHT);
+    const width = Math.min(4 * UI_BUTTON_SIZE, scene.scale.width);
+    const height = Math.max(
+      0.25 * scene.scale.height,
+      Math.min(2.5 * UI_BUTTON_SIZE, scene.scale.height)
+    );
     const background = scene.rexUI.add.roundRectangle(
       0,
       0,
@@ -43,7 +45,7 @@ class AddDialog extends ModalDialog {
         0,
         0,
         width,
-        40,
+        UI_BUTTON_SIZE,
         20,
         COLOR_DIALOG_FOREGROUND
       ),
@@ -59,7 +61,7 @@ class AddDialog extends ModalDialog {
     });
 
     const inputBoxPadding = 20;
-    const inputBoxHeight = 60;
+    const inputBoxHeight = UI_BUTTON_SIZE * 0.75;
 
     const inputBox = new InputText(
       scene,
@@ -120,8 +122,8 @@ class AddDialog extends ModalDialog {
         actionsAlign: "left",
         space: {
           top: 10,
-          title: 20,
-          content: 20,
+          title: UI_BUTTON_SIZE / 2,
+          content: UI_BUTTON_SIZE / 2,
           action: 5,
           left: 10,
           right: 10,

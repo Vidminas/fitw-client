@@ -33,8 +33,6 @@ import {
   FRAME_BUTTON_PLAY_CLICK,
   FRAME_BUTTON_PLAY_HOVER,
   FRAME_BUTTON_PLAY_REST,
-  GAME_HEIGHT,
-  GAME_WIDTH,
   TEXTURE_BUTTONS,
   UI_BUTTON_SIZE,
   UI_FONT_SIZE,
@@ -113,33 +111,29 @@ const createSettingsGrid = (scene: RexScene, currentVolume: number) => {
     text: scene.add.text(0, 0, "Play/Pause Music", { fontSize: UI_FONT_SIZE }),
   });
 
-  const musicVolume = scene.rexUI.add.sizer();
-  musicVolume.add(
-    scene.add.text(0, 0, "Change Music/Sounds Volume", {
-      fontSize: UI_FONT_SIZE,
+  const musicVolumeLabel = scene.add.text(0, 0, "Change Music/Sounds Volume", {
+    fontSize: UI_FONT_SIZE,
+  });
+
+  const musicVolumeSlider = scene.rexUI.add
+    .slider({
+      height: UI_BUTTON_SIZE / 2,
+      width: Math.min(scene.scale.width - UI_BUTTON_SIZE, 3 * UI_BUTTON_SIZE),
+      track: scene.rexUI.add.roundRectangle(
+        0,
+        0,
+        0,
+        0,
+        6,
+        COLOR_DIALOG_FOREGROUND
+      ),
+      thumb: scene.rexUI.add.roundRectangle(0, 0, 0, 0, 25, COLOR_YELLOW),
+      value: currentVolume,
+      input: "drag",
     })
-  );
-  musicVolume.add(
-    scene.rexUI.add
-      .slider({
-        height: UI_BUTTON_SIZE / 2,
-        width: UI_BUTTON_SIZE * 3,
-        track: scene.rexUI.add.roundRectangle(
-          0,
-          0,
-          0,
-          0,
-          6,
-          COLOR_DIALOG_FOREGROUND
-        ),
-        thumb: scene.rexUI.add.roundRectangle(0, 0, 0, 0, 25, COLOR_YELLOW),
-        value: currentVolume,
-        input: "drag",
-      })
-      .on("valuechange", (newValue: number) => {
-        scene.game.events.emit(EVENT_VOLUME_CHANGE, newValue);
-      })
-  );
+    .on("valuechange", (newValue: number) => {
+      scene.game.events.emit(EVENT_VOLUME_CHANGE, newValue);
+    });
 
   const exitWorld = scene.rexUI.add.label({
     icon: new Button(
@@ -157,7 +151,8 @@ const createSettingsGrid = (scene: RexScene, currentVolume: number) => {
 
   grid.add(musicTrack);
   grid.add(musicPause);
-  grid.add(musicVolume);
+  grid.add(musicVolumeLabel);
+  grid.add(musicVolumeSlider);
   grid.add(exitWorld);
   return grid;
 };
@@ -202,6 +197,14 @@ class SettingsDialog extends ModalDialog {
     onConfirm: Function,
     onCancel: Function
   ) {
+    const width = Math.max(
+      scene.scale.width - 4 * UI_BUTTON_SIZE,
+      Math.min(4 * UI_BUTTON_SIZE, scene.scale.width)
+    );
+    const height = Math.max(
+      scene.scale.height * 0.7,
+      Math.min(4 * UI_BUTTON_SIZE, scene.scale.height)
+    );
     const scrollablePanel = new ScrollablePanel(scene, {
       x: 0,
       y: 0,
@@ -209,11 +212,8 @@ class SettingsDialog extends ModalDialog {
         centerX: "center",
         centerY: "center",
       },
-      width: GAME_WIDTH - 4 * UI_BUTTON_SIZE,
-      height: Math.max(
-        GAME_HEIGHT * 0.7,
-        Math.min(4 * UI_BUTTON_SIZE, GAME_HEIGHT)
-      ),
+      width,
+      height,
       scrollMode: "vertical",
       background: scene.rexUI.add.roundRectangle(
         0,

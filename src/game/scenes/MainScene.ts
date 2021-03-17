@@ -201,6 +201,15 @@ class MainScene extends RexScene {
       }
     }
 
+    // this.scale.on(
+    //   Phaser.Scale.Events.ORIENTATION_CHANGE,
+    //   (orientation: Phaser.Scale.Orientation) => {
+    //     if (orientation === Phaser.Scale.Orientation.PORTRAIT) {
+    //       // this.scale.setGameSize(GAME_WIDTH, GAME_HEIGHT)
+    //     }
+    //   }
+    // );
+
     this.game.events.on(
       EVENT_WORLD_CHANGE_BACKGROUND,
       (external: boolean, newBackgroundTexture: string) => {

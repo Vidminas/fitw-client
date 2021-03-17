@@ -3,7 +3,6 @@ import {
   ScrollablePanel,
 } from "phaser3-rex-plugins/templates/ui/ui-components.js";
 import { COLOR_MODAL_BACKGROUND, OPACITY_MODAL_BACKGROUND } from "../colors";
-import { GAME_HEIGHT, GAME_WIDTH } from "../constants";
 
 class ModalDialog extends Phaser.GameObjects.Group {
   private dialog;
@@ -12,8 +11,8 @@ class ModalDialog extends Phaser.GameObjects.Group {
     const background = scene.add.rectangle(
       0,
       0,
-      GAME_WIDTH,
-      GAME_HEIGHT,
+      scene.scale.width,
+      scene.scale.height,
       COLOR_MODAL_BACKGROUND,
       OPACITY_MODAL_BACKGROUND
     );

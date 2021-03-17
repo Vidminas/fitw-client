@@ -1,18 +1,13 @@
 import { ScrollablePanel } from "phaser3-rex-plugins/templates/ui/ui-components.js";
 import { COLOR_DIALOG_BACKGROUND, COLOR_DIALOG_FOREGROUND } from "../colors";
-import {
-  GAME_HEIGHT,
-  GAME_WIDTH,
-  UI_BUTTON_SIZE,
-  UI_FONT_SIZE,
-} from "../constants";
+import { UI_BUTTON_SIZE, UI_FONT_SIZE } from "../constants";
 import { FITWICKS } from "../fitwicks";
 import RexScene from "../scenes/RexScene";
 import ModalDialog from "./ModalDialog";
 
 const createFitwickList = (scene: RexScene, width: number, height: number) => {
-  const columns = Math.floor(width / (UI_BUTTON_SIZE * 3));
-  const rows = Math.ceil(FITWICKS.size / columns);
+  const columns = Math.floor(width / (UI_BUTTON_SIZE * 3)) + 1;
+  const rows = Math.ceil(FITWICKS.size / columns) + 1;
 
   const sizer = scene.rexUI.add.gridSizer({
     width,
@@ -80,12 +75,14 @@ class ListDialog extends ModalDialog {
     // to get rid of the unnecessary space
     // and finally adds 20 for padding
     const width =
-      Math.floor((GAME_WIDTH - UI_BUTTON_SIZE * 4) / (UI_BUTTON_SIZE * 3)) *
+      Math.floor(
+        (scene.scale.width - UI_BUTTON_SIZE * 4) / (UI_BUTTON_SIZE * 3)
+      ) *
         (UI_BUTTON_SIZE * 3) +
       20;
     const height = Math.max(
-      GAME_HEIGHT * 0.75,
-      Math.min(4 * UI_BUTTON_SIZE, GAME_HEIGHT)
+      scene.scale.height * 0.75,
+      Math.min(4 * UI_BUTTON_SIZE, scene.scale.height)
     );
     const scrollablePanel = new ScrollablePanel(scene, {
       x: 0,
@@ -140,7 +137,6 @@ class ListDialog extends ModalDialog {
         scrollablePanel.setChildOY(newScrollValue);
       }
     );
-    console.log(scrollablePanel.input);
     scene.add.existing(scrollablePanel);
 
     super(scene, scrollablePanel);

@@ -7,8 +7,6 @@ import {
   FRAME_BUTTON_CONFIRM_CLICK,
   FRAME_BUTTON_CONFIRM_HOVER,
   FRAME_BUTTON_CONFIRM_REST,
-  GAME_HEIGHT,
-  GAME_WIDTH,
   TEXTURE_BUTTONS,
   UI_BUTTON_SIZE,
   UI_FONT_SIZE,
@@ -41,8 +39,8 @@ const createTitle = (scene: RexScene) =>
 
 class BackgroundDialog extends ModalDialog {
   constructor(scene: RexScene, onConfirm: Function, onCancel: Function) {
-    const minWidth = GAME_WIDTH - 4 * UI_BUTTON_SIZE;
-    const minHeight = GAME_HEIGHT - 4 * UI_BUTTON_SIZE;
+    const minWidth = scene.scale.width - 4 * UI_BUTTON_SIZE;
+    const minHeight = scene.scale.height - 4 * UI_BUTTON_SIZE;
 
     const dialog = new Dialog(scene, {
       x: 0,
