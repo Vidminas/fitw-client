@@ -125,7 +125,9 @@ const WorldDialog: React.FC<WorldDialogProps> = ({
               <IonRow>
                 <IonCol>
                   <IonRow>
-                    <IonCardSubtitle>World owner: nobody</IonCardSubtitle>
+                    <IonCardSubtitle>
+                      World creator: {world?.creatorName || "Unknown"}
+                    </IonCardSubtitle>
                   </IonRow>
                   <IonRow>
                     <IonCardSubtitle>Shared with: nobody</IonCardSubtitle>
