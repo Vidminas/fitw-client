@@ -79,7 +79,7 @@
   transform-origin: center left;
   box-shadow: inset 3px 0px 20px rgba(0, 0, 0, 0.2),
     0px 0px 15px rgba(0, 0, 0, 0.1);
-    pointer-events: none;
+  pointer-events: none;
 }
 .page-side-left,
 .page-side-right {
@@ -89,6 +89,7 @@
   height: 100%;
   backface-visibility: hidden;
   background-color: var(--page-bg);
+  overflow: auto;
 }
 .page-side-right {
   transform-origin: center center;
