@@ -77,13 +77,6 @@ class PhaserGame {
     worldName: string,
     showToastMessage: (color: string, message: string) => void
   ) {
-    if (userId) {
-      this.socket = io(SERVER_ADDRESS);
-      this.socket.on(EVENT_CONNECT, () => {
-        this.socket?.emit(EVENT_WORLD_ENTER, userId, worldId, worldName);
-      });
-    }
-
     this.game = new Phaser.Game({
       parent,
       type: Phaser.AUTO,
@@ -103,6 +96,22 @@ class PhaserGame {
         baseURL: "assets",
       },
     });
+
+    if (userId) {
+      this.socket = io(SERVER_ADDRESS);
+      this.socket.on(EVENT_CONNECT, () => {
+        this.socket?.emit(
+          EVENT_WORLD_ENTER,
+          userId,
+          worldId,
+          worldName,
+          (responseData: IWorld) => {
+            this.game?.events.emit(EVENT_WORLD_DATA, responseData);
+          }
+        );
+      });
+    }
+
     this.registerGameEvents(showToastMessage);
     this.registerServerEvents(showToastMessage);
     return this.game;
@@ -207,10 +216,6 @@ class PhaserGame {
     }
 
     this.socket.on(EVENT_MESSAGE, showToastMessage);
-
-    this.socket.on(EVENT_WORLD_DATA, (world: IWorld) => {
-      this.game?.events.emit(EVENT_WORLD_DATA, world);
-    });
 
     this.socket.on(
       EVENT_WORLD_CHANGE_BACKGROUND,
