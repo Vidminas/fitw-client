@@ -10,20 +10,26 @@
 
 .badge {
   order: 1;
+  opacity: 0.4;
   width: calc(4px + 5vw);
   height: calc(4px + 5vw);
   background-color: grey;
   border-radius: 10px;
-  opacity: 0.4;
+  cursor: pointer;
 }
-.badge:not(.disabled):hover {
+.badge.selected {
+  outline: 2px solid white;
+}
+.badge:not(.disabled):hover,
+.badge:not(.disabled).selected {
   opacity: 0.7;
 }
 .badge.obtained {
   opacity: 0.7;
   background-color: gold;
 }
-.badge.obtained:hover {
+.badge.obtained:hover,
+.badge.obtained.selected {
   opacity: 1;
 }
 
@@ -33,6 +39,7 @@
   font-size: calc(4px + 1vw);
 }
 
-.badge:hover + .badge-details {
+.badge:hover + .badge-details,
+.badge.selected + .badge-details {
   display: block;
 }

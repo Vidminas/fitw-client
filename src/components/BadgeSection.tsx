@@ -14,6 +14,9 @@ interface BadgeProps {
 
 const BadgeSection: React.FC<{}> = () => {
   const userState = useSelector<AppState, UserState>((state) => state.user);
+  const [selectedBadge, setSelectedBadge] = useState<string | undefined>(
+    undefined
+  );
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
 
@@ -24,21 +27,25 @@ const BadgeSection: React.FC<{}> = () => {
     obtainCount,
     countCollected,
   }) => {
-    const classNames =
-      countCollected === undefined
-        ? "badge disabled"
-        : countCollected >= obtainCount
-        ? "badge obtained"
-        : "badge";
+    const classNames = ["badge"];
+    if (countCollected === undefined) {
+      classNames.push("disabled");
+    } else if (countCollected >= obtainCount) {
+      classNames.push("obtained");
+    }
+    if (title === selectedBadge) {
+      classNames.push("selected");
+    }
 
     return (
       <>
         <img
-          className={classNames}
+          className={classNames.join(" ")}
           alt={`${title}. ${description}.`}
           src={imgSrc}
           onClick={(e) => {
             e.stopPropagation();
+            setSelectedBadge(selectedBadge === title ? undefined : title);
             setShowToast(true);
             setToastMessage(
               countCollected === undefined
