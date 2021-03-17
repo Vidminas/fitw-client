@@ -124,7 +124,7 @@ class GUIScene extends RexScene {
 
     this.changeBackgroundButton = new Button(
       this,
-      GAME_WIDTH - 3 * UI_BUTTON_SIZE,
+      GAME_WIDTH - 2 * UI_BUTTON_SIZE,
       0,
       TEXTURE_BUTTONS,
       FRAME_BUTTON_SWITCH_REST,
@@ -134,7 +134,7 @@ class GUIScene extends RexScene {
     );
     this.settingsButton = new Button(
       this,
-      GAME_WIDTH - 2 * UI_BUTTON_SIZE,
+      GAME_WIDTH - 1 * UI_BUTTON_SIZE,
       0,
       TEXTURE_BUTTONS,
       FRAME_BUTTON_SETTINGS_REST,
