@@ -1,10 +1,13 @@
 // logic from https://www.joshmorony.com/how-to-scale-a-game-for-all-device-sizes-in-phaser/
 export const GAME_WIDTH = window.innerWidth * window.devicePixelRatio;
 export const GAME_HEIGHT = window.innerHeight * window.devicePixelRatio;
-export const SCALE_RATIO = window.devicePixelRatio;
+export const SCALE_RATIO = window.devicePixelRatio * 1.5;
 
-export const UI_BUTTON_SIZE = 64 * SCALE_RATIO;
+export const UI_BUTTON_SIZE = 48 * SCALE_RATIO;
 export const UI_ICON_SIZE = 32 * SCALE_RATIO;
+export const UI_FONT_SIZE = `${16 * SCALE_RATIO}px`;
+export const UI_BIG_FONT_SIZE = `${24 * SCALE_RATIO}px`;
+
 export const REGISTRY_BACKGROUND_TEXTURE = "current-background-texture";
 
 // the smallest width and height of all images (it's okay to have bigger)

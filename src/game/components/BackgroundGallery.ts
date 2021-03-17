@@ -12,6 +12,7 @@ import {
   GAME_WIDTH,
   BACKGROUND_TEXTURES,
   REGISTRY_BACKGROUND_TEXTURE,
+  GAME_HEIGHT,
 } from "../constants";
 import RexScene from "../scenes/RexScene";
 import Button from "./Button";
@@ -24,8 +25,11 @@ class BackgroundGallery extends OverlapSizer {
 
   constructor(scene: RexScene) {
     const width = GAME_WIDTH - 4 * UI_BUTTON_SIZE;
-    const height = 4 * UI_BUTTON_SIZE;
-    const bgSize = 4 * UI_BUTTON_SIZE;
+    const height = Math.max(
+      GAME_HEIGHT * 0.5,
+      Math.min(2 * UI_BUTTON_SIZE, GAME_HEIGHT)
+    );
+    const bgSize = height;
 
     super(scene, 0, 0, width, height, {
       background: scene.rexUI.add.roundRectangle(0, 0, 0, 0, 0, COLOR_WHITE),
@@ -71,8 +75,8 @@ class BackgroundGallery extends OverlapSizer {
           backDeceleration: 2000,
         },
         space: {
-          top: UI_BUTTON_SIZE,
-          bottom: UI_BUTTON_SIZE / 2,
+          top: UI_BUTTON_SIZE / 3,
+          bottom: UI_BUTTON_SIZE / 4,
         },
       })
       .layout();

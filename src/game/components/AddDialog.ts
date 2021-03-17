@@ -14,7 +14,9 @@ import {
   FRAME_BUTTON_CONFIRM_CLICK,
   FRAME_BUTTON_CONFIRM_HOVER,
   FRAME_BUTTON_CONFIRM_REST,
+  GAME_HEIGHT,
   TEXTURE_BUTTONS,
+  UI_BUTTON_SIZE,
   UI_FONT_SIZE,
 } from "../constants";
 import { FITWICKS } from "../fitwicks";
@@ -26,10 +28,12 @@ const FITWICK_NAMES = Array.from(FITWICKS.keys());
 
 class AddDialog extends ModalDialog {
   constructor(scene: RexScene, onConfirm: Function, onCancel: Function) {
+    const width = 4 * UI_BUTTON_SIZE;
+    const height = Math.min(2.5 * UI_BUTTON_SIZE, GAME_HEIGHT);
     const background = scene.rexUI.add.roundRectangle(
       0,
       0,
-      100,
+      width,
       100,
       20,
       COLOR_DIALOG_BACKGROUND
@@ -38,7 +42,7 @@ class AddDialog extends ModalDialog {
       background: scene.rexUI.add.roundRectangle(
         0,
         0,
-        100,
+        width,
         40,
         20,
         COLOR_DIALOG_FOREGROUND
@@ -54,16 +58,23 @@ class AddDialog extends ModalDialog {
       },
     });
 
-    const inputBoxWidth = 400;
+    const inputBoxPadding = 20;
     const inputBoxHeight = 60;
 
-    const inputBox = new InputText(scene, 0, 0, inputBoxWidth, inputBoxHeight, {
-      color: COLOR_STRING_WHITE,
-      backgroundColor: COLOR_STRING_DARK_GREY,
-      fontSize: UI_FONT_SIZE,
-      placeholder: "Type in something",
-      valign: "center",
-    });
+    const inputBox = new InputText(
+      scene,
+      0,
+      0,
+      width - inputBoxPadding,
+      inputBoxHeight,
+      {
+        color: COLOR_STRING_WHITE,
+        backgroundColor: COLOR_STRING_DARK_GREY,
+        fontSize: UI_FONT_SIZE,
+        placeholder: "Type in something",
+        valign: "center",
+      }
+    );
     inputBox.setStyle("border-radius", "25px");
     scene.add.existing(inputBox);
 
@@ -96,6 +107,8 @@ class AddDialog extends ModalDialog {
       .dialog({
         x: 0,
         y: 0,
+        width,
+        height,
         anchor: {
           centerX: "center",
           centerY: "center",

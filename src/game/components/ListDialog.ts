@@ -83,7 +83,10 @@ class ListDialog extends ModalDialog {
       Math.floor((GAME_WIDTH - UI_BUTTON_SIZE * 4) / (UI_BUTTON_SIZE * 3)) *
         (UI_BUTTON_SIZE * 3) +
       20;
-    const height = GAME_HEIGHT - UI_BUTTON_SIZE * 4;
+    const height = Math.max(
+      GAME_HEIGHT * 0.75,
+      Math.min(4 * UI_BUTTON_SIZE, GAME_HEIGHT)
+    );
     const scrollablePanel = new ScrollablePanel(scene, {
       x: 0,
       y: 0,

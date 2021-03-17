@@ -210,7 +210,10 @@ class SettingsDialog extends ModalDialog {
         centerY: "center",
       },
       width: GAME_WIDTH - 4 * UI_BUTTON_SIZE,
-      height: Math.max(GAME_HEIGHT - 4 * UI_BUTTON_SIZE, 2 * UI_BUTTON_SIZE),
+      height: Math.max(
+        GAME_HEIGHT * 0.7,
+        Math.min(4 * UI_BUTTON_SIZE, GAME_HEIGHT)
+      ),
       scrollMode: "vertical",
       background: scene.rexUI.add.roundRectangle(
         0,
