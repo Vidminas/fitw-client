@@ -121,7 +121,11 @@ class PreloadScene extends Phaser.Scene {
 
   create() {
     if (process.env.REACT_APP_DEBUG) {
-      this.scene.launch("MainScene", undefined);
+      // This assumes that running on localhost, loading assets would take longer
+      // than getting world data from the server.
+      // This way, when the code reaches this point, if there is no world data
+      // probably the server is not running and we can just go with undefined
+      this.scene.launch("MainScene", this.worldData);
       this.scene.launch("GUIScene");
       this.scene.launch("ModalScene");
     } else if (this.worldData) {
