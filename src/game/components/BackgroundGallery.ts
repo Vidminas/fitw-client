@@ -11,6 +11,7 @@ import {
   UI_BUTTON_SIZE,
   GAME_WIDTH,
   BACKGROUND_TEXTURES,
+  REGISTRY_BACKGROUND_TEXTURE,
 } from "../constants";
 import RexScene from "../scenes/RexScene";
 import Button from "./Button";
@@ -49,7 +50,7 @@ class BackgroundGallery extends OverlapSizer {
         }
       },
     });
-    bgButtons.value = scene.registry.get("bgTexture");
+    bgButtons.value = scene.registry.get(REGISTRY_BACKGROUND_TEXTURE);
 
     const panel = scene.rexUI.add
       .scrollablePanel({

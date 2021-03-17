@@ -24,6 +24,7 @@ import {
   SPEECH_BUBBLE_HEIGHT,
   SPEECH_BUBBLE_MIN_WIDTH,
   UI_BUTTON_SIZE,
+  REGISTRY_BACKGROUND_TEXTURE,
 } from "../constants";
 import Fitwick from "../components/Fitwick";
 import SpeechBubble from "../components/SpeechBubble";
@@ -169,13 +170,17 @@ class MainScene extends RexScene {
   create(world?: IWorld) {
     const cam = this.cameras.main;
 
+    this.registry.set(
+      REGISTRY_BACKGROUND_TEXTURE,
+      world?.background || TEXTURE_BACKGROUND_EMPTY
+    );
     this.background = this.add
       .tileSprite(
         0,
         0,
         GAME_WIDTH,
         GAME_HEIGHT,
-        world?.background || TEXTURE_BACKGROUND_EMPTY
+        this.registry.get(REGISTRY_BACKGROUND_TEXTURE)
       )
       .setOrigin(0);
     // the background scrolls its tile position instead
@@ -199,6 +204,7 @@ class MainScene extends RexScene {
     this.game.events.on(
       EVENT_WORLD_CHANGE_BACKGROUND,
       (external: boolean, newBackgroundTexture: string) => {
+        this.registry.set(REGISTRY_BACKGROUND_TEXTURE, newBackgroundTexture);
         // the same handling regardless of whether it's external or not
         this.background.setTexture(newBackgroundTexture);
       }

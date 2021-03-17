@@ -5,8 +5,7 @@ export const SCALE_RATIO = window.devicePixelRatio;
 
 export const UI_BUTTON_SIZE = 64 * SCALE_RATIO;
 export const UI_ICON_SIZE = 32 * SCALE_RATIO;
-export const UI_FONT_SIZE = `${20 * SCALE_RATIO}px`;
-export const UI_BIG_FONT_SIZE = `${30 * SCALE_RATIO}px`;
+export const REGISTRY_BACKGROUND_TEXTURE = "current-background-texture";
 
 // the smallest width and height of all images (it's okay to have bigger)
 const GAME_BG_WIDTH = 1024;
