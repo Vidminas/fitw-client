@@ -13,6 +13,7 @@ import BadgeSection from "./BadgeSection";
 import StatsSection from "./StatsSection";
 import PerformanceGraph from "./PerformanceGraph";
 import { arrowForwardOutline } from "ionicons/icons";
+import WinningStreak from "./WinningStreak";
 
 type BookClass = "book-open" | "book-closed-front" | "book-closed-back";
 
@@ -127,6 +128,8 @@ const Book: React.FC<{}> = () => {
       <p>Points earned:</p>
       <br />
       <PerformanceGraph />
+      <br />
+      <WinningStreak />
     </>,
     <>
       <p className="world-name">New World</p>
