@@ -34,7 +34,8 @@ function* authLocalUser() {
     } catch (error) {
       yield put({
         type: Actions.USER_AUTH_LOCAL_ERROR,
-        payload: error.response?.data || error,
+        payload:
+          error.response?.data?.error?.message || error.response?.data || error,
       });
     }
   });
@@ -51,7 +52,8 @@ function* requestAuthFromServer() {
     } catch (error) {
       yield put({
         type: Actions.USER_AUTH_EMAIL_ERROR,
-        payload: error.response?.data || error,
+        payload:
+          error.response?.data?.error?.message || error.response?.data || error,
       });
     }
   });
@@ -66,7 +68,8 @@ function* fetchUserFromServer() {
     } catch (error) {
       yield put({
         type: Actions.USER_FETCH_ERROR,
-        payload: error.response?.data || error,
+        payload:
+          error.response?.data?.error?.message || error.response?.data || error,
       });
     }
   });
@@ -83,7 +86,8 @@ function* fetchAllUserWorldsFromServer() {
     } catch (error) {
       yield put({
         type: Actions.WORLD_FETCH_ALL_ERROR,
-        payload: error.response?.data || error,
+        payload:
+          error.response?.data?.error?.message || error.response?.data || error,
       });
     }
   });
@@ -97,7 +101,8 @@ function* fetchWorldFromServer() {
     } catch (error) {
       yield put({
         type: Actions.WORLD_FETCH_ERROR,
-        payload: error.response?.data || error,
+        payload:
+          error.response?.data?.error?.message || error.response?.data || error,
       });
     }
   });
@@ -112,7 +117,8 @@ function* deleteWorldFromServer() {
       console.log(error.response);
       yield put({
         type: Actions.WORLD_DELETE_ERROR,
-        payload: error.response?.data || error,
+        payload:
+          error.response?.data?.error?.message || error.response?.data || error,
       });
     }
   });
