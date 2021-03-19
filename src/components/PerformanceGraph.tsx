@@ -103,11 +103,12 @@ const PerformanceGraph: React.FC<{}> = () => {
                   //   parser: "MM/DD/YYYY",
                   tooltipFormat: "LL",
                   bounds: "ticks",
+                },
+                ticks: {
                   // Ensure the graph goes up to today
                   // This helps to see why a winning streak is lost
                   max: new Date(),
                 },
-                maxBarThickness: 100,
               },
             ],
             yAxes: [
