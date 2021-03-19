@@ -126,6 +126,14 @@
   padding-bottom: var(--page-padding);
 }
 
+.page-side-left > *,
+.page-side-right > * {
+  /* This works around a Firefox bug that makes some elements */
+  /* show on both sides of the page */
+  /* https://bugzilla.mozilla.org/show_bug.cgi?id=1201471 */
+  transform: rotateY(0deg);
+}
+
 .page-side-left p,
 .page-side-right p {
   margin: 0;
