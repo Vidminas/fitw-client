@@ -1,5 +1,7 @@
 .performance-graph {
   --background: none;
+  --padding-start: 0;
+  --inner-padding-end: 0;
   width: 100%;
   overflow-x: auto;
   overflow-y: hidden;

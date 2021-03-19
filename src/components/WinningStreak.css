@@ -1,0 +1,15 @@
+.winning-streak ion-card-header {
+  padding: 0.5vmin;
+}
+
+.winning-streak ion-item {
+  --inner-padding-end: 4px;
+}
+
+.winning-streak ion-icon[slot="start"] {
+  margin-inline-end: 8px;
+}
+
+.winning-streak ion-card-title {
+  font-size: calc(4px + 1.5vw);
+}

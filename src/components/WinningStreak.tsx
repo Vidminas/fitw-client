@@ -2,15 +2,14 @@ import {
   IonCard,
   IonCardHeader,
   IonCardTitle,
-  IonContent,
   IonIcon,
   IonItem,
-  IonText,
 } from "@ionic/react";
 import { calendarOutline } from "ionicons/icons";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { AppState, UserState } from "../redux/store";
+import "./WinningStreak.css";
 
 const WinningStreak: React.FC<{}> = () => {
   const userState = useSelector<AppState, UserState>((state) => state.user);
@@ -24,7 +23,7 @@ const WinningStreak: React.FC<{}> = () => {
   }, [userState.user]);
 
   return (
-    <IonCard>
+    <IonCard className="winning-streak">
       <IonCardHeader>
         <IonItem>
           <IonIcon icon={calendarOutline} slot="start" />
@@ -33,9 +32,6 @@ const WinningStreak: React.FC<{}> = () => {
           </IonCardTitle>
         </IonItem>
       </IonCardHeader>
-      <IonContent>
-        <IonText>Fun</IonText>
-      </IonContent>
     </IonCard>
   );
 };
