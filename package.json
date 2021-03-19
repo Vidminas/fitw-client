@@ -3,6 +3,7 @@
   "description": "Fill In The World educational game client",
   "version": "0.0.1",
   "private": true,
+  "license": "MIT",
   "dependencies": {
     "@capacitor/core": "2.4.6",
     "@ionic/core": "^5.5.2",
