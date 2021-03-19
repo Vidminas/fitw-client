@@ -2,8 +2,12 @@
 export const GAME_WIDTH = window.innerWidth * window.devicePixelRatio;
 export const GAME_HEIGHT = window.innerHeight * window.devicePixelRatio;
 export const SCALE_RATIO = window.devicePixelRatio * 1.5;
+console.log("GAME WIDTH = " + GAME_WIDTH);
+console.log("GAME HEIGHT = " + GAME_HEIGHT);
+console.log("SCALE RATIO = " + SCALE_RATIO);
 
 export const UI_BUTTON_SIZE = 48 * SCALE_RATIO;
+console.log("UI BUTTON SIZE = " + UI_BUTTON_SIZE);
 export const UI_ICON_SIZE = 32 * SCALE_RATIO;
 export const UI_FONT_SIZE = `${16 * SCALE_RATIO}px`;
 export const UI_BIG_FONT_SIZE = `${24 * SCALE_RATIO}px`;
