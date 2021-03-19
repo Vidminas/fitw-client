@@ -1,8 +1,12 @@
 import ContainerLite from "phaser3-rex-plugins/plugins/containerlite.js";
+import { COLOR_STRING_BLACK } from "../colors";
 import {
   FRAME_BUTTON_SPEAKER_CLICK,
   FRAME_BUTTON_SPEAKER_HOVER,
   FRAME_BUTTON_SPEAKER_REST,
+  SPEECH_BUBBLE_MIN_HEIGHT,
+  SPEECH_BUBBLE_MIN_WIDTH,
+  SPEECH_BUBBLE_PADDING,
   TEXTURE_BUTTONS,
   UI_BUTTON_SIZE,
   UI_FONT_SIZE,
@@ -13,48 +17,41 @@ import Fitwick from "./Fitwick";
 class SpeechBubble extends ContainerLite {
   readonly parent: Fitwick;
   readonly speakerButton: Button;
-  private bubble: Phaser.GameObjects.Graphics;
-  private content: Phaser.GameObjects.Text;
 
-  constructor(
-    scene: Phaser.Scene,
-    parent: Fitwick,
-    x: number,
-    y: number,
-    width: number,
-    height: number,
-    quote: string
-  ) {
-    const bubbleWidth = width;
-    const bubbleHeight = height;
-    const bubblePadding = 10;
-    const arrowHeight = bubbleHeight / 4;
+  constructor(scene: Phaser.Scene, parent: Fitwick, quote: string) {
+    const bubble = scene.add.graphics({ x: 0, y: 0 });
+    const content = scene.add.text(0, 0, quote, {
+      fontFamily: "Arial",
+      fontSize: UI_FONT_SIZE,
+      color: COLOR_STRING_BLACK,
+      align: "center",
+      wordWrap: {
+        width:
+          SPEECH_BUBBLE_MIN_WIDTH - UI_BUTTON_SIZE - SPEECH_BUBBLE_PADDING * 2,
+      },
+    });
+    const b = content.getBounds();
 
-    super(
-      scene,
-      x,
-      y,
-      bubbleWidth + bubblePadding,
-      bubbleHeight + arrowHeight + bubblePadding
-    );
-    this.parent = parent;
+    const arrowHeight = SPEECH_BUBBLE_MIN_HEIGHT / 4;
+    const bubbleWidth =
+      Math.max(SPEECH_BUBBLE_MIN_WIDTH, b.width) + SPEECH_BUBBLE_PADDING;
+    const bubbleHeight =
+      Math.max(SPEECH_BUBBLE_MIN_HEIGHT, b.height) + SPEECH_BUBBLE_PADDING;
 
     // Code inspired by https://github.com/photonstorm/phaser3-examples/blob/master/public/src/game%20objects/text/speech%20bubble.js
-    this.bubble = scene.add.graphics({ x: x, y: y });
-
     //  Bubble shadow
-    this.bubble.fillStyle(0x222222, 0.5);
-    this.bubble.fillRoundedRect(6, 6, bubbleWidth, bubbleHeight, 16);
+    bubble.fillStyle(0x222222, 0.5);
+    bubble.fillRoundedRect(6, 6, bubbleWidth, bubbleHeight, 16);
 
     //  Bubble color
-    this.bubble.fillStyle(0xffffff, 1);
+    bubble.fillStyle(0xffffff, 1);
 
     //  Bubble outline line style
-    this.bubble.lineStyle(4, 0x565656, 1);
+    bubble.lineStyle(4, 0x565656, 1);
 
     //  Bubble shape and outline
-    this.bubble.strokeRoundedRect(0, 0, bubbleWidth, bubbleHeight, 16);
-    this.bubble.fillRoundedRect(0, 0, bubbleWidth, bubbleHeight, 16);
+    bubble.strokeRoundedRect(0, 0, bubbleWidth, bubbleHeight, 16);
+    bubble.fillRoundedRect(0, 0, bubbleWidth, bubbleHeight, 16);
 
     //  Calculate arrow coordinates
     const point1X = Math.floor(bubbleWidth / 2 - arrowHeight);
@@ -65,40 +62,27 @@ class SpeechBubble extends ContainerLite {
     const point3Y = Math.floor(bubbleHeight + arrowHeight);
 
     //  Bubble arrow shadow
-    this.bubble.lineStyle(4, 0x222222, 0.5);
-    this.bubble.lineBetween(point2X - 1, point2Y + 6, point3X + 2, point3Y);
+    bubble.lineStyle(4, 0x222222, 0.5);
+    bubble.lineBetween(point2X - 1, point2Y + 6, point3X + 2, point3Y);
 
     //  Bubble arrow fill
-    this.bubble.fillTriangle(
-      point1X,
-      point1Y,
-      point2X,
-      point2Y,
-      point3X,
-      point3Y
-    );
-    this.bubble.lineStyle(2, 0x565656, 1);
-    this.bubble.lineBetween(point2X, point2Y, point3X, point3Y);
-    this.bubble.lineBetween(point1X, point1Y, point3X, point3Y);
+    bubble.fillTriangle(point1X, point1Y, point2X, point2Y, point3X, point3Y);
+    bubble.lineStyle(2, 0x565656, 1);
+    bubble.lineBetween(point2X, point2Y, point3X, point3Y);
+    bubble.lineBetween(point1X, point1Y, point3X, point3Y);
 
-    this.content = scene.add.text(0, 0, quote, {
-      fontFamily: "Arial",
-      fontSize: UI_FONT_SIZE,
-      color: "#000000",
-      align: "center",
-      wordWrap: { width: bubbleWidth - UI_BUTTON_SIZE - bubblePadding * 2 },
-    });
+    super(scene, 0, 0, bubbleWidth, bubbleHeight);
+    this.parent = parent;
 
-    const b = this.content.getBounds();
-    this.content.setPosition(
-      this.bubble.x + bubbleWidth / 2 - b.width / 2,
-      this.bubble.y + bubbleHeight / 2 - b.height / 2
+    content.setPosition(
+      bubble.x + SPEECH_BUBBLE_PADDING,
+      bubble.y + (bubbleHeight - b.height) / 2
     );
 
     this.speakerButton = new Button(
       scene,
-      this.content.x + b.width,
-      this.content.y - b.height,
+      content.x + b.width + SPEECH_BUBBLE_PADDING,
+      content.y + (b.height - UI_BUTTON_SIZE) / 2,
       TEXTURE_BUTTONS,
       FRAME_BUTTON_SPEAKER_REST,
       FRAME_BUTTON_SPEAKER_HOVER,
@@ -110,8 +94,8 @@ class SpeechBubble extends ContainerLite {
 
     this.setOrigin(0);
     this.setInteractive();
-    this.add(this.bubble);
-    this.add(this.content);
+    this.add(bubble);
+    this.add(content);
     this.add(this.speakerButton);
 
     // scene.add

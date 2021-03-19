@@ -24,7 +24,8 @@ export const MAX_SCROLL_X = GAME_BG_WIDTH * 5;
 export const MAX_ZOOM_FACTOR = 4;
 
 export const SPEECH_BUBBLE_MIN_WIDTH = UI_BUTTON_SIZE * 2;
-export const SPEECH_BUBBLE_HEIGHT = UI_BUTTON_SIZE + 10 * SCALE_RATIO;
+export const SPEECH_BUBBLE_MIN_HEIGHT = UI_BUTTON_SIZE + 10 * SCALE_RATIO;
+export const SPEECH_BUBBLE_PADDING = 10;
 
 const MUSIC_CALM_BEAR = "16-Dark Fantasy Studio- Calm bear.wav";
 const MUSIC_PLAYING_IN_WATER = "26-Dark Fantasy Studio- Playing in water.wav";

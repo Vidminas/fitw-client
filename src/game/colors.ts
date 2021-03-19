@@ -5,6 +5,7 @@ export const COLOR_ORANGE = 0xf57f17;
 export const COLOR_DARK_ORANGE = 0xbc5100;
 export const COLOR_DARK_GREY = 0x333333;
 
+export const COLOR_STRING_BLACK = "#000";
 export const COLOR_STRING_WHITE = "#fff";
 export const COLOR_STRING_DARK_ORANGE = "#bc5100";
 export const COLOR_STRING_DARK_GREY = "#333333";

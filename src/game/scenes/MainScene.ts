@@ -20,8 +20,6 @@ import {
   MAX_SCROLL_X,
   MAX_ZOOM_FACTOR,
   TEXTURE_BACKGROUND_EMPTY,
-  SPEECH_BUBBLE_HEIGHT,
-  SPEECH_BUBBLE_MIN_WIDTH,
   UI_BUTTON_SIZE,
   REGISTRY_BACKGROUND_TEXTURE,
 } from "../constants";
@@ -86,17 +84,9 @@ class MainScene extends RexScene {
             }
 
             if (!this.activeSpeechBubble) {
-              const speechBubbleWidth = Math.max(
-                SPEECH_BUBBLE_MIN_WIDTH,
-                fitwick.displayWidth
-              );
               this.activeSpeechBubble = new SpeechBubble(
                 this,
                 fitwick,
-                0,
-                0,
-                speechBubbleWidth,
-                SPEECH_BUBBLE_HEIGHT,
                 fitwick.name
               );
               this.repositionSpeechBubble();
