@@ -1,5 +1,11 @@
 # Fill In The World client
 
+Some screenshots from the application:
+
+|                       <img alt="Screenshot with tent, lake, and palm tree in a desert" src="screenshots/screenshot1.png" width="200"/>                       |           <img alt="Screenshot with snowy mountains, a snowman, and pine trees" src="screenshots/screenshot2.png" width="200"/>            |
+| :----------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------: |
+| <img alt="Screenshot with a dialog adding a 'monit' and a message popup asking if the user meant 'monitor'" src="screenshots/screenshot3.png" width="200" /> | <img alt="Screenshot of in-game badges, a performance graph, and winning streak indicator" src="screenshots/screenshot4.png" width="200"/> |
+
 This is the client application for the following project:
 
 # Exploring gamification techniques in children’s language learning (2020-21)
