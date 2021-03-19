@@ -98,14 +98,20 @@
 
 .page-in-front {
   z-index: 3;
-  pointer-events: all;
 }
 .page-in-middle {
   z-index: 2;
-  pointer-events: all;
 }
 .page-in-back {
   z-index: 1;
+}
+
+.page-in-front:not(.page-turned) .page-side-left,
+.page-in-middle:not(.page-turned) .page-side-left,
+.page-in-back:not(.page-turned) .page-side-left,
+.page-in-front.page-turned .page-side-right,
+.page-in-middle.page-turned .page-side-right,
+.page-in-back.page-turned .page-side-right {
   pointer-events: all;
 }
 
