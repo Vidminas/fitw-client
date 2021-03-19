@@ -80,7 +80,7 @@ const Login: React.FC<RouteComponentProps> = ({ history, location }) => {
                   clearInput={true}
                   placeholder="player@xyz.com"
                   required={true}
-                  pattern="[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})"
+                  pattern="[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{2,}([.]{1}[a-zA-Z-]{2,})+"
                 ></IonInput>
               </IonItem>
               <IonButton type="submit" disabled={status === "loading"}>
