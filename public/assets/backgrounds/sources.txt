@@ -6,6 +6,18 @@ winter_background.png is from:
 https://opengameart.org/content/winter-platformer-game-tileset
 Licensed under CC0 (public domain) license
 
+scifi_background.jpg is from:
+<a href="https://www.freepik.com/vectors/background">Background vector created by macrovector - www.freepik.com</a>
+http://www.freepik.com/terms_of_use
+
+floating_islands.jpg is from:
+<a href='https://www.freepik.com/vectors/snow'>Snow vector created by macrovector - www.freepik.com</a>
+
+back_cave.png is from:
+https://opengameart.org/content/seamless-cave-background
+
+Background city Seamless.png is from:
+https://opengameart.org/content/abandon-city-seamless-background
 
 backgroundColorDesert.png, backgroundColorFall.png, backgroundColorForest.png, backgroundColorGrass.png, backgroundEmpty.png:
 	Background Elements Redux
