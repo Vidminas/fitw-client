@@ -12,10 +12,10 @@ export const REGISTRY_BACKGROUND_TEXTURE = "current-background-texture";
 
 // the smallest width and height of all images (it's okay to have bigger)
 const GAME_BG_WIDTH = 1024;
-const GAME_BG_HEIGHT = 1024;
+// const GAME_BG_HEIGHT = 1024;
 // limits on camera scroll
 export const MAX_SCROLL_X = GAME_BG_WIDTH * 5;
-export const MAX_SCROLL_Y = GAME_BG_HEIGHT;
+// export const MAX_SCROLL_Y = GAME_BG_HEIGHT;
 // limits on camera zoom (besides limiting to game height and width)
 export const MAX_ZOOM_FACTOR = 4;
 

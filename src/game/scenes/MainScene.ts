@@ -18,7 +18,6 @@ import {
   GAME_HEIGHT,
   GAME_WIDTH,
   MAX_SCROLL_X,
-  MAX_SCROLL_Y,
   MAX_ZOOM_FACTOR,
   TEXTURE_BACKGROUND_EMPTY,
   SPEECH_BUBBLE_HEIGHT,
@@ -216,6 +215,14 @@ class MainScene extends RexScene {
         this.registry.set(REGISTRY_BACKGROUND_TEXTURE, newBackgroundTexture);
         // the same handling regardless of whether it's external or not
         this.background.setTexture(newBackgroundTexture);
+        // update bounds to new texture height
+        cam.setBounds(
+          0,
+          0,
+          MAX_SCROLL_X,
+          (this.background as any).displayTexture.source[0].height,
+          false
+        );
       }
     );
 
@@ -355,7 +362,13 @@ class MainScene extends RexScene {
     });
 
     // this prevents camera from scrolling out of bounds
-    cam.setBounds(0, 0, MAX_SCROLL_X, MAX_SCROLL_Y, false);
+    cam.setBounds(
+      0,
+      0,
+      MAX_SCROLL_X,
+      (this.background as any).displayTexture.source[0].height,
+      false
+    );
 
     const pan = this.rexGestures.add.pan();
     pan.on(
