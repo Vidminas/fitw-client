@@ -1,12 +1,25 @@
 import { ScrollablePanel } from "phaser3-rex-plugins/templates/ui/ui-components.js";
 import { COLOR_DIALOG_BACKGROUND, COLOR_DIALOG_FOREGROUND } from "../colors";
-import { UI_BUTTON_SIZE, UI_FONT_SIZE } from "../constants";
+import {
+  FRAME_BUTTON_CANCEL_CLICK,
+  FRAME_BUTTON_CANCEL_HOVER,
+  FRAME_BUTTON_CANCEL_REST,
+  TEXTURE_BUTTONS,
+  UI_BIG_FONT_SIZE,
+  UI_BUTTON_SIZE,
+  UI_FONT_SIZE,
+} from "../constants";
 import { FITWICKS } from "../fitwicks";
 import RexScene from "../scenes/RexScene";
+import Button from "./Button";
 import ModalDialog from "./ModalDialog";
 
+const FITWICK_ITEM_SIZE = UI_BUTTON_SIZE * 4;
+const FITWICK_ITEM_SPACE = 8;
+
 const createFitwickList = (scene: RexScene, width: number, height: number) => {
-  const columns = Math.floor(width / (UI_BUTTON_SIZE * 3)) + 1;
+  const columns =
+    Math.floor(width / (FITWICK_ITEM_SIZE + FITWICK_ITEM_SPACE)) + 1;
   const rows = Math.ceil(FITWICKS.size / columns) + 1;
 
   const sizer = scene.rexUI.add.gridSizer({
@@ -19,8 +32,8 @@ const createFitwickList = (scene: RexScene, width: number, height: number) => {
       right: 3,
       top: 3,
       bottom: 3,
-      column: 8,
-      row: 8,
+      column: FITWICK_ITEM_SPACE,
+      row: FITWICK_ITEM_SPACE,
     },
   });
 
@@ -45,41 +58,52 @@ const createFitwickList = (scene: RexScene, width: number, height: number) => {
   return sizer;
 };
 
-const createTitle = (scene: RexScene) =>
-  scene.rexUI.add.label({
-    background: scene.rexUI.add.roundRectangle(
+const createTitle = (scene: RexScene, dialogWidth: number, hide: Function) => {
+  const titleBackground = scene.rexUI.add.roundRectangle(
+    0,
+    0,
+    100,
+    40,
+    20,
+    COLOR_DIALOG_FOREGROUND
+  );
+  const titleText = scene.add.text(0, 0, "All game objects:", {
+    fontSize: UI_BIG_FONT_SIZE,
+  });
+  const titleWidth = titleText.getBounds().width;
+  return scene.rexUI.add.label({
+    background: titleBackground,
+    text: titleText,
+    action: new Button(
+      scene,
       0,
       0,
-      100,
-      40,
-      20,
-      COLOR_DIALOG_FOREGROUND
+      TEXTURE_BUTTONS,
+      FRAME_BUTTON_CANCEL_REST,
+      FRAME_BUTTON_CANCEL_HOVER,
+      FRAME_BUTTON_CANCEL_CLICK,
+      hide
     ),
-    text: scene.add.text(0, 0, "All game objects:", {
-      fontSize: UI_FONT_SIZE,
-    }),
     space: {
       left: 15,
       right: 15,
       top: 10,
       bottom: 10,
+      // -30 is left+right space
+      text: dialogWidth - titleWidth - UI_BUTTON_SIZE - 30,
     },
   });
+};
 
 class ListDialog extends ModalDialog {
   constructor(scene: RexScene) {
-    // this first takes the width of the whole game and leaves space of two buttons on either side
-    // then it divdes the panel width into how many fitwicks fit on one row
-    // (each fitwick is the size of 3 buttons)
-    // then it gets the floor of that and multiplies by the fitwick width
-    // to get rid of the unnecessary space
-    // and finally adds 20 for padding
+    const baseWidth = Math.max(
+      scene.scale.width - 4 * UI_BUTTON_SIZE,
+      Math.min(4 * UI_BUTTON_SIZE, scene.scale.width)
+    );
+    // this divides the panel width into how many fitwicks fit on one row
     const width =
-      Math.floor(
-        (scene.scale.width - UI_BUTTON_SIZE * 4) / (UI_BUTTON_SIZE * 3)
-      ) *
-        (UI_BUTTON_SIZE * 3) +
-      20;
+      baseWidth - (baseWidth % (FITWICK_ITEM_SIZE + FITWICK_ITEM_SPACE)) + 20;
     const height = Math.max(
       scene.scale.height * 0.75,
       Math.min(4 * UI_BUTTON_SIZE, scene.scale.height)
@@ -102,7 +126,7 @@ class ListDialog extends ModalDialog {
         10,
         COLOR_DIALOG_BACKGROUND
       ),
-      header: createTitle(scene),
+      header: createTitle(scene, width, () => this.hide()),
       panel: {
         child: createFitwickList(scene, width - 20, height),
         mask: { padding: 1 },

@@ -1,5 +1,6 @@
 import { EVENT_WORLD_DATA } from "../../api/events";
 import IWorld from "../../api/world";
+import { COLOR_STRING_WHITE } from "../colors";
 import {
   BACKGROUND_TEXTURES,
   MUSIC_TRACKS,
@@ -10,6 +11,8 @@ import {
   TEXTURE_MEDIEVAL_TROPICAL_SPRITES,
   TEXTURE_UNDERWATER_SPRITES,
   TEXTURE_WINTER_SPRITES,
+  UI_BIG_FONT_SIZE,
+  UI_BUTTON_SIZE,
 } from "../constants";
 import { FITWICKS_AUDIO } from "../fitwicks";
 
@@ -29,8 +32,8 @@ class PreloadScene extends Phaser.Scene {
 
   preload() {
     this.progressBoxWidth = this.scale.width / 2;
-    this.progressBoxHeight = 50;
-    this.progressBoxPadding = 20;
+    this.progressBoxHeight = UI_BUTTON_SIZE;
+    this.progressBoxPadding = UI_BUTTON_SIZE / 2;
 
     this.game.events.once(EVENT_WORLD_DATA, (world: IWorld) => {
       this.worldData = world;
@@ -51,8 +54,8 @@ class PreloadScene extends Phaser.Scene {
       this.scale.height / 2,
       "0%",
       {
-        font: "18px monospace",
-        color: "#ffffff",
+        fontSize: UI_BIG_FONT_SIZE,
+        color: COLOR_STRING_WHITE,
       }
     );
     this.percentText.setOrigin(0.5, 0.5);
