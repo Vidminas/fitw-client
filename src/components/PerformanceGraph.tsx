@@ -62,7 +62,7 @@ const PerformanceGraph: React.FC<{}> = () => {
         borderColor: "rgba(254,139,54,1)",
         backgroundColor: "rgb(254,139,54,0.2)",
         borderWidth: 1,
-        lineTension: 1,
+        lineTension: 0,
         pointBackgroundColor: "#fff",
         pointRadius: 5,
         pointBorderWidth: 3,
