@@ -163,16 +163,6 @@ const createPanel = (
   onConfirm: Function,
   onCancel: Function
 ): Dialog => {
-  const confirmButton = new Button(
-    scene,
-    0,
-    0,
-    TEXTURE_BUTTONS,
-    FRAME_BUTTON_CONFIRM_REST,
-    FRAME_BUTTON_CONFIRM_HOVER,
-    FRAME_BUTTON_CONFIRM_CLICK,
-    onConfirm
-  );
   const cancelButton = new Button(
     scene,
     0,
@@ -183,10 +173,20 @@ const createPanel = (
     FRAME_BUTTON_CANCEL_CLICK,
     onCancel
   );
+  const confirmButton = new Button(
+    scene,
+    0,
+    0,
+    TEXTURE_BUTTONS,
+    FRAME_BUTTON_CONFIRM_REST,
+    FRAME_BUTTON_CONFIRM_HOVER,
+    FRAME_BUTTON_CONFIRM_CLICK,
+    onConfirm
+  );
 
   return scene.rexUI.add.dialog({
     content: createSettingsGrid(scene, currentVolume),
-    actions: [confirmButton, cancelButton],
+    actions: [cancelButton, confirmButton],
   });
 };
 

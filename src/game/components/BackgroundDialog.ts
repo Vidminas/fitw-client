@@ -74,14 +74,10 @@ class BackgroundDialog extends ModalDialog {
         0,
         0,
         TEXTURE_BUTTONS,
-        FRAME_BUTTON_CONFIRM_REST,
-        FRAME_BUTTON_CONFIRM_HOVER,
-        FRAME_BUTTON_CONFIRM_CLICK,
-        () =>
-          onConfirm(
-            (dialog.getElement("content") as BackgroundGallery)
-              .newBackgroundTexture
-          )
+        FRAME_BUTTON_CANCEL_REST,
+        FRAME_BUTTON_CANCEL_HOVER,
+        FRAME_BUTTON_CANCEL_CLICK,
+        () => onCancel()
       )
     );
     dialog.addAction(
@@ -90,10 +86,14 @@ class BackgroundDialog extends ModalDialog {
         0,
         0,
         TEXTURE_BUTTONS,
-        FRAME_BUTTON_CANCEL_REST,
-        FRAME_BUTTON_CANCEL_HOVER,
-        FRAME_BUTTON_CANCEL_CLICK,
-        () => onCancel()
+        FRAME_BUTTON_CONFIRM_REST,
+        FRAME_BUTTON_CONFIRM_HOVER,
+        FRAME_BUTTON_CONFIRM_CLICK,
+        () =>
+          onConfirm(
+            (dialog.getElement("content") as BackgroundGallery)
+              .newBackgroundTexture
+          )
       )
     );
 
