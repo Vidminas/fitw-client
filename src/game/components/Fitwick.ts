@@ -64,6 +64,7 @@ class Fitwick extends Phaser.GameObjects.Sprite implements IFitwick {
     this.state = "move";
     if (!external) {
       this.setTintFill(TINT_GREEN);
+      this.audio?.play();
     } else {
       this.setTintFill(Phaser.Utils.Array.GetRandom(EXTERNAL_TINTS));
     }
