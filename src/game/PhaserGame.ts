@@ -168,7 +168,10 @@ class PhaserGame {
       return;
     }
 
-    this.game.events.on(EVENT_MESSAGE, showToastMessage);
+    this.game.events.on(EVENT_MESSAGE, (color: string, message: string) => {
+      showToastMessage(color, message);
+      this.socket?.emit(EVENT_MESSAGE, color, message);
+    });
 
     this.game.events.on(
       EVENT_WORLD_CHANGE_BACKGROUND,
