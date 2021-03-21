@@ -9,6 +9,7 @@
 }
 
 .stats-list ion-item {
+  color: white;
   font-size: calc(1px + 1vw);
   --background: none;
   --min-height: 0.5vh;

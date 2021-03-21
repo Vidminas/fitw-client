@@ -87,9 +87,14 @@
   padding: var(--page-padding);
   width: 100%;
   height: 100%;
-  backface-visibility: hidden;
   background-color: var(--page-bg);
   overflow: auto;
+  backface-visibility: hidden;
+  /* This works around a Firefox bug that makes some elements */
+  /* show on both sides of the page */
+  /* https://bugzilla.mozilla.org/show_bug.cgi?id=1201471 */
+  /* The same seems to occur on iOS (all browsers) */
+  transform: rotateY(0);
 }
 .page-side-right {
   transform-origin: center center;
@@ -130,14 +135,6 @@
 .page-side-left::after,
 .page-side-right::after {
   padding-bottom: var(--page-padding);
-}
-
-.page-side-left > *,
-.page-side-right > * {
-  /* This works around a Firefox bug that makes some elements */
-  /* show on both sides of the page */
-  /* https://bugzilla.mozilla.org/show_bug.cgi?id=1201471 */
-  transform: rotateY(0deg);
 }
 
 .page-side-left p,

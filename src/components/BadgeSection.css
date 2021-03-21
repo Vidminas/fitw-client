@@ -1,10 +1,9 @@
 .badgeContainer {
-  display: inline-flex;
+  display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  row-gap: 5px;
-  column-gap: 5px;
+  padding: 5px;
   margin: 20px auto;
 }
 
@@ -16,6 +15,7 @@
   background-color: grey;
   border-radius: 10px;
   cursor: pointer;
+  margin: 5px;
 }
 .badge.selected {
   outline: 2px solid white;
