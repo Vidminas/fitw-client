@@ -2,8 +2,6 @@ import { EVENT_WORLD_DATA } from "../../api/events";
 import IWorld from "../../api/world";
 import {
   BACKGROUND_TEXTURES,
-  GAME_HEIGHT,
-  GAME_WIDTH,
   MUSIC_TRACKS,
   TEXTURE_BUTTONS,
   TEXTURE_DESERT_SPRITES,
@@ -15,21 +13,25 @@ import {
 } from "../constants";
 import { FITWICKS_AUDIO } from "../fitwicks";
 
-const progressBoxWidth = GAME_WIDTH / 2;
-const progressBoxHeight = 50;
-const progressBoxPadding = 20;
-
 class PreloadScene extends Phaser.Scene {
   private progressBar!: Phaser.GameObjects.Graphics;
   private progressBox!: Phaser.GameObjects.Graphics;
   private percentText!: Phaser.GameObjects.Text;
   private worldData?: IWorld;
 
+  private progressBoxWidth!: number;
+  private progressBoxHeight!: number;
+  private progressBoxPadding!: number;
+
   constructor() {
     super({ key: "PreloadScene", active: true });
   }
 
   preload() {
+    this.progressBoxWidth = this.scale.width / 2;
+    this.progressBoxHeight = 50;
+    this.progressBoxPadding = 20;
+
     this.game.events.once(EVENT_WORLD_DATA, (world: IWorld) => {
       this.worldData = world;
     });
@@ -38,28 +40,35 @@ class PreloadScene extends Phaser.Scene {
     this.progressBox = this.add.graphics();
     this.progressBox.fillStyle(0x222222, 0.8);
     this.progressBox.fillRect(
-      (GAME_WIDTH - progressBoxWidth) / 2,
-      (GAME_HEIGHT - progressBoxHeight) / 2,
-      progressBoxWidth,
-      progressBoxHeight
+      (this.scale.width - this.progressBoxWidth) / 2,
+      (this.scale.height - this.progressBoxHeight) / 2,
+      this.progressBoxWidth,
+      this.progressBoxHeight
     );
 
-    this.percentText = this.add.text(GAME_WIDTH / 2, GAME_HEIGHT / 2, "0%", {
-      font: "18px monospace",
-      color: "#ffffff",
-    });
+    this.percentText = this.add.text(
+      this.scale.width / 2,
+      this.scale.height / 2,
+      "0%",
+      {
+        font: "18px monospace",
+        color: "#ffffff",
+      }
+    );
     this.percentText.setOrigin(0.5, 0.5);
 
     this.load.on("progress", (value: number) => {
       this.progressBar.clear();
       this.progressBar.fillStyle(0xffffff, 1);
       this.progressBar.fillRect(
-        (GAME_WIDTH - progressBoxWidth + progressBoxPadding) / 2,
-        (GAME_HEIGHT - progressBoxHeight + progressBoxPadding) / 2,
-        (progressBoxWidth * (0.8 + (this.worldData ? 0.2 : 0)) -
-          progressBoxPadding) *
+        (this.scale.width - this.progressBoxWidth + this.progressBoxPadding) /
+          2,
+        (this.scale.height - this.progressBoxHeight + this.progressBoxPadding) /
+          2,
+        (this.progressBoxWidth * (0.8 + (this.worldData ? 0.2 : 0)) -
+          this.progressBoxPadding) *
           value,
-        progressBoxHeight - progressBoxPadding
+        this.progressBoxHeight - this.progressBoxPadding
       );
       // 0-80% for loading local assets
       // 80-100% for getting world data from server
@@ -139,10 +148,14 @@ class PreloadScene extends Phaser.Scene {
         this.progressBar.clear();
         this.progressBar.fillStyle(0xffffff, 1);
         this.progressBar.fillRect(
-          (GAME_WIDTH - progressBoxWidth + progressBoxPadding) / 2,
-          (GAME_HEIGHT - progressBoxHeight + progressBoxPadding) / 2,
-          progressBoxWidth - progressBoxPadding,
-          progressBoxHeight - progressBoxPadding
+          (this.scale.width - this.progressBoxWidth + this.progressBoxPadding) /
+            2,
+          (this.scale.height -
+            this.progressBoxHeight +
+            this.progressBoxPadding) /
+            2,
+          this.progressBoxWidth - this.progressBoxPadding,
+          this.progressBoxHeight - this.progressBoxPadding
         );
         this.percentText.setText("100%");
 
