@@ -20,6 +20,7 @@ import {
   EVENT_DO_FITWICK_DELETE,
   EVENT_MESSAGE,
   EVENT_WORLD_DATA,
+  EVENT_BROWSER_MESSAGE,
 } from "../api/events";
 import { GAME_HEIGHT, GAME_WIDTH } from "./constants";
 import MainScene from "./scenes/MainScene";
@@ -63,11 +64,17 @@ class PhaserGame {
   private game?: Phaser.Game;
   private socket?: Socket;
   private exitWorldCallback: Function;
+  private consoleInfo: typeof console.info;
+  private consoleWarn: typeof console.warn;
+  private consoleError: typeof console.error;
 
   constructor(exitWorldCallback: Function) {
     this.game = undefined;
     this.socket = undefined;
     this.exitWorldCallback = exitWorldCallback;
+    this.consoleInfo = console.info;
+    this.consoleWarn = console.warn;
+    this.consoleError = console.error;
   }
 
   public init(
@@ -110,11 +117,48 @@ class PhaserGame {
           }
         );
       });
+      this.hookIntoBrowserEvents();
+      this.registerGameEvents(showToastMessage);
+      this.registerServerEvents(showToastMessage);
     }
 
-    this.registerGameEvents(showToastMessage);
-    this.registerServerEvents(showToastMessage);
     return this.game;
+  }
+
+  private hookIntoBrowserEvents() {
+    const gameThis = this;
+    console.info = function (message?: any, ...optionalArgs: any[]) {
+      gameThis.socket?.emit(EVENT_BROWSER_MESSAGE, message);
+      return gameThis.consoleInfo.apply(
+        console,
+        [message].concat(optionalArgs)
+      );
+    };
+    console.warn = function (message?: any, ...optionalArgs: any[]) {
+      gameThis.socket?.emit(EVENT_BROWSER_MESSAGE, message);
+      return gameThis.consoleWarn.apply(
+        console,
+        [message].concat(optionalArgs)
+      );
+    };
+    console.error = function (message?: any, ...optionalArgs: any[]) {
+      gameThis.socket?.emit(EVENT_BROWSER_MESSAGE, message);
+      return gameThis.consoleError.apply(
+        console,
+        [message].concat(optionalArgs)
+      );
+    };
+    window.onerror = function (message, url, lineNo, columnNo, error) {
+      const msg = [
+        "Message: " + message,
+        "URL: " + url,
+        "Line: " + lineNo,
+        "Column: " + columnNo,
+        "Error object: " + JSON.stringify(error),
+      ].join(" - ");
+      gameThis.socket?.emit(EVENT_BROWSER_MESSAGE, msg);
+      return false;
+    };
   }
 
   private registerGameEvents(
@@ -251,6 +295,12 @@ class PhaserGame {
   }
 
   public destroy() {
+    console.info = this.consoleInfo;
+    console.warn = this.consoleWarn;
+    console.error = this.consoleError;
+    // When the function returns true, this prevents the firing of the default event handler.
+    window.onerror = () => false;
+
     if (this.game) {
       this.game.destroy(true);
       this.game = undefined;
