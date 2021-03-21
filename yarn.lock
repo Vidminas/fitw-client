@@ -1071,7 +1071,7 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@7.12.5", "@babel/runtime@^7.1.2", "@babel/runtime@^7.10.2", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.1", "@babel/runtime@^7.12.5", "@babel/runtime@^7.5.5", "@babel/runtime@^7.7.2", "@babel/runtime@^7.8.4", "@babel/runtime@^7.9.2":
+"@babel/runtime@^7.1.2", "@babel/runtime@^7.10.2", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.1", "@babel/runtime@^7.12.5", "@babel/runtime@^7.5.5", "@babel/runtime@^7.7.2", "@babel/runtime@^7.8.4", "@babel/runtime@^7.9.2":
   version "7.12.5"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.12.5.tgz#410e7e487441e1b360c29be715d870d9b985882e"
   integrity sha512-plcc+hbExy3McchJCEQG3knOsuh3HH+Prx1P6cLIkET/0dLuQDEnrT+s27Axgc9bqfsmNUNHfscgMUdBpC9xfg==
@@ -1750,11 +1750,6 @@
   version "1.2.10"
   resolved "https://registry.yarnpkg.com/@types/component-emitter/-/component-emitter-1.2.10.tgz#ef5b1589b9f16544642e473db5ea5639107ef3ea"
   integrity sha512-bsjleuRKWmGqajMerkzox19aGbscQX5rmmvvXl3wlIp5gMG1HgkiwPxsN5p070fBDKTNSPgojVbuY1+HWMbFhg==
-
-"@types/dat.gui@^0.7.6":
-  version "0.7.6"
-  resolved "https://registry.yarnpkg.com/@types/dat.gui/-/dat.gui-0.7.6.tgz#61aaacdb01f70e1401e051dfcf4192a30acb2435"
-  integrity sha512-Dx9f9CkXJkDAxt9M05vc7DItSqsiEhWN7Rx3vgO/maltv/nX9TaMX2sd/iAMENnL1D5FivetktJEyCBLFu50CQ==
 
 "@types/eslint@^7.2.4":
   version "7.2.6"
@@ -2648,14 +2643,6 @@ axe-core@^4.0.2:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-4.1.1.tgz#70a7855888e287f7add66002211a423937063eaf"
   integrity sha512-5Kgy8Cz6LPC9DJcNb3yjAXTu3XihQgEdnIg50c//zOC/MyLP0Clg+Y8Sh9ZjjnvBrDZU4DgXS9C3T9r4/scGZQ==
-
-axios-hooks@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/axios-hooks/-/axios-hooks-2.3.0.tgz#2e728e5c75fd59c5300168dd94017bb6d1ffc517"
-  integrity sha512-YAmsXIC6E/Uevz8pdaHDfCPLl/o83TCFiueZMdKgVSDcpuy7mMz1cm85JuANibYMgl0Fqx8SENLfjtG22QX30Q==
-  dependencies:
-    "@babel/runtime" "7.12.5"
-    lru-cache "6.0.0"
 
 axios@^0.21.1:
   version "0.21.1"
@@ -5011,15 +4998,6 @@ expect@^26.6.0, expect@^26.6.2:
     jest-message-util "^26.6.2"
     jest-regex-util "^26.0.0"
 
-exports-loader@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/exports-loader/-/exports-loader-1.1.1.tgz#88c9a6877ee6a5519d7c41a016bdd99148421e69"
-  integrity sha512-CmyhIR2sJ3KOfVsHjsR0Yvo+0lhRhRMAevCbB8dhTVLHsZPs0lCQTvRmR9YNvBXDBxUuhmCE2f54KqEjZUaFrg==
-  dependencies:
-    loader-utils "^2.0.0"
-    schema-utils "^3.0.0"
-    source-map "^0.6.1"
-
 express@^4.17.1:
   version "4.17.1"
   resolved "https://registry.yarnpkg.com/express/-/express-4.17.1.tgz#4491fc38605cf51f8629d39c2b5d026f98a4c134"
@@ -6019,16 +5997,6 @@ import-local@^3.0.2:
   dependencies:
     pkg-dir "^4.2.0"
     resolve-cwd "^3.0.0"
-
-imports-loader@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/imports-loader/-/imports-loader-1.2.0.tgz#b06823d0bb42e6f5ff89bc893829000eda46693f"
-  integrity sha512-zPvangKEgrrPeqeUqH0Uhc59YqK07JqZBi9a9cQ3v/EKUIqrbJHY4CvUrDus2lgQa5AmPyXuGrWP8JJTqzE5RQ==
-  dependencies:
-    loader-utils "^2.0.0"
-    schema-utils "^3.0.0"
-    source-map "^0.6.1"
-    strip-comments "^2.0.1"
 
 imurmurhash@^0.1.4:
   version "0.1.4"
@@ -7346,19 +7314,19 @@ lower-case@^2.0.2:
   dependencies:
     tslib "^2.0.3"
 
-lru-cache@6.0.0, lru-cache@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-6.0.0.tgz#6d6fe6570ebd96aaf90fcad1dafa3b2566db3a94"
-  integrity sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==
-  dependencies:
-    yallist "^4.0.0"
-
 lru-cache@^5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-5.1.1.tgz#1da27e6710271947695daf6848e847f01d84b920"
   integrity sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==
   dependencies:
     yallist "^3.0.2"
+
+lru-cache@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-6.0.0.tgz#6d6fe6570ebd96aaf90fcad1dafa3b2566db3a94"
+  integrity sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==
+  dependencies:
+    yallist "^4.0.0"
 
 lz-string@^1.4.4:
   version "1.4.4"
@@ -8414,24 +8382,22 @@ performance-now@^2.1.0:
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
   integrity sha1-Ywn04OX6kT7BxpMHrjZLSzd8nns=
 
-phaser3-rex-plugins@^1.1.39:
-  version "1.1.39"
-  resolved "https://registry.yarnpkg.com/phaser3-rex-plugins/-/phaser3-rex-plugins-1.1.39.tgz#770bfde0198874a369afd91881ddea80bf2c8479"
-  integrity sha512-H0aPJt+DV1zuuWSSg5yHfbga3QM948/W5fHlwHEhHANVT8DaewUAlo+vQrO3hA4yVq/77dqoiCe5Tk9XoJZ3QQ==
+phaser3-rex-plugins@^1.1.41:
+  version "1.1.41"
+  resolved "https://registry.yarnpkg.com/phaser3-rex-plugins/-/phaser3-rex-plugins-1.1.41.tgz#15e8ac710ee9631c9be1913fd2226386cf4bf53c"
+  integrity sha512-EbvpmGAcxGlHL4sAgiJLmw7mz70BdLP/J0hWDPL/nWzf51W2cK0hPhjndVqwMRAV6Xv/2aVBnULYLHmPDUF6uA==
   dependencies:
     eventemitter3 "^3.1.2"
     lokijs "^1.5.11"
     papaparse "^5.3.0"
     webfontloader "^1.6.28"
 
-phaser@^3.52.0:
-  version "3.52.0"
-  resolved "https://registry.yarnpkg.com/phaser/-/phaser-3.52.0.tgz#834dd7a7717308c2576d2450d0806317cf3d1ea8"
-  integrity sha512-oH39AUXR+cletB3GIvLnVO2J7/M6xs0D0LamVdCrbCDO3jckQOVBcqR6SJ2wam+4D5iJTCXv8K+FmxFzcTUWuA==
+phaser@^3.53.1:
+  version "3.53.1"
+  resolved "https://registry.yarnpkg.com/phaser/-/phaser-3.53.1.tgz#1ba603ce5e4e6d5028cdd411a5a5c0ef0f75fc86"
+  integrity sha512-yvzKotQLhdsaEfS7EdQodosUV9pvcNPcqgjh7mPzVPPZXeaUfwWu4spwgGxU4ohTckVMd2JXbOrTymXF5Qs1Dg==
   dependencies:
     eventemitter3 "^4.0.7"
-    exports-loader "^1.1.1"
-    imports-loader "^1.2.0"
     path "^0.12.7"
 
 picomatch@^2.0.4, picomatch@^2.0.5, picomatch@^2.2.1, picomatch@^2.2.2:
@@ -9723,11 +9689,6 @@ redux-saga@^1.1.3:
   dependencies:
     "@redux-saga/core" "^1.1.3"
 
-redux-thunk@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-2.3.0.tgz#51c2c19a185ed5187aaa9a2d08b666d0d6467622"
-  integrity sha512-km6dclyFnmcvxhAcrQV2AkZmPQjzPDjgVlQtR0EQjxZPyJ0BnMf3in1ryuR8A2qU0HldVRfxYXbFSKlI3N7Slw==
-
 redux@^4.0.0, redux@^4.0.4, redux@^4.0.5:
   version "4.0.5"
   resolved "https://registry.yarnpkg.com/redux/-/redux-4.0.5.tgz#4db5de5816e17891de8a80c424232d06f051d93f"
@@ -10865,11 +10826,6 @@ strip-comments@^1.0.2:
   dependencies:
     babel-extract-comments "^1.0.0"
     babel-plugin-transform-object-rest-spread "^6.26.0"
-
-strip-comments@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/strip-comments/-/strip-comments-2.0.1.tgz#4ad11c3fbcac177a67a40ac224ca339ca1c1ba9b"
-  integrity sha512-ZprKx+bBLXv067WTCALv8SSz5l2+XhpYCsVtSqlMnkAXMWDq+/ekVbl1ghqP9rUHTzv6sm/DwCOiYutU/yp1fw==
 
 strip-eof@^1.0.0:
   version "1.0.0"
