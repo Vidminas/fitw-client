@@ -1,7 +1,9 @@
 // logic from https://www.joshmorony.com/how-to-scale-a-game-for-all-device-sizes-in-phaser/
-export const GAME_WIDTH = window.innerWidth * window.devicePixelRatio;
-export const GAME_HEIGHT = window.innerHeight * window.devicePixelRatio;
 export const SCALE_RATIO = window.devicePixelRatio * 1.5;
+// * 1.5 allows to zoom out a bit more
+export const GAME_WIDTH = window.innerWidth * SCALE_RATIO;
+export const GAME_HEIGHT = window.innerHeight * SCALE_RATIO;
+
 console.log("GAME WIDTH = " + GAME_WIDTH);
 console.log("GAME HEIGHT = " + GAME_HEIGHT);
 console.log("SCALE RATIO = " + SCALE_RATIO);
@@ -14,12 +16,8 @@ export const UI_BIG_FONT_SIZE = `${24 * SCALE_RATIO}px`;
 
 export const REGISTRY_BACKGROUND_TEXTURE = "current-background-texture";
 
-// the smallest width and height of all images (it's okay to have bigger)
-const GAME_BG_WIDTH = 1024;
-// const GAME_BG_HEIGHT = 1024;
-// limits on camera scroll
-export const MAX_SCROLL_X = GAME_BG_WIDTH * 5;
-// export const MAX_SCROLL_Y = GAME_BG_HEIGHT;
+// limits on camera scroll should be consistent for all screen sizes
+export const MAX_SCROLL_X = 1024 * 5;
 // limits on camera zoom (besides limiting to game height and width)
 export const MAX_ZOOM_FACTOR = 4;
 

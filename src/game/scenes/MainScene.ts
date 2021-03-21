@@ -144,8 +144,8 @@ class MainScene extends RexScene {
     );
     const cam = this.cameras.main;
     cam.setDeadzone(
-      Math.min(8 * UI_BUTTON_SIZE, GAME_WIDTH / 2),
-      Math.min(4 * UI_BUTTON_SIZE, GAME_HEIGHT / 2)
+      Math.min(8 * UI_BUTTON_SIZE, this.scale.width / 2),
+      Math.min(4 * UI_BUTTON_SIZE, this.scale.height / 2)
     );
     const scrollX = cam.scrollX;
     const scrollY = cam.scrollY;
@@ -158,6 +158,7 @@ class MainScene extends RexScene {
 
   create(world?: IWorld) {
     const cam = this.cameras.main;
+    cam.setZoom(1.5);
 
     this.registry.set(
       REGISTRY_BACKGROUND_TEXTURE,
