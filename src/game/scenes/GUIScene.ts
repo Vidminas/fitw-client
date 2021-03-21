@@ -10,13 +10,11 @@ import {
 } from "../../api/events";
 import Button from "../components/Button";
 import {
-  GAME_WIDTH,
   UI_BUTTON_SIZE,
   TEXTURE_BUTTONS,
   FRAME_BUTTON_SWITCH_REST,
   FRAME_BUTTON_SWITCH_HOVER,
   FRAME_BUTTON_SWITCH_CLICK,
-  GAME_HEIGHT,
   FRAME_BUTTON_ADD_REST,
   FRAME_BUTTON_ADD_HOVER,
   FRAME_BUTTON_ADD_CLICK,
@@ -124,7 +122,7 @@ class GUIScene extends RexScene {
 
     this.changeBackgroundButton = new Button(
       this,
-      GAME_WIDTH - 2 * UI_BUTTON_SIZE,
+      this.scale.width - 2 * UI_BUTTON_SIZE,
       0,
       TEXTURE_BUTTONS,
       FRAME_BUTTON_SWITCH_REST,
@@ -134,7 +132,7 @@ class GUIScene extends RexScene {
     );
     this.settingsButton = new Button(
       this,
-      GAME_WIDTH - 1 * UI_BUTTON_SIZE,
+      this.scale.width - 1 * UI_BUTTON_SIZE,
       0,
       TEXTURE_BUTTONS,
       FRAME_BUTTON_SETTINGS_REST,
@@ -148,8 +146,8 @@ class GUIScene extends RexScene {
     );
     this.listButton = new Button(
       this,
-      GAME_WIDTH / 2 - UI_BUTTON_SIZE / 2,
-      GAME_HEIGHT - UI_BUTTON_SIZE,
+      this.scale.width / 2 - UI_BUTTON_SIZE / 2,
+      this.scale.height - UI_BUTTON_SIZE,
       TEXTURE_BUTTONS,
       FRAME_BUTTON_LIST_REST,
       FRAME_BUTTON_LIST_HOVER,
@@ -158,8 +156,8 @@ class GUIScene extends RexScene {
     );
     this.addFitwickButton = new Button(
       this,
-      GAME_WIDTH / 2 + UI_BUTTON_SIZE / 2,
-      GAME_HEIGHT - UI_BUTTON_SIZE,
+      this.scale.width / 2 + UI_BUTTON_SIZE / 2,
+      this.scale.height - UI_BUTTON_SIZE,
       TEXTURE_BUTTONS,
       FRAME_BUTTON_ADD_REST,
       FRAME_BUTTON_ADD_HOVER,
@@ -168,8 +166,8 @@ class GUIScene extends RexScene {
     );
     this.confirmFitwickButton = new Button(
       this,
-      GAME_WIDTH / 2 + UI_BUTTON_SIZE / 2,
-      GAME_HEIGHT - UI_BUTTON_SIZE,
+      this.scale.width / 2 + UI_BUTTON_SIZE / 2,
+      this.scale.height - UI_BUTTON_SIZE,
       TEXTURE_BUTTONS,
       FRAME_BUTTON_CONFIRM_REST,
       FRAME_BUTTON_CONFIRM_HOVER,
@@ -180,8 +178,8 @@ class GUIScene extends RexScene {
     this.confirmFitwickButton.setVisible(false);
     this.deleteFitwickButton = new Button(
       this,
-      GAME_WIDTH / 2 - UI_BUTTON_SIZE / 2,
-      GAME_HEIGHT - UI_BUTTON_SIZE,
+      this.scale.width / 2 - UI_BUTTON_SIZE / 2,
+      this.scale.height - UI_BUTTON_SIZE,
       TEXTURE_BUTTONS,
       FRAME_BUTTON_DELETE_REST,
       FRAME_BUTTON_DELETE_HOVER,

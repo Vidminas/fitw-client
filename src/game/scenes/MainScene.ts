@@ -15,8 +15,6 @@ import {
   EVENT_DONE_FITWICK_DELETE,
 } from "../../api/events";
 import {
-  GAME_HEIGHT,
-  GAME_WIDTH,
   MAX_SCROLL_X,
   MAX_ZOOM_FACTOR,
   TEXTURE_BACKGROUND_EMPTY,
@@ -124,11 +122,11 @@ class MainScene extends RexScene {
     if (zoom > MAX_ZOOM_FACTOR) {
       zoom = MAX_ZOOM_FACTOR;
     } else {
-      if (zoom < cam.height / GAME_HEIGHT) {
-        zoom = cam.height / GAME_HEIGHT;
+      if (zoom < cam.height / this.scale.height) {
+        zoom = cam.height / this.scale.height;
       }
-      if (zoom < cam.width / GAME_WIDTH) {
-        zoom = cam.width / GAME_WIDTH;
+      if (zoom < cam.width / this.scale.width) {
+        zoom = cam.width / this.scale.width;
       }
     }
 
@@ -177,8 +175,8 @@ class MainScene extends RexScene {
       .tileSprite(
         0,
         0,
-        GAME_WIDTH,
-        GAME_HEIGHT,
+        this.scale.width,
+        this.scale.height,
         this.registry.get(REGISTRY_BACKGROUND_TEXTURE)
       )
       .setOrigin(0);
@@ -230,8 +228,8 @@ class MainScene extends RexScene {
       EVENT_DO_FITWICK_NEW,
       (external: boolean, fitwick: string | IFitwick) => {
         if (!external) {
-          const x = cam.scrollX + GAME_WIDTH / 2;
-          const y = cam.scrollY + GAME_HEIGHT / 2;
+          const x = cam.scrollX + this.scale.width / 2;
+          const y = cam.scrollY + this.scale.height / 2;
           this.activeFitwick = new Fitwick(this, fitwick as string, x, y);
           this.game.events.emit(
             EVENT_DONE_FITWICK_NEW,

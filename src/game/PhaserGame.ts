@@ -22,7 +22,7 @@ import {
   EVENT_WORLD_DATA,
   EVENT_BROWSER_MESSAGE,
 } from "../api/events";
-import { GAME_HEIGHT, GAME_WIDTH } from "./constants";
+import { SCALE_RATIO } from "./constants";
 import MainScene from "./scenes/MainScene";
 import GUIScene from "./scenes/GUIScene";
 import PreloadScene from "./scenes/PreloadScene";
@@ -87,8 +87,10 @@ class PhaserGame {
     this.game = new Phaser.Game({
       parent,
       type: Phaser.AUTO,
-      width: GAME_WIDTH,
-      height: GAME_HEIGHT,
+      // creating a game slightly larger than window size
+      // allows to zoom out more
+      width: window.innerWidth * SCALE_RATIO,
+      height: window.innerHeight * SCALE_RATIO,
       autoFocus: true,
       scene: [PreloadScene, MainScene, GUIScene, ModalScene],
       dom: {

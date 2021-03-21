@@ -1,11 +1,6 @@
 // logic from https://www.joshmorony.com/how-to-scale-a-game-for-all-device-sizes-in-phaser/
 export const SCALE_RATIO = window.devicePixelRatio * 1.5;
-// * 1.5 allows to zoom out a bit more
-export const GAME_WIDTH = window.innerWidth * SCALE_RATIO;
-export const GAME_HEIGHT = window.innerHeight * SCALE_RATIO;
 
-console.log("GAME WIDTH = " + GAME_WIDTH);
-console.log("GAME HEIGHT = " + GAME_HEIGHT);
 console.log("SCALE RATIO = " + SCALE_RATIO);
 
 export const UI_BUTTON_SIZE = 48 * SCALE_RATIO;
