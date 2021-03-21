@@ -77,6 +77,7 @@ class AddDialog extends ModalDialog {
         valign: "center",
       }
     );
+    inputBox.setStyle("pointer-events", "auto");
     inputBox.setStyle("border-radius", "25px");
     scene.add.existing(inputBox);
 

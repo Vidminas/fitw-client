@@ -12,7 +12,7 @@
     "axios": "^0.21.1",
     "chart.js": "^2.9.4",
     "ionicons": "^5.5.0",
-    "phaser": "^3.53.1",
+    "phaser": "3.52.0",
     "phaser3-rex-plugins": "^1.1.41",
     "react": "^17.0.1",
     "react-chartjs-2": "^2.11.1",
