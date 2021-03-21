@@ -48,7 +48,16 @@ class MainScene extends RexScene {
           _gameObject: Phaser.GameObjects.GameObject | undefined,
           _lastPointer: Phaser.Input.Pointer
         ) => {
-          if (!this.activeFitwick && fitwick.state === "rest") {
+          if (fitwick.state === "rest" && this.activeFitwick !== fitwick) {
+            if (this.activeFitwick) {
+              // false -> not external event
+              this.game.events.emit(
+                EVENT_DO_FITWICK_PLACE,
+                false,
+                this.activeFitwick
+              );
+            }
+
             // false -> not external event
             this.game.events.emit(EVENT_FITWICK_PICK_UP, false, fitwick);
             if (this.activeSpeechBubble) {
