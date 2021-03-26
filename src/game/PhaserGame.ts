@@ -120,9 +120,10 @@ class PhaserGame {
         );
       });
       this.hookIntoBrowserEvents();
-      this.registerGameEvents(showToastMessage);
       this.registerServerEvents(showToastMessage);
     }
+
+    this.registerGameEvents(showToastMessage);
 
     return this.game;
   }

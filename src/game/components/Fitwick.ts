@@ -5,7 +5,7 @@ import { FITWICKS, FITWICKS_AUDIO } from "../fitwicks";
 
 class Fitwick extends Phaser.GameObjects.Sprite implements IFitwick {
   static exists(name: string) {
-    return FITWICKS.has(name);
+    return FITWICKS.has(name.toLowerCase());
   }
 
   public worldId: string;
@@ -25,6 +25,7 @@ class Fitwick extends Phaser.GameObjects.Sprite implements IFitwick {
     atlasTexture?: string,
     atlasFrame?: string
   ) {
+    inputName = inputName.toLowerCase();
     if (!FITWICKS.has(inputName)) {
       throw new Error(`Fitwick ${inputName} not found but created anyway!`);
     }
