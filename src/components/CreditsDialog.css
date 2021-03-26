@@ -1,0 +1,17 @@
+.credits {
+  --width: calc(4rem + 75vw);
+  --height: calc(4rem + 80vh);
+}
+
+.credits ion-card {
+  overflow-y: scroll;
+}
+
+.credits ion-card-header ion-icon {
+  cursor: pointer;
+}
+
+/* .credits-item ion-note {
+  margin-top: auto;
+  margin-bottom: auto;
+} */

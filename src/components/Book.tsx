@@ -186,9 +186,7 @@ const Book: React.FC<{}> = () => {
       ></IonLoading>
       <WorldDialog
         isOpen={showWorldDialog}
-        onDismiss={() => {
-          setShowWorldDialog(false);
-        }}
+        onDismiss={() => setShowWorldDialog(false)}
         world={selectedWorld}
       ></WorldDialog>
       <IonToast
