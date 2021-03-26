@@ -110,7 +110,7 @@ const BadgeSection: React.FC<{}> = () => {
           description="You can get this badge by creating 10 different electronics-themed objects in any world"
           imgSrc="assets/ui/fortran-minimalist-monitor-and-computer.svg"
           countCollected={userState.user?.stats.createdUniqueElectronicsObjects}
-          obtainCount={15}
+          obtainCount={10}
         />
         <Badge
           title="Pyramid badge"
