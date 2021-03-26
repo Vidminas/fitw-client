@@ -29,6 +29,12 @@ export const MUSIC_TRACKS = [
   MUSIC_TREASURE,
 ];
 
+export const AUDIO_FITWICK_TREE = "tree.wav";
+export const AUDIO_FITWICK_DEAD_TREE = "dead tree.wav";
+export const AUDIO_FITWICK_PINE_TREE = "pine tree.wav";
+export const AUDIO_FITWICK_PALM_TREE = "palm tree.wav";
+export const AUDIO_FITWICK_SNOWY_TREE = "snowy tree.wav";
+export const AUDIO_FITWICK_SNOWMAN = "snowman.wav";
 export const AUDIO_FITWICK_BAOBAB = "baobab.wav";
 export const AUDIO_FITWICK_FIRE_PIT = "fire pit.wav";
 export const AUDIO_FITWICK_BUSH = "bush.wav";
