@@ -1,6 +1,8 @@
 import {
   IonContent,
   IonHeader,
+  IonIcon,
+  IonLabel,
   IonPage,
   IonTitle,
   IonToast,
@@ -15,6 +17,7 @@ import "./Clock.css";
 import { useHistory } from "react-router";
 import { AppState } from "../redux/store";
 import { WORLD_FETCH } from "../redux/actionTypes";
+import { timeOutline } from "ionicons/icons";
 
 const Game: React.FC<{}> = () => {
   const history = useHistory();
@@ -100,7 +103,10 @@ const Game: React.FC<{}> = () => {
       <IonHeader>
         <IonToolbar className="clock-toolbar">
           <IonTitle>
-            <div id="clock">Time now: {time}</div>
+            <IonLabel id="clock" color="secondary">
+              <IonIcon icon={timeOutline} />
+              {time}
+            </IonLabel>
           </IonTitle>
         </IonToolbar>
       </IonHeader>

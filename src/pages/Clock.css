@@ -3,7 +3,12 @@
 }
 
 #clock {
-  color: #3dc2ff;
+  display: flex;
   font-size: calc(4px + 3vh);
   letter-spacing: 3px;
+}
+
+#clock ion-icon {
+  align-self: center;
+  margin-right: 5px;
 }
