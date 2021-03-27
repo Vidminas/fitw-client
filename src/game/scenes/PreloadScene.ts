@@ -17,6 +17,7 @@ import {
 import { FITWICKS_AUDIO } from "../fitwicks";
 
 class PreloadScene extends Phaser.Scene {
+  private loadingText!: Phaser.GameObjects.Text;
   private progressBar!: Phaser.GameObjects.Graphics;
   private progressBox!: Phaser.GameObjects.Graphics;
   private percentText!: Phaser.GameObjects.Text;
@@ -38,6 +39,19 @@ class PreloadScene extends Phaser.Scene {
     this.game.events.once(EVENT_WORLD_DATA, (world: IWorld) => {
       this.worldData = world;
     });
+
+    this.loadingText = this.add.text(
+      0,
+      this.scale.height / 2 - this.progressBoxHeight,
+      "Loading...",
+      {
+        fontSize: UI_BIG_FONT_SIZE,
+        color: COLOR_STRING_WHITE,
+      }
+    );
+
+    this.loadingText.x =
+      (this.scale.width - this.loadingText.getBounds().width) / 2;
 
     this.progressBar = this.add.graphics();
     this.progressBox = this.add.graphics();
@@ -82,6 +96,7 @@ class PreloadScene extends Phaser.Scene {
 
     this.load.on("complete", () => {
       if (this.worldData) {
+        this.loadingText.destroy();
         this.progressBar.destroy();
         this.progressBox.destroy();
         this.percentText.destroy();
@@ -162,13 +177,14 @@ class PreloadScene extends Phaser.Scene {
         );
         this.percentText.setText("100%");
 
-        this.scene.launch("MainScene", this.worldData);
-        this.scene.launch("GUIScene");
-        this.scene.launch("ModalScene");
-
+        this.loadingText.destroy();
         this.progressBar.destroy();
         this.progressBox.destroy();
         this.percentText.destroy();
+
+        this.scene.launch("MainScene", this.worldData);
+        this.scene.launch("GUIScene");
+        this.scene.launch("ModalScene");
       });
     }
   }
