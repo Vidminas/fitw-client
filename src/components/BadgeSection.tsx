@@ -132,7 +132,14 @@ const BadgeSection: React.FC<{}> = () => {
         onDidDismiss={() => setShowToast(false)}
         message={toastMessage}
         position="bottom"
-        duration={2000}
+        duration={5000}
+        buttons={[
+          {
+            text: "Close",
+            role: "cancel",
+            side: "end",
+          },
+        ]}
       />
     </>
   );

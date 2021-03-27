@@ -111,7 +111,7 @@ const Game: React.FC<{}> = () => {
           onDidDismiss={() => setShowToast(false)}
           color={toastColor}
           message={toastMessage}
-          duration={2500}
+          duration={3000}
           buttons={[
             {
               text: "Close",
