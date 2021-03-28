@@ -36,9 +36,13 @@ class MainScene extends RexScene {
   }
 
   private registerFitwickEvents(fitwick: Fitwick) {
+    const holdTimeMs = 150;
     // TODO: there is probably a memory leak when this is not cleaned up on delete
     this.rexGestures.add
-      .press(fitwick)
+      .press(fitwick, {
+        time: holdTimeMs,
+        threshold: 15,
+      })
       .on(
         "pressstart",
         (
@@ -71,7 +75,9 @@ class MainScene extends RexScene {
       );
     // TODO: same as with rexGestures.press
     this.rexGestures.add
-      .tap(fitwick)
+      .tap(fitwick, {
+        time: holdTimeMs,
+      })
       .on(
         "tap",
         (
