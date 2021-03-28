@@ -3,6 +3,14 @@ declare module "*.png" {
   export default content;
 }
 
+namespace Phaser.Loader {
+  interface LoaderPlugin {
+    fitwickConfig(
+      config: Phaser.Types.Loader.FileTypes.JSONFileConfig
+    ): Phaser.Loader.LoaderPlugin;
+  }
+}
+
 declare module "phaser3-rex-plugins/templates/ui/ui-plugin.js" {
   class RexUIPlugin extends Phaser.Plugins.ScenePlugin {}
   export default RexUIPlugin;

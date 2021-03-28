@@ -1,0 +1,1038 @@
+{
+  "path": "fitwicks",
+  "atlases": [
+    {
+      "key": "kenney_backgrounds_sprites",
+      "type": "atlasXML",
+      "texture": "kenney_spritesheet.png",
+      "layout": "kenney_spritesheet.xml"
+    },
+    {
+      "key": "underwater_sprites",
+      "type": "atlasXML",
+      "texture": "underwater_sprites.png",
+      "layout": "underwater_sprites.xml"
+    },
+    {
+      "key": "desert_sprites",
+      "type": "atlasXML",
+      "texture": "desert_sprites.png",
+      "layout": "desert_sprites.xml"
+    },
+    {
+      "key": "winter_sprites",
+      "type": "atlasXML",
+      "texture": "winter_sprites.png",
+      "layout": "winter_sprites.xml"
+    },
+    {
+      "key": "medieval_tropical_sprites",
+      "type": "atlasXML",
+      "texture": "medieval_tropical_sprites.png",
+      "layout": "medieval_tropical_sprites.xml"
+    },
+    {
+      "key": "kenney_items_sprites",
+      "type": "atlasXML",
+      "texture": "genericItems_spritesheet_colored.png",
+      "layout": "genericItems_spritesheet_colored.xml"
+    }
+  ],
+  "fitwicks": [
+    {
+      "name": "bush",
+      "pronunciation": "bush.wav",
+      "sprites": [
+        ["kenney_backgrounds_sprites", "bush1.png"],
+        // these look too much like grass
+        // ["kenney_backgrounds_sprites", "bush2.png"],
+        // ["kenney_backgrounds_sprites", "bush3.png"],
+        // ["kenney_backgrounds_sprites", "bush4.png"],
+        ["kenney_backgrounds_sprites", "bushAlt1.png"],
+        // ["kenney_backgrounds_sprites", "bushAlt2.png"],
+        // ["kenney_backgrounds_sprites", "bushAlt3.png"],
+        // ["kenney_backgrounds_sprites", "bushAlt4.png"],
+        ["kenney_backgrounds_sprites", "bushOrange1.png"]
+        // ["kenney_backgrounds_sprites", "bushOrange2.png"],
+        // ["kenney_backgrounds_sprites", "bushOrange3.png"],
+        // ["kenney_backgrounds_sprites", "bushOrange4.png"],
+      ]
+    },
+    {
+      "name": "green bush",
+      "sprites": [
+        ["kenney_backgrounds_sprites", "bush1.png"],
+        // ["kenney_backgrounds_sprites", "bush2.png"],
+        // ["kenney_backgrounds_sprites", "bush3.png"],
+        // ["kenney_backgrounds_sprites", "bush4.png"],
+        ["kenney_backgrounds_sprites", "bushAlt1.png"]
+        // ["kenney_backgrounds_sprites", "bushAlt2.png"],
+        // ["kenney_backgrounds_sprites", "bushAlt3.png"],
+        // ["kenney_backgrounds_sprites", "bushAlt4.png"],
+      ]
+    },
+    {
+      "name": "orange bush",
+      "sprites": [
+        ["kenney_backgrounds_sprites", "bushOrange1.png"]
+        // ["kenney_backgrounds_sprites", "bushOrange2.png"],
+        // ["kenney_backgrounds_sprites", "bushOrange3.png"],
+        // ["kenney_backgrounds_sprites", "bushOrange4.png"],
+      ]
+    },
+    {
+      "name": "house",
+      "sprites": [
+        ["kenney_backgrounds_sprites", "house1.png"],
+        ["kenney_backgrounds_sprites", "house2.png"],
+        ["kenney_backgrounds_sprites", "houseAlt1.png"],
+        ["kenney_backgrounds_sprites", "houseAlt2.png"]
+      ]
+    },
+    {
+      "name": "small house",
+      "sprites": [
+        ["kenney_backgrounds_sprites", "houseSmall1.png"],
+        ["kenney_backgrounds_sprites", "houseSmall2.png"],
+        ["kenney_backgrounds_sprites", "houseSmallAlt1.png"],
+        ["kenney_backgrounds_sprites", "houseSmallAlt2.png"]
+      ]
+    },
+    {
+      "name": "small castle",
+      "sprites": [
+        ["kenney_backgrounds_sprites", "castleSmall.png"],
+        ["kenney_backgrounds_sprites", "castleSmallAlt.png"]
+      ]
+    },
+    {
+      "name": "castle wall",
+      "sprites": [
+        ["kenney_backgrounds_sprites", "castleWall.png"],
+        ["kenney_backgrounds_sprites", "castleWallAlt.png"]
+      ]
+    },
+    {
+      "name": "cactus",
+      "sprites": [
+        ["kenney_backgrounds_sprites", "cactus1.png"],
+        ["kenney_backgrounds_sprites", "cactus2.png"],
+        ["kenney_backgrounds_sprites", "cactus3.png"],
+        ["desert_sprites", "greenery_1.png"],
+        ["desert_sprites", "greenery_2.png"],
+        ["desert_sprites", "greenery_3.png"],
+        ["desert_sprites", "greenery_4.png"],
+        ["desert_sprites", "greenery_5.png"],
+        // greenery 6 is a shrub
+        ["desert_sprites", "greenery_7.png"],
+        ["desert_sprites", "greenery_8.png"],
+        ["desert_sprites", "greenery_9.png"]
+        // greenery 10 is a shrub
+      ]
+    },
+    {
+      "name": "moon",
+      "sprites": [
+        ["kenney_backgrounds_sprites", "moon.png"],
+        ["kenney_backgrounds_sprites", "moonFull.png"]
+      ]
+    },
+    {
+      "name": "full moon",
+      "sprites": [["kenney_backgrounds_sprites", "moonFull.png"]]
+    },
+    {
+      "name": "tree",
+      "pronunciation": "tree.wav",
+      "sprites": [
+        ["kenney_backgrounds_sprites", "tree.png"],
+        ["kenney_backgrounds_sprites", "treeOrange.png"],
+        ["desert_sprites", "tree_7.png"],
+        ["desert_sprites", "tree_10.png"]
+      ]
+    },
+    {
+      "name": "dead tree",
+      "pronunciation": "dead tree.wav",
+      "sprites": [
+        ["kenney_backgrounds_sprites", "treeDead.png"],
+        ["desert_sprites", "tree_11.png"],
+        ["desert_sprites", "tree_12.png"]
+      ]
+    },
+    {
+      "name": "pine tree",
+      "pronunciation": "pine tree.wav",
+      "sprites": [
+        ["kenney_backgrounds_sprites", "treePine.png"],
+        ["kenney_backgrounds_sprites", "treePineFrozen.png"],
+        ["kenney_backgrounds_sprites", "treePineOrange.png"],
+        ["kenney_backgrounds_sprites", "treePineSnow.png"]
+      ]
+    },
+    {
+      "name": "palm tree",
+      "pronunciation": "palm tree.wav",
+      "sprites": [
+        ["kenney_backgrounds_sprites", "treePalm.png"],
+        ["medieval_tropical_sprites", "tree_1.png"],
+        ["medieval_tropical_sprites", "tree_2.png"],
+        ["desert_sprites", "tree_1.png"],
+        ["desert_sprites", "tree_2.png"],
+        ["desert_sprites", "tree_3.png"],
+        ["desert_sprites", "tree_4.png"],
+        ["desert_sprites", "tree_5.png"],
+        ["desert_sprites", "tree_6.png"],
+        ["desert_sprites", "tree_9.png"]
+      ]
+    },
+    {
+      "name": "baobab",
+      "pronunciation": "baobab.wav",
+      "sprites": [["desert_sprites", "tree_8.png"]]
+    },
+    {
+      "name": "snowy tree",
+      "pronunciation": "snowy tree.wav",
+      "sprites": [
+        ["kenney_backgrounds_sprites", "treeSnow.png"],
+        ["kenney_backgrounds_sprites", "treeFrozen.png"],
+        ["winter_sprites", "Tree_1.png"],
+        ["winter_sprites", "Tree_2.png"]
+      ]
+    },
+    {
+      "name": "pyramid",
+      "sprites": [["kenney_backgrounds_sprites", "pyramid.png"]]
+    },
+    {
+      "name": "Mayan pyramid",
+      "sprites": [["kenney_backgrounds_sprites", "pyramidMayan.png"]]
+    },
+    {
+      "name": "sun",
+      "sprites": [["kenney_backgrounds_sprites", "sun.png"]]
+    },
+    {
+      "name": "tower",
+      "sprites": [
+        ["kenney_backgrounds_sprites", "tower.png"],
+        ["kenney_backgrounds_sprites", "towerAlt.png"]
+      ]
+    },
+    {
+      "name": "small tower",
+      "sprites": [
+        ["kenney_backgrounds_sprites", "towerSmall.png"],
+        ["kenney_backgrounds_sprites", "towerSmallAlt.png"]
+      ]
+    },
+    {
+      "name": "fence",
+      "sprites": [["kenney_backgrounds_sprites", "fence.png"]]
+    },
+    {
+      "name": "iron fence",
+      "sprites": [["kenney_backgrounds_sprites", "fenceIron.png"]]
+    },
+    {
+      "name": "seahorse",
+      "sprites": [["underwater_sprites", "Acceleration.png"]]
+    },
+    {
+      "name": "anchor",
+      "sprites": [["underwater_sprites", "Anchor.png"]]
+    },
+    {
+      "name": "barrel",
+      "sprites": [
+        ["underwater_sprites", "Barrel_1.png"],
+        ["underwater_sprites", "Barrel_2.png"],
+        ["medieval_tropical_sprites", "decor_17.png"]
+      ]
+    },
+    {
+      "name": "bomb",
+      "sprites": [["underwater_sprites", "Bomb.png"]]
+    },
+    {
+      "name": "small bomb",
+      "sprites": [["underwater_sprites", "Small-bomb.png"]]
+    },
+    {
+      "name": "bubble",
+      "sprites": [
+        ["underwater_sprites", "Bubble_1.png"],
+        ["underwater_sprites", "Bubble_2.png"],
+        ["underwater_sprites", "Bubble_3.png"]
+      ]
+    },
+    {
+      "name": "chain",
+      "sprites": [["underwater_sprites", "Chain.png"]]
+    },
+    {
+      "name": "chest",
+      "sprites": [
+        ["underwater_sprites", "Chest_ajar.png"],
+        ["underwater_sprites", "Chest_closed.png"],
+        ["underwater_sprites", "Chest_open.png"]
+      ]
+    },
+    {
+      "name": "coin",
+      "sprites": [["underwater_sprites", "Coin.png"]]
+    },
+    {
+      "name": "crown",
+      "sprites": [["underwater_sprites", "Crown.png"]]
+    },
+    {
+      "name": "heart",
+      "sprites": [["underwater_sprites", "Heart.png"]]
+    },
+    {
+      "name": "magnet",
+      "sprites": [["underwater_sprites", "Magnet.png"]]
+    },
+    {
+      "name": "mast",
+      "sprites": [["underwater_sprites", "Mast.png"]]
+    },
+    {
+      "name": "net",
+      "sprites": [["underwater_sprites", "Net.png"]]
+    },
+    {
+      "name": "pearl",
+      "sprites": [["underwater_sprites", "Pearl.png"]]
+    },
+    {
+      "name": "seaweed",
+      "sprites": [
+        ["underwater_sprites", "Seaweed_1.png"],
+        ["underwater_sprites", "Seaweed_2.png"]
+      ]
+    },
+    {
+      "name": "shield",
+      "sprites": [["underwater_sprites", "Shield.png"]]
+    },
+    {
+      "name": "steering wheel",
+      "sprites": [["underwater_sprites", "Steering-wheel.png"]]
+    },
+    {
+      "name": "stone",
+      "sprites": [
+        ["underwater_sprites", "Stone_1.png"],
+        ["underwater_sprites", "Stone_2.png"],
+        ["underwater_sprites", "Stone_3.png"],
+        ["underwater_sprites", "Stone_4.png"],
+        ["underwater_sprites", "Stone_5.png"],
+        ["underwater_sprites", "Stone_6.png"],
+        ["medieval_tropical_sprites", "stones_1.png"],
+        ["medieval_tropical_sprites", "stones_2.png"],
+        ["medieval_tropical_sprites", "stones_3.png"],
+        ["medieval_tropical_sprites", "stones_4.png"],
+        ["medieval_tropical_sprites", "stones_5.png"],
+        ["medieval_tropical_sprites", "stones_6.png"],
+        ["medieval_tropical_sprites", "stones_7.png"],
+        ["desert_sprites", "stones_1.png"],
+        ["desert_sprites", "stones_2.png"],
+        ["desert_sprites", "stones_3.png"],
+        ["desert_sprites", "stones_4.png"],
+        ["desert_sprites", "stones_5.png"],
+        ["desert_sprites", "stones_6.png"],
+        ["desert_sprites", "stones_7.png"],
+        ["desert_sprites", "stones_8.png"],
+        ["desert_sprites", "stones_9.png"],
+        ["desert_sprites", "stones_10.png"],
+        ["desert_sprites", "stones_11.png"],
+        ["desert_sprites", "stones_12.png"],
+        ["winter_sprites", "Stone.png"]
+      ]
+    },
+    // TODO: some of these sprites are incorrectly set
+    {
+      "name": "tropical building",
+      "sprites": [
+        ["medieval_tropical_sprites", "building_1.png"],
+        ["medieval_tropical_sprites", "building_2.png"],
+        ["medieval_tropical_sprites", "building_3.png"],
+        ["medieval_tropical_sprites", "building_4.png"],
+        ["medieval_tropical_sprites", "building_5.png"],
+        ["medieval_tropical_sprites", "building_6.png"],
+        ["medieval_tropical_sprites", "building_7.png"],
+        ["medieval_tropical_sprites", "building_8.png"],
+        ["medieval_tropical_sprites", "building_9.png"],
+        ["medieval_tropical_sprites", "building_10.png"],
+        ["medieval_tropical_sprites", "building_11.png"]
+      ]
+    },
+    {
+      "name": "torch",
+      "sprites": [["medieval_tropical_sprites", "decor_1.png"]]
+    },
+    {
+      "name": "mud pool",
+      "sprites": [["medieval_tropical_sprites", "decor_2.png"]]
+    },
+    {
+      "name": "tree stump",
+      "sprites": [["medieval_tropical_sprites", "decor_3.png"]]
+    },
+    {
+      "name": "sign",
+      "sprites": [
+        ["medieval_tropical_sprites", "decor_4.png"],
+        ["desert_sprites", "decor_3.png"],
+        ["winter_sprites", "Sign_1.png"],
+        ["winter_sprites", "Sign_2.png"]
+      ]
+    },
+    {
+      "name": "bowl",
+      "sprites": [
+        ["medieval_tropical_sprites", "decor_5.png"],
+        ["kenney_items_sprites", "genericItem_color_128.png"]
+      ]
+    },
+    {
+      "name": "fire pit",
+      "pronunciation": "fire pit.wav",
+      "sprites": [
+        ["medieval_tropical_sprites", "decor_6.png"],
+        ["desert_sprites", "decor_7.png"]
+      ]
+    },
+    {
+      "name": "carved stone",
+      "sprites": [["medieval_tropical_sprites", "decor_7.png"]]
+    },
+    {
+      "name": "mystical pool",
+      "sprites": [["medieval_tropical_sprites", "decor_8.png"]]
+    },
+    {
+      "name": "canvas",
+      "sprites": [["medieval_tropical_sprites", "decor_9.png"]]
+    },
+    {
+      "name": "stone flowerbed",
+      "sprites": [["medieval_tropical_sprites", "decor_10.png"]]
+    },
+    {
+      "name": "stone bowl",
+      "sprites": [["medieval_tropical_sprites", "decor_11.png"]]
+    },
+    // TODO: figure it out
+    // {
+    // "name": "IDK what this is", [
+    //   ["medieval_tropical_sprites", "decor_12.png"],
+    // ]},
+    {
+      "name": "window sill",
+      "sprites": [["medieval_tropical_sprites", "decor_13.png"]]
+    },
+    {
+      "name": "wooden cart",
+      "sprites": [["medieval_tropical_sprites", "decor_14.png"]]
+    },
+    {
+      "name": "tray with potatoes",
+      "sprites": [["medieval_tropical_sprites", "decor_15.png"]]
+    },
+    {
+      "name": "mud vase",
+      "sprites": [["medieval_tropical_sprites", "decor_16.png"]]
+    },
+    // decor_17.png is a barrel (included above)
+    {
+      "name": "wooden crate",
+      "sprites": [
+        ["medieval_tropical_sprites", "decor_18.png"],
+        ["winter_sprites", "Crate.png"]
+      ]
+    },
+    {
+      "name": "shrub",
+      "sprites": [
+        ["medieval_tropical_sprites", "greenery_1.png"],
+        ["medieval_tropical_sprites", "greenery_2.png"],
+        ["medieval_tropical_sprites", "greenery_3.png"],
+        ["medieval_tropical_sprites", "greenery_4.png"],
+        ["medieval_tropical_sprites", "greenery_5.png"],
+        ["desert_sprites", "greenery_6.png"],
+        ["desert_sprites", "greenery_10.png"]
+      ]
+    },
+    {
+      "name": "desert building",
+      "sprites": [
+        ["desert_sprites", "building_1.png"],
+        ["desert_sprites", "building_2.png"],
+        ["desert_sprites", "building_3.png"],
+        ["desert_sprites", "building_4.png"],
+        ["desert_sprites", "building_5.png"]
+      ]
+    },
+    {
+      "name": "small pyramid",
+      "sprites": [["desert_sprites", "decor_1.png"]]
+    },
+    {
+      "name": "tent",
+      "sprites": [["desert_sprites", "decor_2.png"]]
+    },
+    // decor_3.png is a sign (included above)
+    {
+      "name": "log",
+      "sprites": [["desert_sprites", "decor_4.png"]]
+    },
+    // TODO: figure it out
+    // {
+    // "name": "IDK what this is", [
+    //   ["desert_sprites", "decor_5.png"],
+    // ])
+    {
+      "name": "skull",
+      "sprites": [["desert_sprites", "decor_6.png"]]
+    },
+    // decor_7.png is a lit fire pit (included above)
+    {
+      "name": "merchant wagon",
+      "sprites": [["desert_sprites", "decor_8.png"]]
+    },
+    {
+      "name": "lake",
+      "sprites": [["desert_sprites", "lake.png"]]
+    },
+    {
+      "name": "stairs",
+      "sprites": [
+        ["desert_sprites", "land_4.png"],
+        ["desert_sprites", "land_8.png"]
+      ]
+    },
+    {
+      "name": "crystal",
+      "sprites": [["winter_sprites", "Crystal.png"]]
+    },
+    {
+      "name": "block of ice",
+      "sprites": [["winter_sprites", "IceBox.png"]]
+    },
+    {
+      "name": "igloo",
+      "sprites": [["winter_sprites", "Igloo.png"]]
+    },
+    {
+      "name": "snowman",
+      "pronunciation": "snowman.wav",
+      "sprites": [["winter_sprites", "SnowMan.png"]]
+    },
+    {
+      "name": "drill",
+      "pronunciation": "drill.wav",
+      "sprites": [["kenney_items_sprites", "genericItem_color_001.png"]]
+    },
+    {
+      "name": "sander",
+      "pronunciation": "sander.wav",
+      "sprites": [["kenney_items_sprites", "genericItem_color_002.png"]]
+    },
+    {
+      "name": "cup",
+      "pronunciation": "cup.wav",
+      "sprites": [["kenney_items_sprites", "genericItem_color_003.png"]]
+    },
+    {
+      "name": "wrench",
+      "pronunciation": "wrench.wav",
+      "sprites": [
+        ["kenney_items_sprites", "genericItem_color_004.png"],
+        ["kenney_items_sprites", "genericItem_color_007.png"]
+      ]
+    },
+    {
+      "name": "spanner",
+      "pronunciation": "spanner.wav",
+      "sprites": [
+        ["kenney_items_sprites", "genericItem_color_004.png"],
+        ["kenney_items_sprites", "genericItem_color_007.png"]
+      ]
+    },
+    {
+      "name": "screwdriver",
+      "pronunciation": "screwdriver.wav",
+      "sprites": [["kenney_items_sprites", "genericItem_color_005.png"]]
+    },
+    // TODO: figure out what the "scoop" at _006.png is actually called
+    {
+      "name": "monkey wrench",
+      "pronunciation": "monkey wrench.wav",
+      "sprites": [["kenney_items_sprites", "genericItem_color_008.png"]]
+    },
+    {
+      "name": "pliers",
+      "pronunciation": "pliers.wav",
+      "sprites": [["kenney_items_sprites", "genericItem_color_009.png"]]
+    },
+    {
+      "name": "hammer",
+      "pronunciation": "hammer.wav",
+      "sprites": [["kenney_items_sprites", "genericItem_color_010.png"]]
+    },
+    {
+      "name": "brush",
+      "pronunciation": "brush.wav",
+      "sprites": [["kenney_items_sprites", "genericItem_color_011.png"]]
+    },
+    {
+      "name": "tape measure",
+      "pronunciation": "tape measure.wav",
+      "sprites": [["kenney_items_sprites", "genericItem_color_012.png"]]
+    },
+    {
+      "name": "box knife",
+      "pronunciation": "box knife.wav",
+      "sprites": [["kenney_items_sprites", "genericItem_color_013.png"]]
+    },
+    {
+      "name": "paint roller",
+      "pronunciation": "paint roller.wav",
+      "sprites": [["kenney_items_sprites", "genericItem_color_014.png"]]
+    },
+    {
+      "name": "chisel",
+      "pronunciation": "chisel.wav",
+      "sprites": [["kenney_items_sprites", "genericItem_color_015.png"]]
+    },
+    {
+      "name": "saw",
+      "pronunciation": "saw.wav",
+      "sprites": [
+        ["kenney_items_sprites", "genericItem_color_016.png"],
+        ["kenney_items_sprites", "genericItem_color_017.png"]
+      ]
+    },
+    {
+      "name": "screw",
+      "pronunciation": "screw.wav",
+      "sprites": [["kenney_items_sprites", "genericItem_color_018.png"]]
+    },
+    {
+      "name": "nail",
+      "pronunciation": "nail.wav",
+      "sprites": [["kenney_items_sprites", "genericItem_color_019.png"]]
+    },
+    {
+      "name": "axe",
+      "pronunciation": "axe.wav",
+      "sprites": [["kenney_items_sprites", "genericItem_color_020.png"]]
+    },
+    {
+      "name": "pickaxe",
+      "pronunciation": "pickaxe.wav",
+      "sprites": [["kenney_items_sprites", "genericItem_color_021.png"]]
+    },
+    {
+      "name": "shovel",
+      "pronunciation": "shovel.wav",
+      "sprites": [["kenney_items_sprites", "genericItem_color_022.png"]]
+    },
+    {
+      "name": "mallet",
+      "pronunciation": "mallet.wav",
+      "sprites": [["kenney_items_sprites", "genericItem_color_023.png"]]
+    },
+    {
+      "name": "pencil",
+      "pronunciation": "pencil.wav",
+      "sprites": [
+        ["kenney_items_sprites", "genericItem_color_024.png"],
+        ["kenney_items_sprites", "genericItem_color_026.png"]
+      ]
+    },
+    {
+      "name": "pen",
+      "pronunciation": "pen.wav",
+      "sprites": [["kenney_items_sprites", "genericItem_color_025.png"]]
+    },
+    {
+      "name": "paintbrush",
+      "pronunciation": "paintbrush.wav",
+      "sprites": [
+        ["kenney_items_sprites", "genericItem_color_027.png"],
+        ["kenney_items_sprites", "genericItem_color_028.png"]
+      ]
+    },
+    {
+      "name": "quill",
+      "pronunciation": "quill.wav",
+      "sprites": [["kenney_items_sprites", "genericItem_color_029.png"]]
+    },
+    {
+      "name": "ink",
+      "sprites": [["kenney_items_sprites", "genericItem_color_030.png"]]
+    },
+    {
+      "name": "palette",
+      "sprites": [["kenney_items_sprites", "genericItem_color_031.png"]]
+    },
+    {
+      "name": "book",
+      "sprites": [
+        ["kenney_items_sprites", "genericItem_color_032.png"],
+        ["kenney_items_sprites", "genericItem_color_033.png"],
+        ["kenney_items_sprites", "genericItem_color_034.png"],
+        ["kenney_items_sprites", "genericItem_color_035.png"]
+      ]
+    },
+    // skipping item 036 because it's not very clear it's a folder
+    {
+      "name": "notepad",
+      "sprites": [
+        ["kenney_items_sprites", "genericItem_color_037.png"],
+        ["kenney_items_sprites", "genericItem_color_038.png"]
+      ]
+    },
+    // skipping cameras 039-047 because they aren't clear
+    {
+      "name": "monitor",
+      "sprites": [
+        ["kenney_items_sprites", "genericItem_color_051.png"],
+        ["kenney_items_sprites", "genericItem_color_052.png"],
+        ["kenney_items_sprites", "genericItem_color_053.png"]
+      ]
+    },
+    {
+      "name": "computer",
+      "sprites": [
+        ["kenney_items_sprites", "genericItem_color_054.png"],
+        ["kenney_items_sprites", "genericItem_color_055.png"]
+      ]
+    },
+    {
+      "name": "keyboard",
+      "sprites": [
+        ["kenney_items_sprites", "genericItem_color_056.png"],
+        ["kenney_items_sprites", "genericItem_color_057.png"]
+      ]
+    },
+    {
+      "name": "mouse",
+      "sprites": [
+        ["kenney_items_sprites", "genericItem_color_058.png"],
+        ["kenney_items_sprites", "genericItem_color_059.png"]
+      ]
+    },
+    {
+      "name": "tablet",
+      "sprites": [["kenney_items_sprites", "genericItem_color_060.png"]]
+    },
+    // no clue what 061 is
+    {
+      "name": "remote",
+      "sprites": [["kenney_items_sprites", "genericItem_color_062.png"]]
+    },
+    {
+      "name": "mobile phone",
+      "sprites": [
+        ["kenney_items_sprites", "genericItem_color_063.png"],
+        ["kenney_items_sprites", "genericItem_color_064.png"],
+        ["kenney_items_sprites", "genericItem_color_065.png"],
+        ["kenney_items_sprites", "genericItem_color_067.png"]
+      ]
+    },
+    {
+      "name": "music player",
+      "sprites": [["kenney_items_sprites", "genericItem_color_066.png"]]
+    },
+    // 068 is a casette, kids don't really need this
+    // 069-072 are unclear
+    {
+      "name": "USB",
+      "sprites": [["kenney_items_sprites", "genericItem_color_073.png"]]
+    },
+    {
+      "name": "calculator",
+      "sprites": [["kenney_items_sprites", "genericItem_color_074.png"]]
+    },
+    {
+      "name": "motherboard",
+      "sprites": [["kenney_items_sprites", "genericItem_color_075.png"]]
+    },
+    {
+      "name": "RAM",
+      "sprites": [["kenney_items_sprites", "genericItem_color_076.png"]]
+    },
+    {
+      "name": "graphics card",
+      "sprites": [
+        ["kenney_items_sprites", "genericItem_color_077.png"],
+        ["kenney_items_sprites", "genericItem_color_078.png"]
+      ]
+    },
+    {
+      "name": "joystick",
+      "sprites": [
+        ["kenney_items_sprites", "genericItem_color_079.png"],
+        ["kenney_items_sprites", "genericItem_color_080.png"]
+      ]
+    },
+    {
+      "name": "controller",
+      "sprites": [
+        ["kenney_items_sprites", "genericItem_color_081.png"],
+        ["kenney_items_sprites", "genericItem_color_082.png"]
+      ]
+    },
+    {
+      "name": "microphone",
+      "sprites": [["kenney_items_sprites", "genericItem_color_083.png"]]
+    },
+    {
+      "name": "headphones",
+      "sprites": [["kenney_items_sprites", "genericItem_color_084.png"]]
+    },
+    {
+      "name": "CD",
+      "sprites": [
+        ["kenney_items_sprites", "genericItem_color_085.png"],
+        ["kenney_items_sprites", "genericItem_color_088.png"]
+      ]
+    },
+    {
+      "name": "cursor",
+      "sprites": [["kenney_items_sprites", "genericItem_color_086.png"]]
+    },
+    // 087 is unclear
+    {
+      "name": "pill",
+      "sprites": [
+        ["kenney_items_sprites", "genericItem_color_089.png"],
+        ["kenney_items_sprites", "genericItem_color_090.png"]
+      ]
+    },
+    // don't know what 091 is
+    // 092 is unclear
+    {
+      "name": "syringe",
+      "sprites": [["kenney_items_sprites", "genericItem_color_093.png"]]
+    },
+    {
+      "name": "thermometer",
+      "sprites": [["kenney_items_sprites", "genericItem_color_094.png"]]
+    },
+    {
+      "name": "toothbrush",
+      "sprites": [["kenney_items_sprites", "genericItem_color_095.png"]]
+    },
+    // don't know what 096 and 097 are
+    // 098 and 099 are pills, too unclear
+    {
+      "name": "plaster",
+      "sprites": [["kenney_items_sprites", "genericItem_color_100.png"]]
+    },
+    {
+      "name": "bone",
+      "sprites": [["kenney_items_sprites", "genericItem_color_101.png"]]
+    },
+    {
+      "name": "first aid kit",
+      "sprites": [["kenney_items_sprites", "genericItem_color_102.png"]]
+    },
+    // 103-104 are unclear
+    {
+      "name": "vial",
+      "sprites": [
+        ["kenney_items_sprites", "genericItem_color_105.png"],
+        ["kenney_items_sprites", "genericItem_color_108.png"]
+      ]
+    },
+    {
+      "name": "test tube",
+      "sprites": [["kenney_items_sprites", "genericItem_color_106.png"]]
+    },
+    {
+      "name": "beaker",
+      "sprites": [["kenney_items_sprites", "genericItem_color_107.png"]]
+    },
+    {
+      "name": "test tubes",
+      "sprites": [["kenney_items_sprites", "genericItem_color_109.png"]]
+    },
+    {
+      "name": "stethoscope",
+      "sprites": [["kenney_items_sprites", "genericItem_color_110.png"]]
+    },
+    {
+      "name": "microscope",
+      "sprites": [["kenney_items_sprites", "genericItem_color_111.png"]]
+    },
+    // 112 is unclear
+    {
+      "name": "crutch",
+      "sprites": [["kenney_items_sprites", "genericItem_color_113.png"]]
+    },
+    {
+      "name": "pot",
+      "sprites": [["kenney_items_sprites", "genericItem_color_114.png"]]
+    },
+    // 115 is unclear
+    {
+      "name": "pan",
+      "sprites": [["kenney_items_sprites", "genericItem_color_116.png"]]
+    },
+    // 117 is unclear
+    {
+      "name": "glass of water",
+      "sprites": [["kenney_items_sprites", "genericItem_color_118.png"]]
+    },
+    {
+      "name": "glass of lemonade",
+      "sprites": [["kenney_items_sprites", "genericItem_color_119.png"]]
+    },
+    {
+      "name": "glass of wine",
+      "sprites": [["kenney_items_sprites", "genericItem_color_120.png"]]
+    },
+    {
+      "name": "mug",
+      "sprites": [["kenney_items_sprites", "genericItem_color_121.png"]]
+    },
+    {
+      "name": "salt shaker",
+      "sprites": [["kenney_items_sprites", "genericItem_color_122.png"]]
+    },
+    {
+      "name": "pepper shaker",
+      "sprites": [["kenney_items_sprites", "genericItem_color_123.png"]]
+    },
+    {
+      "name": "kettle",
+      "sprites": [
+        ["kenney_items_sprites", "genericItem_color_124.png"],
+        ["kenney_items_sprites", "genericItem_color_125.png"]
+      ]
+    },
+    {
+      "name": "thermal flask",
+      "sprites": [["kenney_items_sprites", "genericItem_color_126.png"]]
+    },
+    {
+      "name": "fork",
+      "sprites": [["kenney_items_sprites", "genericItem_color_129.png"]]
+    },
+    {
+      "name": "spoon",
+      "sprites": [["kenney_items_sprites", "genericItem_color_130.png"]]
+    },
+    {
+      "name": "knife",
+      "sprites": [
+        ["kenney_items_sprites", "genericItem_color_131.png"],
+        ["kenney_items_sprites", "genericItem_color_134.png"]
+      ]
+    },
+    {
+      "name": "oven glove",
+      "sprites": [["kenney_items_sprites", "genericItem_color_132.png"]]
+    },
+    {
+      "name": "cutting board",
+      "sprites": [["kenney_items_sprites", "genericItem_color_133.png"]]
+    },
+    {
+      "name": "spatula",
+      "sprites": [["kenney_items_sprites", "genericItem_color_135.png"]]
+    },
+    {
+      "name": "tongs",
+      "sprites": [["kenney_items_sprites", "genericItem_color_136.png"]]
+    },
+    {
+      "name": "blender",
+      "sprites": [["kenney_items_sprites", "genericItem_color_137.png"]]
+    },
+    {
+      "name": "toaster",
+      "sprites": [["kenney_items_sprites", "genericItem_color_138.png"]]
+    },
+    {
+      "name": "coffee machine",
+      "sprites": [["kenney_items_sprites", "genericItem_color_139.png"]]
+    },
+    {
+      "name": "rolling pin",
+      "sprites": [["kenney_items_sprites", "genericItem_color_140.png"]]
+    },
+    {
+      "name": "suitcase",
+      "sprites": [
+        ["kenney_items_sprites", "genericItem_color_141.png"],
+        ["kenney_items_sprites", "genericItem_color_143.png"]
+      ]
+    },
+    {
+      "name": "luggage",
+      "sprites": [["kenney_items_sprites", "genericItem_color_142.png"]]
+    },
+    {
+      "name": "purse",
+      "sprites": [
+        ["kenney_items_sprites", "genericItem_color_143.png"],
+        ["kenney_items_sprites", "genericItem_color_144.png"]
+      ]
+    },
+    {
+      "name": "school bag",
+      "sprites": [["kenney_items_sprites", "genericItem_color_146.png"]]
+    },
+    {
+      "name": "steering wheel",
+      "sprites": [["kenney_items_sprites", "genericItem_color_147.png"]]
+    },
+    {
+      "name": "passport",
+      "sprites": [["kenney_items_sprites", "genericItem_color_148.png"]]
+    },
+    {
+      "name": "ID card",
+      "sprites": [["kenney_items_sprites", "genericItem_color_149.png"]]
+    },
+    // 150 is unclear
+    {
+      "name": "ID badge",
+      "sprites": [["kenney_items_sprites", "genericItem_color_151.png"]]
+    },
+    // 152 is unclear
+    // don't know what 153 is called
+    {
+      "name": "key",
+      "sprites": [
+        ["kenney_items_sprites", "genericItem_color_154.png"],
+        ["kenney_items_sprites", "genericItem_color_155.png"]
+      ]
+    },
+    // don't know what 156 is
+    {
+      "name": "wallet",
+      "pronunciation": "wallet.wav",
+      "sprites": [["kenney_items_sprites", "genericItem_color_157.png"]]
+    },
+    {
+      "name": "money",
+      "sprites": [["kenney_items_sprites", "genericItem_color_158.png"]]
+    },
+    // 159-161 are coins, too unclear
+    {
+      "name": "compass",
+      "pronunciation": "compass.wav",
+      "sprites": [["kenney_items_sprites", "genericItem_color_162.png"]]
+    }
+    // don't know what 163 is
+  ]
+}

@@ -82,13 +82,13 @@ class ModalScene extends RexScene {
     const addDialog = new AddDialog(
       this,
       (text: string) => {
-        if (Fitwick.exists(text)) {
+        if (Fitwick.findInConfig(this, text)) {
           // let the main scene handle the addition of a new Fitwick
           // false -> not external event
           this.game.events.emit(EVENT_DO_FITWICK_NEW, false, text);
           addDialog.hide();
         } else {
-          addDialog.showError(text);
+          addDialog.showError(this, text);
         }
       },
       () => {

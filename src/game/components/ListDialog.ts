@@ -1,6 +1,7 @@
 import { ScrollablePanel } from "phaser3-rex-plugins/templates/ui/ui-components.js";
 import { COLOR_DIALOG_BACKGROUND, COLOR_DIALOG_FOREGROUND } from "../colors";
 import {
+  CONFIG_FITWICKS,
   FRAME_BUTTON_CANCEL_CLICK,
   FRAME_BUTTON_CANCEL_HOVER,
   FRAME_BUTTON_CANCEL_REST,
@@ -9,7 +10,7 @@ import {
   UI_BUTTON_SIZE,
   UI_FONT_SIZE,
 } from "../constants";
-import { FITWICKS } from "../fitwicks";
+import { FitwickConfigSection } from "../fitwickLoader";
 import RexScene from "../scenes/RexScene";
 import Button from "./Button";
 import ModalDialog from "./ModalDialog";
@@ -18,9 +19,15 @@ const FITWICK_ITEM_SIZE = UI_BUTTON_SIZE * 4;
 const FITWICK_ITEM_SPACE = 8;
 
 const createFitwickList = (scene: RexScene, width: number, height: number) => {
+  const fitwickConfig = scene.cache.json.get(CONFIG_FITWICKS) as
+    | FitwickConfigSection
+    | undefined;
+
   const columns =
     Math.floor(width / (FITWICK_ITEM_SIZE + FITWICK_ITEM_SPACE)) + 1;
-  const rows = Math.ceil(FITWICKS.size / columns) + 1;
+  const rows = fitwickConfig
+    ? Math.ceil(fitwickConfig.fitwicks.length / columns) + 1
+    : 3;
 
   const sizer = scene.rexUI.add.gridSizer({
     width,
@@ -37,14 +44,14 @@ const createFitwickList = (scene: RexScene, width: number, height: number) => {
     },
   });
 
-  FITWICKS.forEach((atlasElements: [string, string][], name: string) => {
-    const firstTexture = atlasElements[0][0];
-    const firstFrame = atlasElements[0][1];
+  fitwickConfig?.fitwicks.forEach((fitwick) => {
+    const firstTexture = fitwick.sprites[0][0];
+    const firstFrame = fitwick.sprites[0][1];
     const fitwickRow = scene.rexUI.add.label({
       icon: scene.add
         .image(0, 0, firstTexture, firstFrame)
         .setDisplaySize(UI_BUTTON_SIZE, UI_BUTTON_SIZE),
-      text: scene.add.text(0, 0, name, {
+      text: scene.add.text(0, 0, fitwick.name, {
         fontSize: UI_FONT_SIZE,
         wordWrap: {
           width: UI_BUTTON_SIZE * 2,

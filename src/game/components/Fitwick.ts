@@ -1,11 +1,19 @@
 import IFitwick from "../../api/fitwick";
 import { EXTERNAL_TINTS, TINT_GREEN } from "../colors";
-import { SCALE_RATIO } from "../constants";
-import { FITWICKS, FITWICKS_AUDIO } from "../fitwicks";
+import { CONFIG_FITWICKS, SCALE_RATIO } from "../constants";
+import { FitwickConfigSection } from "../fitwickLoader";
 
 class Fitwick extends Phaser.GameObjects.Sprite implements IFitwick {
-  static exists(name: string) {
-    return FITWICKS.has(name.toLowerCase());
+  static findInConfig(scene: Phaser.Scene, name: string) {
+    if (!scene.cache.json.has(CONFIG_FITWICKS)) {
+      return undefined;
+    }
+    const fitwicks = scene.cache.json.get(
+      CONFIG_FITWICKS
+    ) as FitwickConfigSection;
+    return fitwicks.fitwicks.find(
+      (fitwick) => fitwick.name === name.toLowerCase()
+    );
   }
 
   public worldId: string;
@@ -25,8 +33,8 @@ class Fitwick extends Phaser.GameObjects.Sprite implements IFitwick {
     atlasTexture?: string,
     atlasFrame?: string
   ) {
-    inputName = inputName.toLowerCase();
-    if (!FITWICKS.has(inputName)) {
+    const fitwickConfig = Fitwick.findInConfig(scene, inputName);
+    if (!fitwickConfig) {
       throw new Error(`Fitwick ${inputName} not found but created anyway!`);
     }
 
@@ -34,7 +42,7 @@ class Fitwick extends Phaser.GameObjects.Sprite implements IFitwick {
     if (!existingFitwick) {
       worldId = `${inputName}/${x}:${y}:${Date.now()}`;
       const randomAtlasElement = Phaser.Utils.Array.GetRandom(
-        FITWICKS.get(inputName)!
+        fitwickConfig.sprites
       );
       atlasTexture = randomAtlasElement[0];
       atlasFrame = randomAtlasElement[1];
@@ -52,8 +60,9 @@ class Fitwick extends Phaser.GameObjects.Sprite implements IFitwick {
     this.setInteractive({
       useHandCursor: true,
     });
-    if (FITWICKS_AUDIO.has(this.name)) {
-      this.audio = scene.sound.add(FITWICKS_AUDIO.get(this.name)!);
+
+    if (fitwickConfig.pronunciation) {
+      this.audio = scene.sound.add(fitwickConfig.pronunciation);
     }
     // this.scene.add
     //   .graphics()

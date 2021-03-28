@@ -8,6 +8,7 @@ import {
   COLOR_STRING_WHITE,
 } from "../colors";
 import {
+  CONFIG_FITWICKS,
   FRAME_BUTTON_CANCEL_CLICK,
   FRAME_BUTTON_CANCEL_HOVER,
   FRAME_BUTTON_CANCEL_REST,
@@ -18,12 +19,10 @@ import {
   UI_BUTTON_SIZE,
   UI_FONT_SIZE,
 } from "../constants";
-import { FITWICKS } from "../fitwicks";
 import RexScene from "../scenes/RexScene";
 import Button from "./Button";
 import ModalDialog from "./ModalDialog";
-
-const FITWICK_NAMES = Array.from(FITWICKS.keys());
+import { FitwickConfigSection } from "../fitwickLoader";
 
 class AddDialog extends ModalDialog {
   constructor(scene: RexScene, onConfirm: Function, onCancel: Function) {
@@ -138,25 +137,33 @@ class AddDialog extends ModalDialog {
     super(scene, dialog);
   }
 
-  public showError(inputName: string) {
-    const bestMatch = findBestMatch(inputName, FITWICK_NAMES).bestMatch;
-    console.log(
-      `"${inputName}" unknown, the closest match is "${bestMatch.target}" with rating ${bestMatch.rating}`
-    );
+  public showError(scene: Phaser.Scene, inputName: string) {
+    if (scene.cache.json.has(CONFIG_FITWICKS)) {
+      const fitwickConfig = scene.cache.json.get(
+        CONFIG_FITWICKS
+      ) as FitwickConfigSection;
+      const fitwickNames = fitwickConfig.fitwicks.map(
+        (fitwick) => fitwick.name
+      );
+      const bestMatch = findBestMatch(inputName, fitwickNames).bestMatch;
+      console.log(
+        `"${inputName}" unknown, the closest match is "${bestMatch.target}" with rating ${bestMatch.rating}`
+      );
 
-    if (bestMatch.rating > 0.2) {
-      this.scene.game.events.emit(
-        EVENT_MESSAGE,
-        "warning",
-        `Unknown object "${inputName}". Did you mean "${bestMatch.target}"?`
-      );
-    } else {
-      this.scene.game.events.emit(
-        EVENT_MESSAGE,
-        "warning",
-        `Unknown object "${inputName}". Check the list of all game objects to see if it exists in the game.`
-      );
+      if (bestMatch.rating > 0.2) {
+        this.scene.game.events.emit(
+          EVENT_MESSAGE,
+          "warning",
+          `Unknown object "${inputName}". Did you mean "${bestMatch.target}"?`
+        );
+        return;
+      }
     }
+    this.scene.game.events.emit(
+      EVENT_MESSAGE,
+      "warning",
+      `Unknown object "${inputName}". Check the list of all game objects to see if it exists in the game.`
+    );
   }
 }
 

@@ -29,51 +29,9 @@ export const MUSIC_TRACKS = [
   MUSIC_TREASURE,
 ];
 
-export const AUDIO_FITWICK_TREE = "tree.wav";
-export const AUDIO_FITWICK_DEAD_TREE = "dead tree.wav";
-export const AUDIO_FITWICK_PINE_TREE = "pine tree.wav";
-export const AUDIO_FITWICK_PALM_TREE = "palm tree.wav";
-export const AUDIO_FITWICK_SNOWY_TREE = "snowy tree.wav";
-export const AUDIO_FITWICK_SNOWMAN = "snowman.wav";
-export const AUDIO_FITWICK_BAOBAB = "baobab.wav";
-export const AUDIO_FITWICK_FIRE_PIT = "fire pit.wav";
-export const AUDIO_FITWICK_BUSH = "bush.wav";
-export const AUDIO_FITWICK_AXE = "axe.wav";
-export const AUDIO_FITWICK_BOX_KNIFE = "box knife.wav";
-export const AUDIO_FITWICK_BRUSH = "brush.wav";
-export const AUDIO_FITWICK_CHISEL = "chisel.wav";
-export const AUDIO_FITWICK_COMPASS = "compass.wav";
-export const AUDIO_FITWICK_CUP = "cup.wav";
-export const AUDIO_FITWICK_DRILL = "drill.wav";
-export const AUDIO_FITWICK_HAMMER = "hammer.wav";
-export const AUDIO_FITWICK_MALLET = "mallet.wav";
-export const AUDIO_FITWICK_MONKEY_WRENCH = "monkey wrench.wav";
-export const AUDIO_FITWICK_NAIL = "nail.wav";
-export const AUDIO_FITWICK_PAINT_ROLLER = "paint roller.wav";
-export const AUDIO_FITWICK_PAINTBRUSH = "paintbrush.wav";
-export const AUDIO_FITWICK_PEN = "pen.wav";
-export const AUDIO_FITWICK_PENCIL = "pencil.wav";
-export const AUDIO_FITWICK_PICKAXE = "pickaxe.wav";
-export const AUDIO_FITWICK_PLIERS = "pliers.wav";
-export const AUDIO_FITWICK_QUILL = "quill.wav";
-export const AUDIO_FITWICK_SANDER = "sander.wav";
-export const AUDIO_FITWICK_SAW = "saw.wav";
-export const AUDIO_FITWICK_SCREW = "screw.wav";
-export const AUDIO_FITWICK_SCREWDRIVER = "screwdriver.wav";
-export const AUDIO_FITWICK_SHOVEL = "shovel.wav";
-export const AUDIO_FITWICK_SPANNER = "spanner.wav";
-export const AUDIO_FITWICK_TAPE_MEASURE = "tape measure.wav";
-export const AUDIO_FITWICK_WALLET = "wallet.wav";
-export const AUDIO_FITWICK_WRENCH = "wrench.wav";
-// export const AUDIO_FITWICK_ = ".wav";
+export const CONFIG_FITWICKS = "fitwicks";
 
 export const TEXTURE_BUTTONS = "buttons";
-export const TEXTURE_KENNEY_ASSETS = "kenney_assets";
-export const TEXTURE_UNDERWATER_SPRITES = "underwater_sprites";
-export const TEXTURE_DESERT_SPRITES = "desert_sprites";
-export const TEXTURE_MEDIEVAL_TROPICAL_SPRITES = "medieval_tropical_sprites";
-export const TEXTURE_WINTER_SPRITES = "winter_sprites";
-export const TEXTURE_KENNEY_ITEMS = "genericItems_spritesheet_colored";
 
 export const TEXTURE_BACKGROUND_EMPTY = "backgroundEmpty.png";
 const TEXTURE_BACKGROUND_FALL = "backgroundColorFall.png";
@@ -99,6 +57,7 @@ export const BACKGROUND_TEXTURES = [
   TEXTURE_BACKGROUND_DESERT,
   TEXTURE_BACKGROUND_SCIFI,
   TEXTURE_BACKGROUND_FLOATING_ISLANDS,
+  // these contain too much background decoration:
   // TEXTURE_BACKGROUND_UNDERWATER1,
   // TEXTURE_BACKGROUND_UNDERWATER2,
   // TEXTURE_BACKGROUND_UNDERWATER3,

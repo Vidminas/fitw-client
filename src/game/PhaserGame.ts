@@ -28,6 +28,7 @@ import GUIScene from "./scenes/GUIScene";
 import PreloadScene from "./scenes/PreloadScene";
 import Fitwick from "./components/Fitwick";
 import ModalScene from "./scenes/ModalScene";
+import FitwickConfigLoaderPlugin from "./fitwickLoader";
 
 // logic borrowed from:
 // https://stackoverflow.com/questions/31829951/how-to-reduce-javascript-object-to-only-contain-properties-from-interface
@@ -103,6 +104,15 @@ class PhaserGame {
       },
       loader: {
         baseURL: "assets",
+      },
+      plugins: {
+        global: [
+          {
+            key: "fitwickConfig",
+            plugin: FitwickConfigLoaderPlugin,
+            start: true,
+          },
+        ],
       },
     });
 

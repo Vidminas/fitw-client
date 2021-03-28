@@ -3,18 +3,12 @@ import IWorld from "../../api/world";
 import { COLOR_STRING_WHITE } from "../colors";
 import {
   BACKGROUND_TEXTURES,
+  CONFIG_FITWICKS,
   MUSIC_TRACKS,
   TEXTURE_BUTTONS,
-  TEXTURE_DESERT_SPRITES,
-  TEXTURE_KENNEY_ASSETS,
-  TEXTURE_KENNEY_ITEMS,
-  TEXTURE_MEDIEVAL_TROPICAL_SPRITES,
-  TEXTURE_UNDERWATER_SPRITES,
-  TEXTURE_WINTER_SPRITES,
   UI_BIG_FONT_SIZE,
   UI_BUTTON_SIZE,
 } from "../constants";
-import { FITWICKS_AUDIO } from "../fitwicks";
 
 class PreloadScene extends Phaser.Scene {
   private loadingText!: Phaser.GameObjects.Text;
@@ -105,41 +99,12 @@ class PreloadScene extends Phaser.Scene {
 
     MUSIC_TRACKS.forEach((track) => this.load.audio(track, `music/${track}`));
 
-    FITWICKS_AUDIO.forEach((track) =>
-      this.load.audio(track, `fitwicks/${track}`)
-    );
+    this.load.fitwickConfig({
+      key: CONFIG_FITWICKS,
+      url: "fitwicks/fitwicks.jsonc",
+    });
 
     this.load.multiatlas(TEXTURE_BUTTONS, "ui/buttons.json", "ui/");
-    this.load.atlasXML(
-      TEXTURE_KENNEY_ASSETS,
-      "fitwicks/kenney_spritesheet.png",
-      "fitwicks/kenney_spritesheet.xml"
-    );
-    this.load.atlasXML(
-      TEXTURE_UNDERWATER_SPRITES,
-      "fitwicks/underwater_sprites.png",
-      "fitwicks/underwater_sprites.xml"
-    );
-    this.load.atlasXML(
-      TEXTURE_DESERT_SPRITES,
-      "fitwicks/desert_sprites.png",
-      "fitwicks/desert_sprites.xml"
-    );
-    this.load.atlasXML(
-      TEXTURE_MEDIEVAL_TROPICAL_SPRITES,
-      "fitwicks/medieval_tropical_sprites.png",
-      "fitwicks/medieval_tropical_sprites.xml"
-    );
-    this.load.atlasXML(
-      TEXTURE_WINTER_SPRITES,
-      "fitwicks/winter_sprites.png",
-      "fitwicks/winter_sprites.xml"
-    );
-    this.load.atlasXML(
-      TEXTURE_KENNEY_ITEMS,
-      "fitwicks/genericItems_spritesheet_colored.png",
-      "fitwicks/genericItems_spritesheet_colored.xml"
-    );
 
     BACKGROUND_TEXTURES.forEach((texture: string) => {
       this.load.image(texture, `backgrounds/${texture}`);
