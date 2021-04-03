@@ -6,6 +6,7 @@ import {
   CONFIG_FITWICKS,
   MUSIC_TRACKS,
   TEXTURE_BUTTONS,
+  TEXTURE_FITWICK_PLACEHOLDER,
   UI_BIG_FONT_SIZE,
   UI_BUTTON_SIZE,
 } from "../constants";
@@ -103,6 +104,10 @@ class PreloadScene extends Phaser.Scene {
       key: CONFIG_FITWICKS,
       url: "fitwicks/fitwicks.jsonc",
     });
+    this.load.svg(
+      TEXTURE_FITWICK_PLACEHOLDER,
+      `fitwicks/${TEXTURE_FITWICK_PLACEHOLDER}`
+    );
 
     this.load.multiatlas(TEXTURE_BUTTONS, "ui/buttons.json", "ui/");
 

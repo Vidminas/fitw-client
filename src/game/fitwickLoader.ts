@@ -52,39 +52,14 @@ class FitwickConfigFile extends Phaser.Loader.FileTypes.JSONFile {
       }
 
       result.atlases.forEach((atlas) => {
-        if (atlas.type === "atlasXML") {
-          this.loader.atlasXML(
-            atlas.key,
-            `${result.path}/${atlas.texture}`,
-            `${result.path}/${atlas.layout}`
-          );
-        } else if (atlas.type === "atlasJSON") {
-          this.loader.atlas(
-            atlas.key,
-            `${result.path}/${atlas.texture}`,
-            `${result.path}/${atlas.layout}`
-          );
-        } else {
+        if (atlas.type !== "atlasXML" && atlas.type !== "atlasJSON") {
           console.warn(
             `Encountered unimplemented atlas type ${atlas.type} while processing ${this.key}`
           );
         }
       });
 
-      result.fitwicks.forEach((fitwick) => {
-        if (fitwick.pronunciation) {
-          this.loader.audio(
-            fitwick.pronunciation,
-            `${result.path}/${fitwick.pronunciation}`
-          );
-        }
-      });
-
-      this.data = {
-        atlases: result.atlases.map((atlas) => atlas.key),
-        fitwicks: result.fitwicks,
-      };
-
+      this.data = result;
       this.onProcessComplete();
     }
   }

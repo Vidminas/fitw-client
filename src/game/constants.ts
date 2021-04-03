@@ -30,6 +30,7 @@ export const MUSIC_TRACKS = [
 ];
 
 export const CONFIG_FITWICKS = "fitwicks";
+export const TEXTURE_FITWICK_PLACEHOLDER = "placeholder.svg";
 
 export const TEXTURE_BUTTONS = "buttons";
 
