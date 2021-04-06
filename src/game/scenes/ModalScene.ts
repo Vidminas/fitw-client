@@ -5,8 +5,11 @@ import {
 import AddDialog from "../components/AddDialog";
 import BackgroundDialog from "../components/BackgroundDialog";
 import Fitwick from "../components/Fitwick";
-import ListDialog from "../components/ListDialog";
+import FitwickListDialog from "../components/FitwickListDialog";
+import FitwickListItem from "../components/FitwickListItem";
 import SettingsDialog from "../components/SettingsDialog";
+import { CONFIG_FITWICKS } from "../constants";
+import { FitwickConfigSection } from "../fitwickLoader";
 import {
   LOCAL_EVENT_OPEN_ADD_FITWICK_DIALOG,
   LOCAL_EVENT_OPEN_BACKGROUND_DIALOG,
@@ -16,12 +19,25 @@ import {
 import RexScene from "./RexScene";
 
 class ModalScene extends RexScene {
+  private fitwickItemPool: FitwickListItem[];
+
   constructor() {
     super({ key: "ModalScene", active: false });
+    this.fitwickItemPool = [];
   }
 
   create() {
     this.input.setTopOnly(false);
+
+    const fitwickConfig = this.cache.json.get(CONFIG_FITWICKS) as
+      | FitwickConfigSection
+      | undefined;
+    fitwickConfig?.fitwicks.forEach((fitwick) => {
+      const fitwickItem = new FitwickListItem(this, fitwick);
+      fitwickItem.setActive(false);
+      fitwickItem.setVisible(false);
+      this.fitwickItemPool.push(fitwickItem);
+    });
 
     this.events.on(
       LOCAL_EVENT_OPEN_BACKGROUND_DIALOG,
@@ -75,7 +91,10 @@ class ModalScene extends RexScene {
   }
 
   private onOpenFitwickList() {
-    new ListDialog(this);
+    new FitwickListDialog(this, this.fitwickItemPool);
+    // TODO: not really sure why this hack is needed here
+    // but otherwise list items appear behind the modal dialog
+    this.fitwickItemPool.forEach((item) => item.setDepth(100));
   }
 
   private onOpenAddFitwickDialog() {

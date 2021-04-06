@@ -68,7 +68,7 @@ declare module "phaser3-rex-plugins/plugins/containerlite.js" {
 }
 
 declare module "phaser3-rex-plugins/templates/ui/ui-components.js" {
-  export class BaseSizer extends Phaser.GameObjects.GameObject {
+  export class BaseSizer extends Phaser.GameObjects.Zone {
     constructor(scene: Phaser.Scene);
     addBackground(background: any);
     add(child: any);
@@ -82,6 +82,7 @@ declare module "phaser3-rex-plugins/templates/ui/ui-components.js" {
     setDepth(depth: number);
     popUp(duration: number);
     scaleDownDestroy(duration: number);
+    scaleDown(duration: number);
     drawBounds(graphics: Phaser.GameObjects.Graphics, color?: number);
     setAnchor(config: any);
     isInTouching(): boolean;
@@ -118,5 +119,10 @@ declare module "phaser3-rex-plugins/templates/ui/ui-components.js" {
     bottomChildOY: number;
     setT(percentage: number);
     setChildOY(oy: number);
+    getElement(name: string): any;
+  }
+
+  export class Label extends Sizer {
+    getElement(name: string): Phaser.GameObjects.GameObject;
   }
 }

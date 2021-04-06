@@ -5,7 +5,11 @@ import {
   SCALE_RATIO,
   TEXTURE_FITWICK_PLACEHOLDER,
 } from "../constants";
-import { FitwickConfigSection } from "../fitwickLoader";
+import {
+  FitwickConfigSection,
+  lazyLoadAtlas,
+  lazyLoadPronunciation,
+} from "../fitwickLoader";
 
 class Fitwick extends Phaser.GameObjects.Sprite implements IFitwick {
   static findInConfig(scene: Phaser.Scene, name: string) {
@@ -18,66 +22,6 @@ class Fitwick extends Phaser.GameObjects.Sprite implements IFitwick {
     return fitwicks.fitwicks.find(
       (fitwick) => fitwick.name === name.toLowerCase()
     );
-  }
-
-  private lazyLoadAtlas(atlasTexture: string, atlasFrame: string) {
-    const fitwicks = this.scene.cache.json.get(
-      CONFIG_FITWICKS
-    ) as FitwickConfigSection;
-    if (!fitwicks) {
-      return undefined;
-    }
-
-    const atlas = fitwicks.atlases.find((atlas) => atlas.key === atlasTexture);
-    if (!atlas) {
-      console.warn(
-        `Fitwick atlas ${atlasTexture} not found in fitwick config!`
-      );
-      return undefined;
-    }
-
-    if (atlas.type === "atlasXML") {
-      this.scene.load.atlasXML(
-        atlas.key,
-        `${fitwicks.path}/${atlas.texture}`,
-        `${fitwicks.path}/${atlas.layout}`
-      );
-    } else if (atlas.type === "atlasJSON") {
-      this.scene.load.atlas(
-        atlas.key,
-        `${fitwicks.path}/${atlas.texture}`,
-        `${fitwicks.path}/${atlas.layout}`
-      );
-    } else {
-      console.warn(
-        `Encountered unimplemented atlas type ${atlas.type} of ${atlas.key}`
-      );
-      return undefined;
-    }
-
-    this.scene.load.once(Phaser.Loader.Events.COMPLETE, () => {
-      this.setTexture(atlasTexture, atlasFrame);
-      (this.input.hitArea as Phaser.Geom.Rectangle).setSize(
-        this.width,
-        this.height
-      );
-    });
-    this.scene.load.start();
-  }
-
-  private lazyLoadSound(pronunciation: string) {
-    const fitwicks = this.scene.cache.json.get(
-      CONFIG_FITWICKS
-    ) as FitwickConfigSection;
-    if (!fitwicks) {
-      return undefined;
-    }
-
-    this.scene.load.audio(pronunciation, `${fitwicks.path}/${pronunciation}`);
-    this.scene.load.once(Phaser.Loader.Events.COMPLETE, () => {
-      this.audio = this.scene.sound.add(pronunciation);
-    });
-    this.scene.load.start();
   }
 
   public worldId: string;
@@ -124,7 +68,13 @@ class Fitwick extends Phaser.GameObjects.Sprite implements IFitwick {
           `Fitwick ${inputName}, frame ${atlasFrame} not found in atlas ${atlasTexture}!`
         );
       } else {
-        this.lazyLoadAtlas(atlasTexture!, atlasFrame!);
+        lazyLoadAtlas(scene, atlasTexture!, () => {
+          this.setTexture(atlasTexture!, atlasFrame);
+          (this.input.hitArea as Phaser.Geom.Rectangle).setSize(
+            this.width,
+            this.height
+          );
+        });
       }
     }
 
@@ -144,7 +94,9 @@ class Fitwick extends Phaser.GameObjects.Sprite implements IFitwick {
       if (scene.cache.audio.has(fitwickConfig.pronunciation)) {
         this.audio = scene.sound.add(fitwickConfig.pronunciation);
       } else {
-        this.lazyLoadSound(fitwickConfig.pronunciation);
+        lazyLoadPronunciation(scene, fitwickConfig.pronunciation, () => {
+          this.audio = this.scene.sound.add(fitwickConfig.pronunciation!);
+        });
       }
     }
     // this.scene.add

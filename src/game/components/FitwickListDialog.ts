@@ -1,32 +1,31 @@
 import { ScrollablePanel } from "phaser3-rex-plugins/templates/ui/ui-components.js";
 import { COLOR_DIALOG_BACKGROUND, COLOR_DIALOG_FOREGROUND } from "../colors";
 import {
-  CONFIG_FITWICKS,
   FRAME_BUTTON_CANCEL_CLICK,
   FRAME_BUTTON_CANCEL_HOVER,
   FRAME_BUTTON_CANCEL_REST,
   TEXTURE_BUTTONS,
   UI_BIG_FONT_SIZE,
   UI_BUTTON_SIZE,
-  UI_FONT_SIZE,
 } from "../constants";
-import { FitwickConfigSection } from "../fitwickLoader";
 import RexScene from "../scenes/RexScene";
 import Button from "./Button";
+import FitwickListItem from "./FitwickListItem";
 import ModalDialog from "./ModalDialog";
 
-const FITWICK_ITEM_SIZE = UI_BUTTON_SIZE * 4;
 const FITWICK_ITEM_SPACE = 8;
 
-const createFitwickList = (scene: RexScene, width: number, height: number) => {
-  const fitwickConfig = scene.cache.json.get(CONFIG_FITWICKS) as
-    | FitwickConfigSection
-    | undefined;
-
-  const columns =
-    Math.floor(width / (FITWICK_ITEM_SIZE + FITWICK_ITEM_SPACE)) + 1;
-  const rows = fitwickConfig
-    ? Math.ceil(fitwickConfig.fitwicks.length / columns) + 1
+const createFitwickList = (
+  scene: RexScene,
+  width: number,
+  height: number,
+  fitwickItemPool: FitwickListItem[]
+) => {
+  const columns = Math.floor(
+    width / (FitwickListItem.ITEM_WIDTH + FITWICK_ITEM_SPACE)
+  );
+  const rows = fitwickItemPool.length
+    ? Math.ceil(fitwickItemPool.length / columns) + 1
     : 3;
 
   const sizer = scene.rexUI.add.gridSizer({
@@ -44,22 +43,10 @@ const createFitwickList = (scene: RexScene, width: number, height: number) => {
     },
   });
 
-  fitwickConfig?.fitwicks.forEach((fitwick) => {
-    const firstTexture = fitwick.sprites[0][0];
-    const firstFrame = fitwick.sprites[0][1];
-    const fitwickRow = scene.rexUI.add.label({
-      icon: scene.add
-        .image(0, 0, firstTexture, firstFrame)
-        .setDisplaySize(UI_BUTTON_SIZE, UI_BUTTON_SIZE),
-      text: scene.add.text(0, 0, fitwick.name, {
-        fontSize: UI_FONT_SIZE,
-        wordWrap: {
-          width: UI_BUTTON_SIZE * 2,
-        },
-      }),
-      space: { icon: 3 },
-    });
-    sizer.add(fitwickRow);
+  fitwickItemPool.forEach((listItem) => {
+    listItem.setActive(true);
+    listItem.setVisible(true);
+    sizer.add(listItem);
   });
 
   return sizer;
@@ -102,15 +89,16 @@ const createTitle = (scene: RexScene, dialogWidth: number, hide: Function) => {
   });
 };
 
-class ListDialog extends ModalDialog {
-  constructor(scene: RexScene) {
+class FitwickListDialog extends ModalDialog {
+  constructor(scene: RexScene, fitwickItemPool: FitwickListItem[]) {
     const baseWidth = Math.max(
-      scene.scale.width - 4 * UI_BUTTON_SIZE,
+      scene.scale.width - 8 * UI_BUTTON_SIZE,
       Math.min(4 * UI_BUTTON_SIZE, scene.scale.width)
     );
     // this divides the panel width into how many fitwicks fit on one row
     const width =
-      baseWidth - (baseWidth % (FITWICK_ITEM_SIZE + FITWICK_ITEM_SPACE)) + 20;
+      baseWidth -
+      (baseWidth % (FitwickListItem.ITEM_WIDTH + FITWICK_ITEM_SPACE));
     const height = Math.max(
       scene.scale.height * 0.75,
       Math.min(4 * UI_BUTTON_SIZE, scene.scale.height)
@@ -135,7 +123,7 @@ class ListDialog extends ModalDialog {
       ),
       header: createTitle(scene, width, () => this.hide()),
       panel: {
-        child: createFitwickList(scene, width - 20, height),
+        child: createFitwickList(scene, width, height, fitwickItemPool),
         mask: { padding: 1 },
       },
       slider: true,
@@ -148,6 +136,7 @@ class ListDialog extends ModalDialog {
         panel: 10,
       },
     });
+
     scrollablePanel.layout();
     scrollablePanel.popUp(500);
     scrollablePanel.setInteractive();
@@ -172,6 +161,22 @@ class ListDialog extends ModalDialog {
 
     super(scene, scrollablePanel);
   }
+
+  hide() {
+    // remove fitwick list items without destroying them
+    this.dialog
+      .getElement("panel")
+      .children.forEach((item: FitwickListItem) => {
+        item.setActive(false);
+        item.setVisible(false);
+      });
+    // for reasons unknown to me, this documented method does not do anything
+    // this.dialog.getElement("panel").removeAll(false);
+    // but this works instead
+    this.dialog.getElement("panel").children = [];
+
+    super.hide();
+  }
 }
 
-export default ListDialog;
+export default FitwickListDialog;

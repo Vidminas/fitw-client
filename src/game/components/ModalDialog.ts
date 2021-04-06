@@ -5,7 +5,7 @@ import {
 import { COLOR_MODAL_BACKGROUND, OPACITY_MODAL_BACKGROUND } from "../colors";
 
 class ModalDialog extends Phaser.GameObjects.Group {
-  private dialog;
+  protected dialog;
 
   constructor(scene: Phaser.Scene, dialog: ScrollablePanel | Dialog) {
     const background = scene.add.rectangle(
@@ -67,7 +67,7 @@ class ModalDialog extends Phaser.GameObjects.Group {
   }
 
   public hide() {
-    this.dialog.scaleDownDestroy(100);
+    this.dialog.scaleDown(100);
     this.destroy(true);
   }
 }
