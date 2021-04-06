@@ -170,7 +170,7 @@ class FitwickListDialog extends ModalDialog {
         item.setActive(false);
         item.setVisible(false);
       });
-    // for reasons unknown to me, this documented method does not do anything
+    // TODO: for some reason, this documented method does not do anything
     // this.dialog.getElement("panel").removeAll(false);
     // but this works instead
     this.dialog.getElement("panel").children = [];

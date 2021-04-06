@@ -70,8 +70,10 @@ class FitwickListItem extends Label {
           FitwickListItem.ITEM_HEIGHT
         );
     } else {
+      this.getIcon().setAlpha(0.5);
       lazyLoadAtlas(this.scene, firstTexture, () => {
         this.getIcon()
+          .setAlpha(1)
           .setTexture(firstTexture, firstFrame)
           .setDisplaySize(
             FitwickListItem.ITEM_ICON_WIDTH,

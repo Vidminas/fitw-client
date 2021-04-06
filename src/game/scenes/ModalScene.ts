@@ -94,6 +94,7 @@ class ModalScene extends RexScene {
     new FitwickListDialog(this, this.fitwickItemPool);
     // TODO: not really sure why this hack is needed here
     // but otherwise list items appear behind the modal dialog
+    // and this line doesn't work anywhere else
     this.fitwickItemPool.forEach((item) => item.setDepth(100));
   }
 
