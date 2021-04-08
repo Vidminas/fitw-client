@@ -12,3 +12,7 @@
   align-self: center;
   margin-right: 5px;
 }
+
+#game-root {
+  height: 100%;
+}

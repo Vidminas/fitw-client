@@ -22,7 +22,6 @@ import {
   EVENT_WORLD_DATA,
   EVENT_BROWSER_MESSAGE,
 } from "../api/events";
-import { SCALE_RATIO } from "./constants";
 import MainScene from "./scenes/MainScene";
 import GUIScene from "./scenes/GUIScene";
 import PreloadScene from "./scenes/PreloadScene";
@@ -79,7 +78,7 @@ class PhaserGame {
   }
 
   public init(
-    parent: string,
+    parent: HTMLDivElement,
     userId: IUser["id"],
     worldId: IWorld["id"] | null,
     worldName: string,
@@ -88,10 +87,6 @@ class PhaserGame {
     this.game = new Phaser.Game({
       parent,
       type: Phaser.AUTO,
-      // creating a game slightly larger than window size
-      // allows to zoom out more
-      width: window.innerWidth * SCALE_RATIO,
-      height: window.innerHeight * SCALE_RATIO,
       autoFocus: true,
       scene: [PreloadScene, MainScene, GUIScene, ModalScene],
       dom: {
@@ -99,7 +94,10 @@ class PhaserGame {
       },
       scale: {
         mode: Phaser.Scale.FIT,
+        width: parent.clientWidth * window.devicePixelRatio,
+        height: parent.clientHeight * window.devicePixelRatio,
         autoCenter: Phaser.Scale.CENTER_BOTH,
+        autoRound: true,
         expandParent: true,
       },
       loader: {
@@ -140,6 +138,7 @@ class PhaserGame {
 
   private hookIntoBrowserEvents() {
     const gameThis = this;
+
     console.info = function (message?: any, ...optionalArgs: any[]) {
       gameThis.socket?.emit(EVENT_BROWSER_MESSAGE, message);
       return gameThis.consoleInfo.apply(

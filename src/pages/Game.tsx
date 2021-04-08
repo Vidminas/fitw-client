@@ -8,16 +8,17 @@ import {
   IonToast,
   IonToolbar,
 } from "@ionic/react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import IUser from "../api/user";
 import IWorld from "../api/world";
 import PhaserGame from "../game/PhaserGame";
-import "./Clock.css";
 import { useHistory } from "react-router";
 import { AppState } from "../redux/store";
 import { WORLD_FETCH } from "../redux/actionTypes";
 import { timeOutline } from "ionicons/icons";
+
+import "./Game.css";
 
 const Game: React.FC<{}> = () => {
   const history = useHistory();
@@ -26,48 +27,58 @@ const Game: React.FC<{}> = () => {
   const currentWorld = useSelector<AppState, IWorld | null>(
     (state) => state.user.currentWorld
   );
+  const gameParentDiv = useRef<HTMLDivElement>(null);
   const [time, setTime] = useState("");
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [toastColor, setToastColor] = useState("");
 
   useEffect(() => {
-    if (!currentWorld) {
+    if (!currentWorld || !gameParentDiv.current) {
       return;
     }
     if (!user && !process.env.REACT_APP_DEBUG) {
       return;
     }
+
     // new worlds don't have an ID
     if (currentWorld.id) {
       // this updates the worlds state, but it does not change the user current world
       // TODO: figure out a way to update the current state world
       dispatch({ type: WORLD_FETCH, payload: currentWorld.id });
     }
-    const newGame = new PhaserGame(() => {
-      // navigating back home should work, but game does not get cleaned up properly
-      // this may be related to:
-      // https://stackoverflow.com/questions/57081820/changing-routes-breaks-game-in-phaser-3
-      history.push("/home");
-      // for now, the workaround is to refresh the page
-      history.go(0);
-    });
-    newGame.init(
-      "game-root",
-      user?.id,
-      currentWorld.id,
-      currentWorld.name,
-      (color: string, message: string) => {
-        setToastColor(color);
-        setToastMessage(message);
-        setShowToast(true);
-      }
-    );
+
+    let newGame: PhaserGame | undefined = undefined;
+
+    // size of the parent div is not computed on component mount
+    // see: https://github.com/facebook/react/issues/13108
+    setTimeout(() => {
+      newGame = new PhaserGame(() => {
+        // navigating back home should work, but game does not get cleaned up properly
+        // this may be related to:
+        // https://stackoverflow.com/questions/57081820/changing-routes-breaks-game-in-phaser-3
+        history.push("/home");
+        // for now, the workaround is to refresh the page
+        history.go(0);
+      });
+      newGame.init(
+        gameParentDiv.current!,
+        user?.id,
+        currentWorld.id,
+        currentWorld.name,
+        (color: string, message: string) => {
+          setToastColor(color);
+          setToastMessage(message);
+          setShowToast(true);
+        }
+      );
+    }, 10);
+
     return () => {
       // this cleanup gets called if the game is exited without using
       // the in-game "Exit World" button
       // e.g. by clicking back in the browser
-      newGame.destroy();
+      newGame?.destroy();
     };
   }, [dispatch, user, currentWorld, history]);
 
@@ -110,8 +121,8 @@ const Game: React.FC<{}> = () => {
           </IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
-        <div id="game-root"></div>
+      <IonContent>
+        <div ref={gameParentDiv} id="game-root"></div>
         <IonToast
           isOpen={showToast}
           onDidDismiss={() => setShowToast(false)}
